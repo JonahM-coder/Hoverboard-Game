@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1ff03f1baf69de40963951104ac0f62, type: 3}
+  m_Name: Board 2
+  m_EditorClassIdentifier: 
+  HbIndex: 2
+  boardModel: {fileID: 5992245282145195907, guid: de18d93c20f7a2a41938c9abe37a39d1,
+    type: 3}
+  HbName: Burning Comet
+  hbPlayer: {fileID: 3483197519430441236, guid: 14fab5a5caa7559478d40764e9fdf982,
+    type: 3}
+  HbSpeed: C
+  HbBoost: A
+  HbHandling: C
+  HbWeightClass: Light
+  speedColor: {r: 0, g: 0, b: 0, a: 0}
+  boostColor: {r: 0, g: 0, b: 0, a: 0}
+  handlingColor: {r: 0, g: 0, b: 0, a: 0}
+  selectButton: {fileID: 3544581754792374789, guid: 5e74216a0a5619a41bbafcf602f380f7,
+    type: 3}
+  playButton: {fileID: 6600667871620347742, guid: 7c9fa81eb2a837c44a57f5b449623832,
+    type: 3}
+  sceneToLoad: {fileID: 102900000, guid: 27da8e54a9d163e49b62572af05f7526, type: 3}

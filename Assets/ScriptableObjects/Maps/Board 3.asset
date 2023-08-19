@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1ff03f1baf69de40963951104ac0f62, type: 3}
+  m_Name: Board 3
+  m_EditorClassIdentifier: 
+  HbIndex: 3
+  boardModel: {fileID: 6636213627262392884, guid: c994a703950ebff4d8f60fc9cf35528e,
+    type: 3}
+  HbName: Black Venator
+  hbPlayer: {fileID: 4214142135130908756, guid: 83a7507ecd66d254d8d0c24ec2155073,
+    type: 3}
+  HbSpeed: A
+  HbBoost: B
+  HbHandling: D
+  HbWeightClass: Heavy
+  speedColor: {r: 0, g: 0, b: 0, a: 0}
+  boostColor: {r: 0, g: 0, b: 0, a: 0}
+  handlingColor: {r: 0, g: 0, b: 0, a: 0}
+  selectButton: {fileID: 3544581754792374789, guid: 5e74216a0a5619a41bbafcf602f380f7,
+    type: 3}
+  playButton: {fileID: 6600667871620347742, guid: 7c9fa81eb2a837c44a57f5b449623832,
+    type: 3}
+  sceneToLoad: {fileID: 102900000, guid: 27da8e54a9d163e49b62572af05f7526, type: 3}
