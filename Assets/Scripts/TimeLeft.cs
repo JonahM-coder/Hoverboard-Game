@@ -32,9 +32,12 @@ public class TimeLeft : MonoBehaviour
 
     public bool countdownFinished = false;
 
+    public GameObject retireSprite;
+
     public void Start()
     {
         // Turn off player HUD
+        retireSprite.SetActive(false);
         boostBar.gameObject.SetActive(false);
         timeText.enabled = false;
         currentGateText.enabled = false;
@@ -80,6 +83,7 @@ public class TimeLeft : MonoBehaviour
                 controller.DeactivateForce();
 
                 // Turn off player HUD
+                retireSprite.SetActive(false);
                 timeText.enabled = false;
                 currentGateText.enabled = false;
                 powerText.enabled = false;

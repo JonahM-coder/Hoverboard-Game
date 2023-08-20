@@ -23,11 +23,16 @@ public class GoalScript : MonoBehaviour
     public Button restartButton;
     public Button menuButton;
 
+    public GameObject goalSprite;
+    public GameObject retireSprite;
+
     private bool goalReached = false;
 
     public void Start()
     {
         //Disable buttons
+        retireSprite.SetActive(false);
+        goalSprite.SetActive(false);
         restartButton.gameObject.SetActive(false);
         menuButton.gameObject.SetActive(false);
     }
@@ -52,6 +57,8 @@ public class GoalScript : MonoBehaviour
             // Victory screen text goes here
             goalText.enabled = true;
             finalTimeText.enabled = true;
+            goalSprite.SetActive(true);
+            retireSprite.SetActive(false);
 
             // In-game HUD is disabled
             timeLeftText.enabled = false;

@@ -19,7 +19,14 @@ public class KillboxTrigger : MonoBehaviour
     public Button restartButton; //Restart button
     public Button menuButton; //Return to Main Menu button
 
+    public GameObject retireSprite;
+
     public HbController player;
+
+    public void Start()
+    {
+        retireSprite.SetActive(false);
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -38,6 +45,8 @@ public class KillboxTrigger : MonoBehaviour
             speedometerText.enabled = false;
             timeDisplayText.enabled = false;
             timeLeftText.enabled = false;
+
+            retireSprite.SetActive(true);
 
             restartButton.gameObject.SetActive(true);
             menuButton.gameObject.SetActive(true);
