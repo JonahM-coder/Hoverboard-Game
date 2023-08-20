@@ -17,6 +17,7 @@ public class TimeLeft : MonoBehaviour
     public HbController controller;
 
     // UI Text variables
+    public BoostmeterBar boostBar;
     public Text retireText;
     public Text timeText; //countdown timer
     public Text currentGateText; //total gates text
@@ -33,8 +34,8 @@ public class TimeLeft : MonoBehaviour
 
     public void Start()
     {
-        //HUD off at first
         // Turn off player HUD
+        boostBar.gameObject.SetActive(false);
         timeText.enabled = false;
         currentGateText.enabled = false;
         powerText.enabled = false;
@@ -163,6 +164,7 @@ public class TimeLeft : MonoBehaviour
         }
 
         countdownFinished = true;
+        boostBar.gameObject.SetActive(true);
         timeText.enabled = true;
         currentGateText.enabled = true;
         powerText.enabled = true;

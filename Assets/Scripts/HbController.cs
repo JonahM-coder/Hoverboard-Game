@@ -78,20 +78,27 @@ public class HbController : MonoBehaviour
     // Countdown Text
     public Text countdownText;
 
+    // Boostmeter Bar GameObject
+    public BoostmeterBar boostMeterBar;
+
     private void Awake()
     {
         //Hoverboard hover & initial position setup
         hb = GetComponent<Rigidbody>();
-        currentBoostMeter = boostMeter;
 
     }
 
     private void Start()
     {
+        //Set up start position
         StartCoroutine(Countdown());
         currentGravity = gravity;
         isMoving = false;
         isFalling = false;
+
+        // Set up boost meter
+        currentBoostMeter = boostMeter;
+        boostMeterBar.SetMaxMeter(boostMeter);
 
         // Store the initial rotation values for each axis (X, Y, Z)
         initialRotationX = transform.localRotation.eulerAngles.x;
@@ -173,7 +180,7 @@ public class HbController : MonoBehaviour
             }
             else //Apply Gravity
             {
-
+                isFalling = true;
                 // Increase gravity over time
                 currentGravity += gravityIncreaseRate * Time.deltaTime;
                 currentGravity = Mathf.Min(currentGravity, gravity * maxGravityMultiplier);
@@ -226,6 +233,7 @@ public class HbController : MonoBehaviour
             {
                 //Decreases current BoostMeter fuel
                 currentBoostMeter -= boostMeterDrain;
+                boostMeterBar.SetMeter(currentBoostMeter);
                 StartBoost();
 
                 //Changes the current Player BoostMeter display
@@ -325,6 +333,7 @@ public class HbController : MonoBehaviour
         if (currentBoostMeter < boostMeter)
         {
             UpdateBoostMeter(5000f);
+            boostMeterBar.SetMeter(boostMeter);
         }
     }
     

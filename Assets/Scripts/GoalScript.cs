@@ -19,6 +19,7 @@ public class GoalScript : MonoBehaviour
     public Text currentPowerText;
     public Text speedometerText;
     public Text finalTimeText;
+    public BoostmeterBar boostBar;
     public Button restartButton;
     public Button menuButton;
 
@@ -59,6 +60,7 @@ public class GoalScript : MonoBehaviour
             powerText.enabled = false;
             currentPowerText.enabled = false;
             speedometerText.enabled = false;
+            boostBar.gameObject.SetActive(false);
 
             //Enable buttons
             restartButton.gameObject.SetActive(true);
