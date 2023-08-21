@@ -78,6 +78,18 @@ public class HbController : MonoBehaviour
     // Countdown Text
     public Text countdownText;
 
+    //Ready Sprite variables
+    public GameObject readySprite;
+    private bool isReadyVisible = false;
+    private float readyTimer = 0f;
+    private float readyVisibilityDuration = 3f;
+
+    //Go Sprite variables
+    public GameObject goSprite;
+    private bool isGoVisible = false;
+    private float goTimer = 0f;
+    private float goVisibilityDuration = 1f;
+
     // Boostmeter Bar GameObject
     public BoostmeterBar boostMeterBar;
 
@@ -95,6 +107,8 @@ public class HbController : MonoBehaviour
         currentGravity = gravity;
         isMoving = false;
         isFalling = false;
+        readySprite.SetActive(true);
+        goSprite.SetActive(false);
 
         // Set up boost meter
         currentBoostMeter = boostMeter;
@@ -108,6 +122,30 @@ public class HbController : MonoBehaviour
 
     private void FixedUpdate()
     {
+
+        //Update Ready time
+        if (isReadyVisible)
+        {
+            readyTimer += Time.deltaTime;
+            if (readyTimer >= readyVisibilityDuration)
+            {
+                readyTimer = 0f;
+                isReadyVisible = false;
+                readySprite.SetActive(false);
+            }
+        }
+
+        //Update Go time
+        if (isGoVisible)
+        {
+            goTimer += Time.deltaTime;
+            if (goTimer >= goVisibilityDuration)
+            {
+                goTimer = 0f;
+                isGoVisible = false;
+                goSprite.SetActive(false);
+            }
+        }
 
         currentPosition = transform.position;
         currentRotation = transform.rotation;
@@ -384,6 +422,11 @@ public class HbController : MonoBehaviour
 
         countdownText.text = "GO!";
         countdownText.gameObject.SetActive(false);
+
+        readySprite.SetActive(false);
+        goSprite.SetActive(true);
+        isReadyVisible = false;
+        isGoVisible = true;
 
         isMoving = true;
         countdownText.enabled = false;
