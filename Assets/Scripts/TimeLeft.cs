@@ -83,7 +83,7 @@ public class TimeLeft : MonoBehaviour
                 controller.DeactivateForce();
 
                 // Turn off player HUD
-                retireSprite.SetActive(false);
+                retireSprite.SetActive(true);
                 timeText.enabled = false;
                 currentGateText.enabled = false;
                 powerText.enabled = false;
