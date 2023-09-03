@@ -8948,6 +8948,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 398551418208284608, guid: 2e15b649a7187e444ae65e61f671787a,
         type: 3}
+      propertyPath: turnTorque
+      value: 45
+      objectReference: {fileID: 0}
+    - target: {fileID: 398551418208284608, guid: 2e15b649a7187e444ae65e61f671787a,
+        type: 3}
       propertyPath: readySprite
       value: 
       objectReference: {fileID: 1150315990}

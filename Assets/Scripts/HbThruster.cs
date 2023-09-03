@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class HbThruster : MonoBehaviour
 {
@@ -19,6 +20,11 @@ public class HbThruster : MonoBehaviour
     public GameObject goal;
     public TimeLeft timer;
     public HbController controller;
+
+    // Gamepad button commands
+    private bool isAccelerating = false;
+    private bool isPlayerBoosting = false;
+    private bool isBraking = false;
 
     private bool isMoving = false;
 
@@ -46,7 +52,11 @@ public class HbThruster : MonoBehaviour
             if (isMoving)
             {
 
-                if (Input.GetKey(KeyCode.W))
+                isAccelerating = InputSystem.GetDevice<Gamepad>().aButton.isPressed;
+                isPlayerBoosting = InputSystem.GetDevice<Gamepad>().xButton.isPressed;
+                isBraking = InputSystem.GetDevice<Gamepad>().bButton.isPressed;
+
+                if (isAccelerating)
                 {
                     if (!accelerateThruster.isPlaying)
                     {
@@ -61,7 +71,7 @@ public class HbThruster : MonoBehaviour
                 
                 if (defaultThruster.isPlaying)
                 {
-                    if (Input.GetKey(KeyCode.S))
+                    if (isBraking)
                     {
                         defaultThruster.Stop();
                         defaultThruster.Clear();
@@ -75,7 +85,7 @@ public class HbThruster : MonoBehaviour
                     defaultThruster.Play();
                 }
 
-                if (Input.GetKey(KeyCode.Space) && !isBoosting)
+                if (isPlayerBoosting && !isBoosting)
                 {
                     if (currentPower != 0)
                     {
@@ -163,6 +173,7 @@ public class HbThruster : MonoBehaviour
     {
         yield return new WaitForSeconds(boostDuration);
 
+        isPlayerBoosting = false;
         isBoosting = false;
         boostThruster.Stop();
         boostThruster.Clear();

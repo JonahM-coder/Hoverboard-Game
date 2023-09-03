@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 public class HbController : MonoBehaviour
 {
@@ -48,13 +49,13 @@ public class HbController : MonoBehaviour
 
     [Header("Extra")]
     public float boostDuration = 3f;
-    public bool isBoosting = false;
     public float boostMeterDrain = 25f;
     public float boostMeter = 10000f;
     public float currentBoostMeter;
     public float boostMeterFill = 250f;
     private float boostTimer = 0f;
-    
+    private bool isBoosting = false;
+
     //Rotation variables
     private float initialRotationX;
     private float initialRotationY;
@@ -80,9 +81,9 @@ public class HbController : MonoBehaviour
 
     //Ready Sprite variables
     public GameObject readySprite;
-    private bool isReadyVisible = false;
     private float readyTimer = 0f;
     private float readyVisibilityDuration = 3f;
+    private bool isReadyVisible = false;
 
     //Go Sprite variables
     public GameObject goSprite;
@@ -92,6 +93,12 @@ public class HbController : MonoBehaviour
 
     // Boostmeter Bar GameObject
     public BoostmeterBar boostMeterBar;
+
+    // Gamepad button commands
+    private bool isAccelerating = false;
+    private bool isRefreshing = false;
+    private bool isPlayerBoosting = false;
+    private bool isBraking = false;
 
     private void Awake()
     {
@@ -156,6 +163,22 @@ public class HbController : MonoBehaviour
         // In-game hoverboard mechanics, controls, and physics
         if (isMoving && !hasReachedGoal)
         {
+
+            //Gamepad Stick and Button Commands are active
+            Vector2 moveInput = InputSystem.GetDevice<Gamepad>().leftStick.ReadValue();
+            isAccelerating = InputSystem.GetDevice<Gamepad>().aButton.isPressed;
+            isPlayerBoosting = InputSystem.GetDevice<Gamepad>().xButton.isPressed;
+            isRefreshing = InputSystem.GetDevice<Gamepad>().yButton.isPressed;
+            isBraking = InputSystem.GetDevice<Gamepad>().bButton.isPressed;
+
+            Vector3 movement = transform.forward * moveInput.y * moveInput * Time.deltaTime;
+
+            hb.MovePosition(hb.position + movement);
+
+            float rotationInput = moveInput.x;
+            Quaternion rotation = Quaternion.Euler(0, rotationInput * turnTorque * Time.deltaTime, 0);
+            hb.MoveRotation(hb.rotation * rotation);
+
             if (currentBoostMeter < 0)
             {
                 currentBoostMeter = 0;
@@ -175,7 +198,7 @@ public class HbController : MonoBehaviour
 
 
             // Check if the hoverboard is tilted beyond the threshold angle
-            if (Input.GetKey(KeyCode.R))
+            if (isRefreshing)
             {
                 StopBoost();
                 ResetOrientation();
@@ -220,7 +243,7 @@ public class HbController : MonoBehaviour
             {
                 isFalling = true;
                 // Increase gravity over time
-                currentGravity += gravityIncreaseRate * Time.deltaTime;
+                currentGravity += gravityIncreaseRate * Time.fixedDeltaTime;
                 currentGravity = Mathf.Min(currentGravity, gravity * maxGravityMultiplier);
 
                 Vector3 gravityForce = Vector3.down * currentGravity;
@@ -228,32 +251,15 @@ public class HbController : MonoBehaviour
             }
 
             // Apply forward force
-            if (Input.GetKey(KeyCode.W))
+            if (isAccelerating)
             {
 
                 hb.AddForce(transform.right * forwardForce, ForceMode.Acceleration);
 
-                // Apply turning
-                if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
-                {
-                    float turnInput = Input.GetAxis("Horizontal");
-
-                    Quaternion targetRotation = Quaternion.Euler(turnInput * maxTurnAngle, 0f, 0f);
-                    hb.AddTorque(Vector3.up * turnInput * turnSpeed, ForceMode.Acceleration);
-                }
-
-
-            }
-            else if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D)) //Apply leaning
-            {
-                float turnInput = Input.GetAxis("Horizontal");
-
-                Quaternion targetRotation = Quaternion.Euler(turnInput * maxTurnAngle, 0f, 0f);
-                hb.AddTorque(Vector3.up * turnInput * turnSpeed, ForceMode.Acceleration);
             }
 
             // Apply braking force
-            if (Input.GetKey(KeyCode.S))
+            if (isBraking)
             {
                 Vector3 brakingVelocity = -hb.velocity.normalized * brakingForce;
                 hb.AddForce(brakingVelocity, ForceMode.Impulse);
@@ -267,7 +273,7 @@ public class HbController : MonoBehaviour
 
 
             // Speed boost input
-            if (Input.GetKey(KeyCode.Space) && !isBoosting && currentBoostMeter != 0)
+            if (isPlayerBoosting && !isBoosting && currentBoostMeter != 0)
             {
                 //Decreases current BoostMeter fuel
                 currentBoostMeter -= boostMeterDrain;
@@ -360,6 +366,7 @@ public class HbController : MonoBehaviour
 
     private void StopBoost()
     {
+        isPlayerBoosting = false;
         isBoosting = false;
         boostTimer = 0f;
         boostForce = 0f;
