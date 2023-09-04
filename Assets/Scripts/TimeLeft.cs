@@ -59,7 +59,7 @@ public class TimeLeft : MonoBehaviour
     {
         
        if(countdownFinished)
-        {
+       {
             if (timeIsRunning)
             {
                 if (currentTime >= 0)
@@ -69,9 +69,8 @@ public class TimeLeft : MonoBehaviour
                 }
                 else
                 {
-                    retireText.enabled = true;
                     timeIsRunning = false;
-
+                    retireSprite.SetActive(true);
                 }
 
             }
@@ -83,7 +82,6 @@ public class TimeLeft : MonoBehaviour
                 controller.DeactivateForce();
 
                 // Turn off player HUD
-                retireSprite.SetActive(true);
                 timeText.enabled = false;
                 currentGateText.enabled = false;
                 powerText.enabled = false;
@@ -98,7 +96,7 @@ public class TimeLeft : MonoBehaviour
 
 
             }
-        }
+       }
         
     }
 
@@ -124,7 +122,7 @@ public class TimeLeft : MonoBehaviour
             if (other.transform.tag == "Goal")
             {
                 timeIsRunning = false;
-                retireText.enabled = false;
+                retireSprite.SetActive(false);
             }
         }
 

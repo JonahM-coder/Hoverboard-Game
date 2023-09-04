@@ -78,6 +78,9 @@ public class HbController : MonoBehaviour
 
     // Countdown Text
     public Text countdownText;
+    public GameObject countdownSprite_3sec;
+    public GameObject countdownSprite_2sec;
+    public GameObject countdownSprite_1sec;
 
     //Ready Sprite variables
     public GameObject readySprite;
@@ -94,11 +97,16 @@ public class HbController : MonoBehaviour
     // Boostmeter Bar GameObject
     public BoostmeterBar boostMeterBar;
 
+    // Pause Sprite variables
+    public GameObject pauseSprite;
+
     // Gamepad button commands
     private bool isAccelerating = false;
     private bool isRefreshing = false;
     private bool isPlayerBoosting = false;
     private bool isBraking = false;
+    private bool isPaused = false;
+    
 
     private void Awake()
     {
@@ -109,6 +117,7 @@ public class HbController : MonoBehaviour
 
     private void Start()
     {
+
         //Set up start position
         StartCoroutine(Countdown());
         currentGravity = gravity;
@@ -116,6 +125,7 @@ public class HbController : MonoBehaviour
         isFalling = false;
         readySprite.SetActive(true);
         goSprite.SetActive(false);
+        pauseSprite.SetActive(false);
 
         // Set up boost meter
         currentBoostMeter = boostMeter;
@@ -130,188 +140,205 @@ public class HbController : MonoBehaviour
     private void FixedUpdate()
     {
 
-        //Update Ready time
-        if (isReadyVisible)
+        //Pause Menu
+        if (InputSystem.GetDevice<Gamepad>().startButton.isPressed)
         {
-            readyTimer += Time.deltaTime;
-            if (readyTimer >= readyVisibilityDuration)
-            {
-                readyTimer = 0f;
-                isReadyVisible = false;
-                readySprite.SetActive(false);
-            }
+            isPaused = !isPaused;
+            pauseSprite.SetActive(true);
+            Time.timeScale = isPaused ? 0f : 1f;
         }
 
-        //Update Go time
-        if (isGoVisible)
+        if (!isPaused)
         {
-            goTimer += Time.deltaTime;
-            if (goTimer >= goVisibilityDuration)
+            //Disable pause menu
+            pauseSprite.SetActive(false);
+
+            //Update Ready time
+            if (isReadyVisible)
             {
-                goTimer = 0f;
-                isGoVisible = false;
-                goSprite.SetActive(false);
-            }
-        }
-
-        currentPosition = transform.position;
-        currentRotation = transform.rotation;
-
-        //Update where the front of the hoverboard is facing
-        initialRotationY = transform.localRotation.eulerAngles.y;
-
-        // In-game hoverboard mechanics, controls, and physics
-        if (isMoving && !hasReachedGoal)
-        {
-
-            //Gamepad Stick and Button Commands are active
-            Vector2 moveInput = InputSystem.GetDevice<Gamepad>().leftStick.ReadValue();
-            isAccelerating = InputSystem.GetDevice<Gamepad>().aButton.isPressed;
-            isPlayerBoosting = InputSystem.GetDevice<Gamepad>().xButton.isPressed;
-            isRefreshing = InputSystem.GetDevice<Gamepad>().yButton.isPressed;
-            isBraking = InputSystem.GetDevice<Gamepad>().bButton.isPressed;
-
-            Vector3 movement = transform.forward * moveInput.y * moveInput * Time.deltaTime;
-
-            hb.MovePosition(hb.position + movement);
-
-            float rotationInput = moveInput.x;
-            Quaternion rotation = Quaternion.Euler(0, rotationInput * turnTorque * Time.deltaTime, 0);
-            hb.MoveRotation(hb.rotation * rotation);
-
-            if (currentBoostMeter < 0)
-            {
-                currentBoostMeter = 0;
-            }
-            else if (currentBoostMeter > boostMeter)
-            {
-                currentBoostMeter = boostMeter;
-            }
-
-            int totalBoost = (int)currentBoostMeter;
-
-            if (boostText != null)
-            {
-                totalBoost = Mathf.Max(totalBoost, 0);
-                boostText.text = totalBoost.ToString();
-            }
-
-
-            // Check if the hoverboard is tilted beyond the threshold angle
-            if (isRefreshing)
-            {
-                StopBoost();
-                ResetOrientation();
-                return;
-            }
-
-            Ray ray = new Ray(transform.position, transform.up);
-            RaycastHit hit;
-
-
-            for (int i = 0; i < 4; i++)
-            {
-                ApplyForce(anchors[i], hits[i]);
-
-            }
-
-
-            hb.AddForce(Input.GetAxis("Vertical") * moveForce * transform.right * acceleration);
-            hb.AddTorque(Input.GetAxis("Horizontal") * turnTorque * transform.up);
-
-            // Check if the ray intersects with the ground layer
-            if (Physics.Raycast(transform.position, Vector3.up, out hit, Mathf.Infinity, groundLayer))
-            {
-                isFalling = false;
-                float distanceToGround = hit.distance;
-
-                Vector3 groundPosition = hit.point + Vector3.up * hoverHeight;
-                transform.position = groundPosition;
-
-                float proportionalHeight = (hoverHeight - distanceToGround) / hoverHeight;
-                Vector3 appliedHoverForce = Vector3.up * proportionalHeight * hoverForce;
-                hb.AddForce(appliedHoverForce, ForceMode.Acceleration);
-
-                hb.constraints = RigidbodyConstraints.FreezePositionY;
-                if(distanceToGround < hoverHeight)
+                readyTimer += Time.deltaTime;
+                if (readyTimer >= readyVisibilityDuration)
                 {
-                    hb.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotation;
+                    readyTimer = 0f;
+                    isReadyVisible = false;
+                    readySprite.SetActive(false);
+                }
+            }
+
+            //Update Go time
+            if (isGoVisible)
+            {
+                goTimer += Time.deltaTime;
+                if (goTimer >= goVisibilityDuration)
+                {
+                    goTimer = 0f;
+                    isGoVisible = false;
+                    goSprite.SetActive(false);
+                }
+            }
+
+            currentPosition = transform.position;
+            currentRotation = transform.rotation;
+
+            //Update where the front of the hoverboard is facing
+            initialRotationY = transform.localRotation.eulerAngles.y;
+
+            // In-game hoverboard mechanics, controls, and physics
+            if (isMoving && !hasReachedGoal)
+            {
+
+                //Gamepad Stick and Button Commands are active
+                Vector2 moveInput = InputSystem.GetDevice<Gamepad>().leftStick.ReadValue();
+                isAccelerating = InputSystem.GetDevice<Gamepad>().aButton.isPressed;
+                isPlayerBoosting = InputSystem.GetDevice<Gamepad>().xButton.isPressed;
+                isRefreshing = InputSystem.GetDevice<Gamepad>().yButton.isPressed;
+                isBraking = InputSystem.GetDevice<Gamepad>().bButton.isPressed;
+
+                //Gamepad movement
+                Vector3 movement = transform.forward * moveInput.y * moveInput * Time.deltaTime;
+                hb.MovePosition(hb.position + movement);
+
+                //Gamepad rotation
+                float rotationInput = moveInput.x;
+                Quaternion rotation = Quaternion.Euler(0, rotationInput * turnTorque * Time.deltaTime, 0);
+                hb.MoveRotation(hb.rotation * rotation);
+
+                if (currentBoostMeter < 0)
+                {
+                    currentBoostMeter = 0;
+                }
+                else if (currentBoostMeter > boostMeter)
+                {
+                    currentBoostMeter = boostMeter;
                 }
 
-            }
-            else //Apply Gravity
-            {
-                isFalling = true;
-                // Increase gravity over time
-                currentGravity += gravityIncreaseRate * Time.fixedDeltaTime;
-                currentGravity = Mathf.Min(currentGravity, gravity * maxGravityMultiplier);
+                int totalBoost = (int)currentBoostMeter;
 
-                Vector3 gravityForce = Vector3.down * currentGravity;
-                hb.AddForce(gravityForce, ForceMode.Acceleration);
-            }
-
-            // Apply forward force
-            if (isAccelerating)
-            {
-
-                hb.AddForce(transform.right * forwardForce, ForceMode.Acceleration);
-
-            }
-
-            // Apply braking force
-            if (isBraking)
-            {
-                Vector3 brakingVelocity = -hb.velocity.normalized * brakingForce;
-                hb.AddForce(brakingVelocity, ForceMode.Impulse);
-            }
-            else // Apply autoacceleration
-            {
-
-                Vector3 forwardForceVector = transform.right * forwardForce;
-                hb.AddForce(forwardForceVector, ForceMode.Acceleration);
-            }
+                if (boostText != null)
+                {
+                    totalBoost = Mathf.Max(totalBoost, 0);
+                    boostText.text = totalBoost.ToString();
+                }
 
 
-            // Speed boost input
-            if (isPlayerBoosting && !isBoosting && currentBoostMeter != 0)
-            {
-                //Decreases current BoostMeter fuel
-                currentBoostMeter -= boostMeterDrain;
-                boostMeterBar.SetMeter(currentBoostMeter);
-                StartBoost();
-
-                //Changes the current Player BoostMeter display
-                UpdateBoostMeter(Mathf.Clamp01(boostTimer / boostDuration));
-            }
-
-            // Hoverboard boost duration
-            if (isBoosting)
-            {
-
-                boostTimer += Time.fixedDeltaTime;
-
-                if (boostTimer >= boostDuration)
+                // Check if the hoverboard is tilted beyond the threshold angle
+                if (isRefreshing)
                 {
                     StopBoost();
+                    ResetOrientation();
+                    return;
                 }
 
-            }
+                Ray ray = new Ray(transform.position, transform.up);
+                RaycastHit hit;
 
-            // Apply boost force
-            if (isBoosting)
+
+                for (int i = 0; i < 4; i++)
+                {
+                    ApplyForce(anchors[i], hits[i]);
+
+                }
+
+
+                hb.AddForce(Input.GetAxis("Vertical") * moveForce * transform.right * acceleration);
+                hb.AddTorque(Input.GetAxis("Horizontal") * turnTorque * transform.up);
+
+                // Check if the ray intersects with the ground layer
+                if (Physics.Raycast(transform.position, Vector3.up, out hit, Mathf.Infinity, groundLayer))
+                {
+                    isFalling = false;
+                    float distanceToGround = hit.distance;
+
+                    Vector3 groundPosition = hit.point + Vector3.up * hoverHeight;
+                    transform.position = groundPosition;
+
+                    float proportionalHeight = (hoverHeight - distanceToGround) / hoverHeight;
+                    Vector3 appliedHoverForce = Vector3.up * proportionalHeight * hoverForce;
+                    hb.AddForce(appliedHoverForce, ForceMode.Acceleration);
+
+                    hb.constraints = RigidbodyConstraints.FreezePositionY;
+                    if (distanceToGround < hoverHeight)
+                    {
+                        hb.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotation;
+                    }
+
+                }
+                else //Apply Gravity
+                {
+                    isFalling = true;
+                    // Increase gravity over time
+                    currentGravity += gravityIncreaseRate * Time.fixedDeltaTime;
+                    currentGravity = Mathf.Min(currentGravity, gravity * maxGravityMultiplier);
+
+                    Vector3 gravityForce = Vector3.down * currentGravity;
+                    hb.AddForce(gravityForce, ForceMode.Acceleration);
+                }
+
+                // Apply forward force
+                if (isAccelerating)
+                {
+
+                    hb.AddForce(transform.right * forwardForce, ForceMode.Acceleration);
+
+                }
+
+                // Apply braking force
+                if (isBraking)
+                {
+                    Vector3 brakingVelocity = -hb.velocity.normalized * brakingForce;
+                    hb.AddForce(brakingVelocity, ForceMode.Impulse);
+                }
+                else // Apply autoacceleration
+                {
+
+                    Vector3 forwardForceVector = transform.right * forwardForce;
+                    hb.AddForce(forwardForceVector, ForceMode.Acceleration);
+                }
+
+
+                // Speed boost input
+                if (isPlayerBoosting && !isBoosting && currentBoostMeter != 0)
+                {
+                    //Decreases current BoostMeter fuel
+                    currentBoostMeter -= boostMeterDrain;
+                    boostMeterBar.SetMeter(currentBoostMeter);
+                    StartBoost();
+
+                    //Changes the current Player BoostMeter display
+                    UpdateBoostMeter(Mathf.Clamp01(boostTimer / boostDuration));
+                }
+
+                // Hoverboard boost duration
+                if (isBoosting)
+                {
+
+                    boostTimer += Time.fixedDeltaTime;
+
+                    if (boostTimer >= boostDuration)
+                    {
+                        StopBoost();
+                    }
+
+                }
+
+                // Apply boost force
+                if (isBoosting)
+                {
+                    hb.AddForce(transform.right * boostForce, ForceMode.Acceleration);
+                }
+
+            } //End of player controls
+
+            // When the player reaches the goal
+            if (hasReachedGoal)
             {
-                hb.AddForce(transform.right * boostForce, ForceMode.Acceleration);
+                // Move the hoverboard towards the targetPoint
+                float goalMoveSpeed = 5f; // Adjust this to control the movement speed
+                transform.position = Vector3.Lerp(transform.position, targetPoint, goalMoveSpeed * Time.deltaTime);
             }
-
-        } //End of player controls
-
-        // When the player reaches the goal
-        if (hasReachedGoal)
-        {
-            // Move the hoverboard towards the targetPoint
-            float goalMoveSpeed = 5f; // Adjust this to control the movement speed
-            transform.position = Vector3.Lerp(transform.position, targetPoint, goalMoveSpeed * Time.deltaTime);
         }
+
+
 
     }
 
@@ -422,10 +449,36 @@ public class HbController : MonoBehaviour
 
         while (count > 0)
         {
+            if (count < 4)
+            {
+                countdownSprite_3sec.SetActive(true);
+                countdownSprite_2sec.SetActive(false);
+                countdownSprite_1sec.SetActive(false);
+            }
+
+            if (count < 3)
+            {
+                countdownSprite_3sec.SetActive(false);
+                countdownSprite_2sec.SetActive(true);
+                countdownSprite_1sec.SetActive(false);
+            }
+
+            if (count < 2)
+            {
+                countdownSprite_3sec.SetActive(false);
+                countdownSprite_2sec.SetActive(false);
+                countdownSprite_1sec.SetActive(true);
+            }
+
+
             countdownText.text = count.ToString();
             yield return new WaitForSeconds(1);
             count--;
         }
+
+        countdownSprite_3sec.SetActive(false);
+        countdownSprite_2sec.SetActive(false);
+        countdownSprite_1sec.SetActive(false);
 
         countdownText.text = "GO!";
         countdownText.gameObject.SetActive(false);
