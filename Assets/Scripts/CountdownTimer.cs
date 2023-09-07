@@ -18,7 +18,11 @@ public class CountdownTimer : MonoBehaviour
     public GameObject goSprite;
     private bool isGoVisible = false;
     private float goTimer = 0f;
-    private float goVisibilityDuration = 0.5f;
+    private float goVisibilityDuration = 0.8f;
+
+    public GameObject countdownSprite_3sec;
+    public GameObject countdownSprite_2sec;
+    public GameObject countdownSprite_1sec;
 
     // Start is called before the first frame update
     void Start()
@@ -62,12 +66,37 @@ public class CountdownTimer : MonoBehaviour
 
         while (count > 0)
         {
+            if (count < 4)
+            {
+                countdownSprite_3sec.SetActive(true);
+                countdownSprite_2sec.SetActive(false);
+                countdownSprite_1sec.SetActive(false);
+            }
+
+            if (count < 3)
+            {
+                countdownSprite_3sec.SetActive(false);
+                countdownSprite_2sec.SetActive(true);
+                countdownSprite_1sec.SetActive(false);
+            }
+
+            if (count < 2)
+            {
+                countdownSprite_3sec.SetActive(false);
+                countdownSprite_2sec.SetActive(false);
+                countdownSprite_1sec.SetActive(true);
+            }
+
             countdownText.text = count.ToString();
             yield return new WaitForSeconds(1);
             count--;
         }
 
+        readySprite.SetActive(false);
+        countdownSprite_1sec.SetActive(false);
+
         countdownText.text = "GO!";
+        goSprite.SetActive(true);
         isGoVisible = true;
         yield return new WaitForSeconds(1);
 

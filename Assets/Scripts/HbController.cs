@@ -76,24 +76,6 @@ public class HbController : MonoBehaviour
     private Vector3 targetPoint;
     public float stopPointSpeed = 20f;
 
-    // Countdown Text
-    public Text countdownText;
-    public GameObject countdownSprite_3sec;
-    public GameObject countdownSprite_2sec;
-    public GameObject countdownSprite_1sec;
-
-    //Ready Sprite variables
-    public GameObject readySprite;
-    private float readyTimer = 0f;
-    private float readyVisibilityDuration = 3f;
-    private bool isReadyVisible = false;
-
-    //Go Sprite variables
-    public GameObject goSprite;
-    private bool isGoVisible = false;
-    private float goTimer = 0f;
-    private float goVisibilityDuration = 1f;
-
     // Boostmeter Bar GameObject
     public BoostmeterBar boostMeterBar;
 
@@ -123,8 +105,6 @@ public class HbController : MonoBehaviour
         currentGravity = gravity;
         isMoving = false;
         isFalling = false;
-        readySprite.SetActive(true);
-        goSprite.SetActive(false);
         pauseSprite.SetActive(false);
 
         // Set up boost meter
@@ -152,30 +132,6 @@ public class HbController : MonoBehaviour
         {
             //Disable pause menu
             pauseSprite.SetActive(false);
-
-            //Update Ready time
-            if (isReadyVisible)
-            {
-                readyTimer += Time.deltaTime;
-                if (readyTimer >= readyVisibilityDuration)
-                {
-                    readyTimer = 0f;
-                    isReadyVisible = false;
-                    readySprite.SetActive(false);
-                }
-            }
-
-            //Update Go time
-            if (isGoVisible)
-            {
-                goTimer += Time.deltaTime;
-                if (goTimer >= goVisibilityDuration)
-                {
-                    goTimer = 0f;
-                    isGoVisible = false;
-                    goSprite.SetActive(false);
-                }
-            }
 
             currentPosition = transform.position;
             currentRotation = transform.rotation;
@@ -449,69 +405,11 @@ public class HbController : MonoBehaviour
 
         while (count > 0)
         {
-            if (count < 4)
-            {
-                countdownSprite_3sec.SetActive(true);
-                countdownSprite_2sec.SetActive(false);
-                countdownSprite_1sec.SetActive(false);
-            }
-
-            if (count < 3)
-            {
-                countdownSprite_3sec.SetActive(false);
-                countdownSprite_2sec.SetActive(true);
-                countdownSprite_1sec.SetActive(false);
-            }
-
-            if (count < 2)
-            {
-                countdownSprite_3sec.SetActive(false);
-                countdownSprite_2sec.SetActive(false);
-                countdownSprite_1sec.SetActive(true);
-            }
-
-
-            countdownText.text = count.ToString();
             yield return new WaitForSeconds(1);
             count--;
         }
 
-        countdownSprite_3sec.SetActive(false);
-        countdownSprite_2sec.SetActive(false);
-        countdownSprite_1sec.SetActive(false);
-
-        countdownText.text = "GO!";
-        countdownText.gameObject.SetActive(false);
-
-        readySprite.SetActive(false);
-        goSprite.SetActive(true);
-        isReadyVisible = false;
-        isGoVisible = true;
-
         isMoving = true;
-        countdownText.enabled = false;
-
     }
 
 }
-
-/* LEANING FUNCTION HERE
- 
-             else if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D)) //Apply leaning
-            {
-             
-                // Calculate lean angle based on the input
-                float targetLeanAngle = Input.GetAxis("Horizontal") * maxLeanAngle;
-
-                // Smoothly interpolate to the target lean angle
-                currentLeanAngle = Mathf.Lerp(currentLeanAngle, targetLeanAngle, Time.deltaTime * leanSpeed);
-
-                // Apply the leaning effect (rotation around the X-axis)
-                Quaternion leanRotation = Quaternion.Euler(-currentLeanAngle, 0f, 0f);
-                transform.localRotation = leanRotation;
-
-                // Apply turning effect (rotation around the Y-axis)
-                transform.Rotate(0f, Input.GetAxis("Horizontal") * turnSpeed * Time.deltaTime, 0f, Space.Self);
-            }
- 
- */
