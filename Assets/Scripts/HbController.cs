@@ -24,6 +24,7 @@ public class HbController : MonoBehaviour
     public float maxGravityMultiplier = 2f; // Maximum gravity multiplier to prevent excessive increase
     public float gravityIncreaseRate = 1f; // The rate at which gravity increases (adjust as needed)
     public bool isFalling;
+    public float angularDrag = 1f;
 
     [Header("Speed Stats")]
     public float moveForce;
@@ -41,7 +42,7 @@ public class HbController : MonoBehaviour
     public float turnTorque;
     public float turnSpeed = 20f;
     public float maxTurnAngle = 35f;
-    
+    public float strafeSpeed = 4f;
     public float leanSpeed = 2f;
     public float leanSmoothness = 5f;
     public float maxLeanAngle = 30f;
@@ -86,6 +87,8 @@ public class HbController : MonoBehaviour
     private bool isAccelerating = false;
     private bool isRefreshing = false;
     private bool isPlayerBoosting = false;
+    private bool isStrafingLeft = false;
+    private bool isStrafingRight = false;
     private bool isBraking = false;
     private bool isPaused = false;
     
@@ -94,6 +97,7 @@ public class HbController : MonoBehaviour
     {
         //Hoverboard hover & initial position setup
         hb = GetComponent<Rigidbody>();
+        hb.angularDrag = angularDrag;
 
     }
 
@@ -149,6 +153,8 @@ public class HbController : MonoBehaviour
                 isPlayerBoosting = InputSystem.GetDevice<Gamepad>().xButton.isPressed;
                 isRefreshing = InputSystem.GetDevice<Gamepad>().yButton.isPressed;
                 isBraking = InputSystem.GetDevice<Gamepad>().bButton.isPressed;
+                isStrafingLeft = InputSystem.GetDevice<Gamepad>().leftShoulder.isPressed;
+                isStrafingRight = InputSystem.GetDevice<Gamepad>().rightShoulder.isPressed;
 
                 //Gamepad movement
                 Vector3 movement = transform.forward * moveInput.y * moveInput * Time.deltaTime;
@@ -158,6 +164,18 @@ public class HbController : MonoBehaviour
                 float rotationInput = moveInput.x;
                 Quaternion rotation = Quaternion.Euler(0, rotationInput * turnTorque * Time.deltaTime, 0);
                 hb.MoveRotation(hb.rotation * rotation);
+
+                //Strafing
+                if (isStrafingLeft)
+                {
+                    StrafeLeft();
+                }
+
+                if (isStrafingRight)
+                {
+                    StrafeRight();
+                }
+
 
                 if (currentBoostMeter < 0)
                 {
@@ -373,6 +391,20 @@ public class HbController : MonoBehaviour
             currentBoostMeter += fillAmount;
         }
 
+    }
+
+    private void StrafeLeft()
+    {
+        // Strafe the hoverboard to the left
+        Vector3 strafeDirection = transform.forward * strafeSpeed * Time.fixedDeltaTime;
+        hb.MovePosition(hb.position + strafeDirection);
+    }
+
+    private void StrafeRight()
+    {
+        // Strafe the hoverboard to the right
+        Vector3 strafeDirection = -transform.forward * strafeSpeed * Time.fixedDeltaTime;
+        hb.MovePosition(hb.position + strafeDirection);
     }
 
     public void StopAtPoint(Vector3 stopPoint)
