@@ -24,7 +24,6 @@ public class HbController : MonoBehaviour
     public float maxGravityMultiplier = 2f; // Maximum gravity multiplier to prevent excessive increase
     public float gravityIncreaseRate = 1f; // The rate at which gravity increases (adjust as needed)
     public bool isFalling;
-    public float angularDrag = 1f;
 
     [Header("Speed Stats")]
     public float moveForce;
@@ -42,11 +41,14 @@ public class HbController : MonoBehaviour
     public float turnTorque;
     public float turnSpeed = 20f;
     public float maxTurnAngle = 35f;
+
+    [Header("Balance Stats")]
+    public float angularDrag = 1f;
     public float strafeSpeed = 4f;
-    public float leanSpeed = 2f;
-    public float leanSmoothness = 5f;
-    public float maxLeanAngle = 30f;
-    //private float currentLeanAngle = 0f; **Requires Board Lean function
+    public float strafeAcceleration = 2f;
+    public float strafeDeceleration = 4f;
+    private float currentStrafeSpeed = 0f;
+    public float maxStrafeSpeed = 5f;
 
     [Header("Extra")]
     public float boostDuration = 3f;
@@ -98,6 +100,7 @@ public class HbController : MonoBehaviour
         //Hoverboard hover & initial position setup
         hb = GetComponent<Rigidbody>();
         hb.angularDrag = angularDrag;
+        hb.freezeRotation = true;
 
     }
 
@@ -405,6 +408,34 @@ public class HbController : MonoBehaviour
         // Strafe the hoverboard to the right
         Vector3 strafeDirection = -transform.forward * strafeSpeed * Time.fixedDeltaTime;
         hb.MovePosition(hb.position + strafeDirection);
+    }
+
+    private void StartStrafe(float targetSpeed)
+    {
+        // Gradually accelerate or decelerate to the target strafe speed
+        targetSpeed = Mathf.Clamp(targetSpeed, -maxStrafeSpeed, maxStrafeSpeed);
+        StartCoroutine(ChangeStrafeSpeed(targetSpeed));
+    }
+
+    private void StopStrafe()
+    {
+        // Gradually decelerate to zero strafe speed
+        StartCoroutine(ChangeStrafeSpeed(0.0f));
+    }
+
+    private IEnumerator ChangeStrafeSpeed(float targetSpeed)
+    {
+        float startSpeed = currentStrafeSpeed;
+        float elapsedTime = 0.0f;
+
+        while (elapsedTime < 1.0f)
+        {
+            currentStrafeSpeed = Mathf.Lerp(startSpeed, targetSpeed, elapsedTime);
+            elapsedTime += Time.deltaTime * (targetSpeed == 0.0f ? strafeDeceleration : strafeAcceleration);
+            yield return null;
+        }
+
+        currentStrafeSpeed = targetSpeed;
     }
 
     public void StopAtPoint(Vector3 stopPoint)
