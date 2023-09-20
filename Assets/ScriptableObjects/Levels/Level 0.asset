@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Level 0
   m_EditorClassIdentifier: 
   levelIndex: 0
-  areaName: Ivory Casino
+  areaName: White Forest
   areaModel: {fileID: 1109990484854936129, guid: f969bb3f7a121a54f9162bcb46433395,
     type: 3}
-  levelName: Alpine Slipstream
+  levelName: Park Cross
   difficultyText: Beginner
   levelModel: {fileID: 5265415122302203756, guid: 2b5d4a795832d13448e8da66cf7b79bb,
     type: 3}
