@@ -10,7 +10,7 @@ public class CameraBehavior : MonoBehaviour
     public float speed;
     
     // Start is called before the first frame update
-    private void Awake()
+    public void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player");
         cameraTarget = player.transform.Find("CameraTarget").gameObject;
@@ -19,10 +19,10 @@ public class CameraBehavior : MonoBehaviour
     // Update is called once per frame
     private void FixedUpdate()
     {
-        follow();
+        Follow();
     }
 
-    private void follow()
+    private void Follow()
     {
         gameObject.transform.position = Vector3.Lerp(transform.position, cameraTarget.transform.position, Time.deltaTime * speed);
         gameObject.transform.LookAt(player.gameObject.transform.position);
