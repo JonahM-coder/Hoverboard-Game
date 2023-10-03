@@ -1598,7 +1598,7 @@ RectTransform:
   m_LocalScale: {x: 8.4009285, y: 0.66929, z: 0.66929}
   m_Children: []
   m_Father: {fileID: 580574620}
-  m_RootOrder: 14
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2150,7 +2150,7 @@ RectTransform:
   - {fileID: 1630482137}
   - {fileID: 1839240584}
   m_Father: {fileID: 580574620}
-  m_RootOrder: 12
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2433,7 +2433,7 @@ Transform:
   - {fileID: 815786524}
   - {fileID: 477651236}
   m_Father: {fileID: 580574620}
-  m_RootOrder: 17
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &542554831 stripped
 Transform:
@@ -2854,7 +2854,7 @@ Transform:
   - {fileID: 1551391405}
   - {fileID: 1658529009}
   m_Father: {fileID: 580574620}
-  m_RootOrder: 18
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &567907792
 MonoBehaviour:
@@ -2975,8 +2975,6 @@ RectTransform:
   - {fileID: 1737782314}
   - {fileID: 2063699345}
   - {fileID: 394762646}
-  - {fileID: 1390744403}
-  - {fileID: 1771317843}
   - {fileID: 506686089}
   - {fileID: 1143083342}
   - {fileID: 419402086}
@@ -2984,6 +2982,8 @@ RectTransform:
   - {fileID: 1565784033}
   - {fileID: 535335001}
   - {fileID: 567907791}
+  - {fileID: 1390744403}
+  - {fileID: 1771317843}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -6015,7 +6015,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Quit
+  m_Text: Main Menu
 --- !u!222 &1077967405
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -6215,7 +6215,7 @@ RectTransform:
   m_LocalScale: {x: 8.4009285, y: 0.66929, z: 0.66929}
   m_Children: []
   m_Father: {fileID: 580574620}
-  m_RootOrder: 13
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -7217,7 +7217,7 @@ RectTransform:
   - {fileID: 251247248}
   - {fileID: 544223927}
   m_Father: {fileID: 580574620}
-  m_RootOrder: 15
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -7534,7 +7534,7 @@ RectTransform:
   m_Children:
   - {fileID: 137363584}
   m_Father: {fileID: 580574620}
-  m_RootOrder: 10
+  m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -8417,7 +8417,7 @@ RectTransform:
   m_Children:
   - {fileID: 1252122917}
   m_Father: {fileID: 580574620}
-  m_RootOrder: 16
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -9066,6 +9066,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pauseSprite: {fileID: 535335000}
   blackOverlay: {fileID: 815786525}
+  resetButton: {fileID: 1390744402}
+  quitButton: {fileID: 1771317839}
 --- !u!114 &1733961473
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9773,7 +9775,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 580574621}
         m_MethodName: ChangeScene
-        m_Mode: 1
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -9832,7 +9834,7 @@ RectTransform:
   m_Children:
   - {fileID: 1077967403}
   m_Father: {fileID: 580574620}
-  m_RootOrder: 11
+  m_RootOrder: 18
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -11099,6 +11101,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2002813727}
   - component: {fileID: 2002813726}
+  - component: {fileID: 2002813725}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -11106,6 +11109,25 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &2002813725
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2002813724}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_HorizontalAxis: Horizontal
+  m_VerticalAxis: Vertical
+  m_SubmitButton: Submit
+  m_CancelButton: Cancel
+  m_InputActionsPerSecond: 10
+  m_RepeatDelay: 0.5
+  m_ForceModuleActive: 0
 --- !u!114 &2002813726
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11118,7 +11140,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_FirstSelected: {fileID: 0}
+  m_FirstSelected: {fileID: 1390744402}
   m_sendNavigationEvents: 1
   m_DragThreshold: 10
 --- !u!4 &2002813727

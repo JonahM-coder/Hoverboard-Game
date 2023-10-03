@@ -8,6 +8,8 @@ public class PauseBehavior : MonoBehaviour
 
     public GameObject pauseSprite;
     public Image blackOverlay;
+    public GameObject resetButton;
+    public GameObject quitButton;
 
     private bool isPaused = false;
     private bool isPausable = false;
@@ -19,6 +21,8 @@ public class PauseBehavior : MonoBehaviour
         
         //Disable Pause UI menu
         pauseSprite.SetActive(false);
+        resetButton.SetActive(false);
+        quitButton.SetActive(false);
         SetBlackOverlayAlpha(0f);
     }
 
@@ -42,6 +46,8 @@ public class PauseBehavior : MonoBehaviour
     private void PauseGame()
     {
         pauseSprite.SetActive(true);
+        resetButton.SetActive(true);
+        quitButton.SetActive(true);
         Time.timeScale = 0f;
         isPaused = true;
         SetBlackOverlayAlpha(0.5f);
@@ -50,6 +56,8 @@ public class PauseBehavior : MonoBehaviour
     private void ResumeGame()
     {
         pauseSprite.SetActive(false);
+        resetButton.SetActive(false);
+        quitButton.SetActive(false);
         Time.timeScale = 1f;
         isPaused = false;
         SetBlackOverlayAlpha(0f);
