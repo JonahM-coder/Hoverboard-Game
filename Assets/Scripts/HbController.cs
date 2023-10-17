@@ -59,6 +59,11 @@ public class HbController : MonoBehaviour
     private float boostTimer = 0f;
     private bool isBoosting = false;
 
+    //Respawn & Checkpoint variables
+    private Transform playerTransform;
+    public int currentCheckpoint = 0;
+    private Checkpoint previousCheckpoint;
+
     //Rotation variables
     private float initialRotationX;
     private float initialRotationY;
@@ -98,6 +103,13 @@ public class HbController : MonoBehaviour
         hb.angularDrag = angularDrag;
         hb.freezeRotation = true;
 
+        //Checkpoint system startup
+        playerTransform = transform;
+        Checkpoint respawnPoint = FindObjectOfType<Checkpoint>();
+        if (respawnPoint != null)
+        {
+            respawnPoint.SetRespawnPosition();
+        }
     }
 
     private void Start()
@@ -184,7 +196,8 @@ public class HbController : MonoBehaviour
             if (isRefreshing)
             {
                 StopBoost();
-                ResetOrientation();
+                RefillBoostMeter();
+                Respawn();
                 return;
             }
 
@@ -195,7 +208,6 @@ public class HbController : MonoBehaviour
             for (int i = 0; i < 4; i++)
             {
                 ApplyForce(anchors[i], hits[i]);
-
             }
 
 
@@ -236,9 +248,7 @@ public class HbController : MonoBehaviour
             // Apply forward force
             if (isAccelerating)
             {
-
                 hb.AddForce(transform.right * forwardForce, ForceMode.Acceleration);
-
             }
 
             // Apply braking force
@@ -270,14 +280,12 @@ public class HbController : MonoBehaviour
             // Hoverboard boost duration
             if (isBoosting)
             {
-
                 boostTimer += Time.fixedDeltaTime;
 
                 if (boostTimer >= boostDuration)
                 {
                     StopBoost();
                 }
-
             }
 
             // Apply boost force
@@ -295,10 +303,6 @@ public class HbController : MonoBehaviour
             float goalMoveSpeed = 5f; // Adjust this to control the movement speed
             transform.position = Vector3.Lerp(transform.position, targetPoint, goalMoveSpeed * Time.deltaTime);
         }
-        
-
-
-
     }
 
     //Extra functions
@@ -312,23 +316,51 @@ public class HbController : MonoBehaviour
             hb.AddForceAtPosition(transform.up * force * multiplier, anchor.position, ForceMode.Acceleration);
         }
     }
-
-    
+   
     private void OnTriggerEnter(Collider other)
     {
         if (other.transform.tag == "Battery")
         {
-
             RefillBoostMeter();
-
         }
 
         if (other.transform.tag == "SpeedBoost")
         {
             StartBoost();
         }
+
+        if (other.CompareTag("Spawn"))
+        {
+            Checkpoint checkpoint = other.GetComponent<Checkpoint>();
+
+            if (checkpoint.checkpointNumber > currentCheckpoint)
+            {
+                if (previousCheckpoint != null)
+                {
+                    Destroy(previousCheckpoint.gameObject);
+                }
+            }
+            currentCheckpoint = checkpoint.checkpointNumber;
+            previousCheckpoint = checkpoint;
+        }
     }
-    
+
+    private void Respawn()
+    {
+        // Find the checkpoint with the corresponding number and set the respawn position.
+        Checkpoint[] checkpoints = FindObjectsOfType<Checkpoint>();
+        foreach (Checkpoint checkpoint in checkpoints)
+        {
+            if (checkpoint.checkpointNumber == currentCheckpoint)
+            {
+                // Set the respawn position to the checkpoint's position and rotation
+                playerTransform.position = checkpoint.transform.position;
+                playerTransform.rotation = Quaternion.Euler(0, checkpoint.transform.rotation.eulerAngles.y, 0);
+                break;
+            }
+        }
+
+    }
 
     private void ResetOrientation()
     {
@@ -347,7 +379,6 @@ public class HbController : MonoBehaviour
         boostForce = boostForceStart;
         isBoosting = true;
         boostTimer = 0f;
-
     }
 
     private void StopBoost()
@@ -357,7 +388,6 @@ public class HbController : MonoBehaviour
         boostTimer = 0f;
         boostForce = 0f;
     }
-
     
     private void RefillBoostMeter()
     {

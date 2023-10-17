@@ -12,6 +12,7 @@ TagManager:
   - Killbox
   - Goal
   - SpeedBoost
+  - Spawn
   layers:
   - Default
   - TransparentFX
