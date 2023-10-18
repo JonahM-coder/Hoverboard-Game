@@ -13,6 +13,7 @@ TagManager:
   - Goal
   - SpeedBoost
   - Spawn
+  - Respawnbox
   layers:
   - Default
   - TransparentFX

@@ -329,6 +329,11 @@ public class HbController : MonoBehaviour
             StartBoost();
         }
 
+        if (other.transform.tag == "Respawnbox")
+        {
+            Respawn();
+        }
+
         if (other.CompareTag("Spawn"))
         {
             Checkpoint checkpoint = other.GetComponent<Checkpoint>();
