@@ -52,10 +52,10 @@ public class HbController : MonoBehaviour
 
     [Header("Extra")]
     public float boostDuration = 3f;
-    public float boostMeterDrain = 25f;
+    public float boostMeterDrain = 2000f;
     public float boostMeter = 10000f;
     public float currentBoostMeter;
-    public float boostMeterFill = 250f;
+    public float boostMeterFill = 500f;
     private float boostTimer = 0f;
     private bool isBoosting = false;
 
@@ -94,7 +94,6 @@ public class HbController : MonoBehaviour
     private bool isStrafingLeft = false;
     private bool isStrafingRight = false;
     private bool isBraking = false;
-    
 
     private void Awake()
     {
@@ -192,13 +191,12 @@ public class HbController : MonoBehaviour
             }
 
 
-            // Check if the hoverboard is tilted beyond the threshold angle
+            // Respawn back to checkpoint
             if (isRefreshing)
             {
+                hb.velocity = Vector3.zero;
                 StopBoost();
-                RefillBoostMeter();
                 Respawn();
-                return;
             }
 
             Ray ray = new Ray(transform.position, transform.up);
@@ -271,10 +269,11 @@ public class HbController : MonoBehaviour
                 //Decreases current BoostMeter fuel
                 currentBoostMeter -= boostMeterDrain;
                 boostMeterBar.SetMeter(currentBoostMeter);
-                StartBoost();
 
                 //Changes the current Player BoostMeter display
                 UpdateBoostMeter(Mathf.Clamp01(boostTimer / boostDuration));
+
+                StartBoost();
             }
 
             // Hoverboard boost duration
@@ -354,6 +353,12 @@ public class HbController : MonoBehaviour
     {
         // Find the checkpoint with the corresponding number and set the respawn position.
         Checkpoint[] checkpoints = FindObjectsOfType<Checkpoint>();
+
+        //Decreases current BoostMeter fuel
+        currentBoostMeter -= boostMeterDrain * 0.5f;
+        boostMeterBar.SetMeter(currentBoostMeter);
+        UpdateBoostMeter(Mathf.Clamp01(boostTimer / boostDuration));
+
         foreach (Checkpoint checkpoint in checkpoints)
         {
             if (checkpoint.checkpointNumber == currentCheckpoint)
@@ -394,7 +399,7 @@ public class HbController : MonoBehaviour
         boostForce = 0f;
     }
     
-    private void RefillBoostMeter()
+    public void RefillBoostMeter()
     {
         if (currentBoostMeter < boostMeter)
         {
