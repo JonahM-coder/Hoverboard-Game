@@ -2,77 +2,84 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 
 public class PauseBehavior : MonoBehaviour
 {
 
-    public GameObject pauseSprite;
-    public Image blackOverlay;
+    //Pause Menu Components
+    public GameObject pauseMenu, quitMenu;
 
-    public GameObject resumeButton;
-    public GameObject resetButton;
-    public GameObject quitButton;
+    //Transition Components
+    public GameObject pauseFirstButton, resetButton, quitButton, exitFirstButton, exitClosedButton;
 
-    private bool isPaused = false;
+    //State variables
     private bool isPausable = false;
 
     public void Start()
     {
         //Prevent pausing during countdown
         StartCoroutine(Countdown());
-        
-        //Disable Pause UI menu
-        pauseSprite.SetActive(false);
-        resumeButton.SetActive(false);
-        resetButton.SetActive(false);
-        quitButton.SetActive(false);
-        SetBlackOverlayAlpha(0f);
+
+        //Disable Pause UI menu during countdown
+        quitMenu.SetActive(false);
+        pauseMenu.SetActive(false);
+
     }
 
     public void OnPausePerformed()
     {
-
-        if(isPausable)
+        if (isPausable)
         {
-            if (!isPaused)
+            if (!pauseMenu.activeInHierarchy)
             {
-                PauseGame();
+                pauseMenu.SetActive(true);
+                Time.timeScale = 0f;
+
+                //clear selected object and set new selected object
+                EventSystem.current.SetSelectedGameObject(null);
+                EventSystem.current.SetSelectedGameObject(pauseFirstButton);
+                resetButton.SetActive(true);
+                quitButton.SetActive(true);
+                
+
             }
             else
             {
-                ResumeGame();
+                pauseMenu.SetActive(false);
+                Time.timeScale = 1f;
+                quitMenu.SetActive(false);
             }
         }
-
     }
 
     private void PauseGame()
     {
-        pauseSprite.SetActive(true);
-        resumeButton.SetActive(true);
-        resetButton.SetActive(true);
-        quitButton.SetActive(true);
         Time.timeScale = 0f;
-        isPaused = true;
-        SetBlackOverlayAlpha(0.5f);
     }
 
     public void ResumeGame()
     {
-        pauseSprite.SetActive(false);
-        resumeButton.SetActive(false);
-        resetButton.SetActive(false);
-        quitButton.SetActive(false);
         Time.timeScale = 1f;
-        isPaused = false;
-        SetBlackOverlayAlpha(0f);
     }
 
-    private void SetBlackOverlayAlpha(float alpha)
+    public void OpenQuit()
     {
-        Color currentColor = blackOverlay.color;
-        currentColor.a = alpha;
-        blackOverlay.color = currentColor;
+        quitMenu.SetActive(true);
+
+        //clear selected object and set new selected object
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(exitFirstButton);
+    }
+
+    public void CloseQuit()
+    {
+        quitMenu.SetActive(false);
+
+        //clear selected object and set new selected object
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(quitButton);
     }
 
     IEnumerator Countdown()

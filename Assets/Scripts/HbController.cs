@@ -36,26 +36,24 @@ public class HbController : MonoBehaviour
     [Header("Boost Stats")]
     public float boostForceStart = 10f;
     public float boostForce = 20f;
-
-    [Header("Handling Stats")]
-    public float turnTorque;
-    public float turnSpeed = 20f;
-    public float maxTurnAngle = 35f;
-
-    [Header("Balance Stats")]
-    public float angularDrag = 1f;
-    public float strafeSpeed = 4f;
-    public float strafeAcceleration = 2f;
-    public float strafeDeceleration = 4f;
-    private float currentStrafeSpeed = 0f;
-    public float maxStrafeSpeed = 5f;
-
-    [Header("Extra")]
     public float boostDuration = 3f;
     public float boostMeterDrain = 2000f;
     public float boostMeter = 10000f;
     public float currentBoostMeter;
     public float boostMeterFill = 500f;
+
+    [Header("Handling Stats")]
+    public float turnTorque;
+    public float strafeSpeed = 4f;
+    public float strafeAcceleration = 2f;
+    public float strafeDeceleration = 4f;
+    public float maxStrafeSpeed = 5f;
+
+    [Header("Balance Stats")]
+    public float angularDrag = 1f;
+
+    [Header("Extra")]
+    private float currentStrafeSpeed = 0f;
     private float boostTimer = 0f;
     private bool isBoosting = false;
 

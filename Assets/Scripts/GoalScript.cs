@@ -20,8 +20,6 @@ public class GoalScript : MonoBehaviour
     public Text speedometerText;
     public Text finalTimeText;
     public BoostmeterBar boostBar;
-    public Button restartButton;
-    public Button menuButton;
 
     public GameObject goalSprite;
     private bool goalReached = false;
@@ -30,8 +28,7 @@ public class GoalScript : MonoBehaviour
     {
         //Disable buttons
         goalSprite.SetActive(false);
-        restartButton.gameObject.SetActive(false);
-        menuButton.gameObject.SetActive(false);
+
     }
 
     private void OnTriggerEnter(Collider other)
@@ -64,10 +61,6 @@ public class GoalScript : MonoBehaviour
             currentPowerText.enabled = false;
             speedometerText.enabled = false;
             boostBar.gameObject.SetActive(false);
-
-            //Enable buttons
-            restartButton.gameObject.SetActive(true);
-            menuButton.gameObject.SetActive(true);
 
         }
     }

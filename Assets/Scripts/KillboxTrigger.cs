@@ -16,9 +16,6 @@ public class KillboxTrigger : MonoBehaviour
     public Text timeDisplayText; //Time Left text
     public Text timeLeftText;
 
-    public Button restartButton; //Restart button
-    public Button menuButton; //Return to Main Menu button
-
     public GameObject retireSprite;
 
     public HbController player;
@@ -47,9 +44,6 @@ public class KillboxTrigger : MonoBehaviour
             timeLeftText.enabled = false;
 
             retireSprite.SetActive(true);
-
-            restartButton.gameObject.SetActive(true);
-            menuButton.gameObject.SetActive(true);
 
         }
     }
