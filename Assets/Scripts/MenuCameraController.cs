@@ -49,6 +49,9 @@ public class MenuCameraController : MonoBehaviour
 
     public void Start()
     {
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(button1);
+
         menuCamera = Camera.main;
         menuCamera.fieldOfView = Mathf.Clamp(menuCamera.fieldOfView, originalFOV, newFOV);
 
