@@ -2,15 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 
 public class GoalScript : MonoBehaviour
 {
-
+    //Camera Change
     public Transform stopPoint;
     public Camera mainCamera;
     public Camera goalCamera;
 
-    //UI Elements
+    //Text Elements
     public Text goalText;
     public Text timeLeftText;
     public Text currentTimeText;
@@ -21,13 +23,17 @@ public class GoalScript : MonoBehaviour
     public Text finalTimeText;
     public BoostmeterBar boostBar;
 
-    public GameObject goalSprite;
+    //Goal UI GameObject
+    public GameObject landingMenu, quitMenu;
+    public GameObject landingButton, quitButton, quitMenu_landingButton, quitMenu_exitGameButton;
+    
     private bool goalReached = false;
 
     public void Start()
     {
-        //Disable buttons
-        goalSprite.SetActive(false);
+        //Disable Menus
+        landingMenu.SetActive(false);
+        quitMenu.SetActive(false);
 
     }
 
@@ -48,20 +54,50 @@ public class GoalScript : MonoBehaviour
                 controller.StopAtPoint(stopPoint.position);
             }
 
+            //Disable Text
+            DisableHUD();
+
             // Victory screen text goes here
             goalText.enabled = true;
             finalTimeText.enabled = true;
-            goalSprite.SetActive(true);
+            landingMenu.SetActive(true);
 
-            // In-game HUD is disabled
-            timeLeftText.enabled = false;
-            currentTimeText.enabled = false;
-            currentGateText.enabled = false;
-            powerText.enabled = false;
-            currentPowerText.enabled = false;
-            speedometerText.enabled = false;
-            boostBar.gameObject.SetActive(false);
+            if (!landingMenu.activeInHierarchy)
+            {
+                SelectButtonAndEnableNavigation(landingButton);
+            }
 
         }
     }
+
+    public void OpenQuit()
+    {
+        quitMenu.SetActive(true);
+        SelectButtonAndEnableNavigation(landingButton);
+    }
+
+    public void CloseQuit()
+    {
+        quitMenu.SetActive(false);
+        SelectButtonAndEnableNavigation(quitButton);
+    }
+
+    private void SelectButtonAndEnableNavigation(GameObject button)
+    {
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(button);
+    }
+
+    private void DisableHUD()
+    {
+        // In-game Text is disabled
+        timeLeftText.enabled = false;
+        currentTimeText.enabled = false;
+        currentGateText.enabled = false;
+        powerText.enabled = false;
+        currentPowerText.enabled = false;
+        speedometerText.enabled = false;
+        boostBar.gameObject.SetActive(false);
+    }
+
 }

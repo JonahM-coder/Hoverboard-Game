@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 
 public class MenuCameraController : MonoBehaviour
 {
@@ -213,6 +215,9 @@ public class MenuCameraController : MonoBehaviour
             imageComponent.enabled = true;
         }
 
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(button3);
+
     }
 
     public void ChangeMenuBack()
@@ -256,6 +261,9 @@ public class MenuCameraController : MonoBehaviour
         {
             imageComponent.enabled = false;
         }
+
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(button1);
 
     }
 

@@ -2510,17 +2510,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_MethodName: CloseLevelMenu
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &1182724514
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5347,7 +5336,7 @@ PrefabInstance:
     - target: {fileID: 6940416961604416913, guid: 3586735800b9e6c4b816f341e67e2ea3,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6940416961604416913, guid: 3586735800b9e6c4b816f341e67e2ea3,
         type: 3}

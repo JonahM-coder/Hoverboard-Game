@@ -43,13 +43,6 @@ public class PauseBehavior : MonoBehaviour
                 resetButton.SetActive(true);
                 quitButton.SetActive(true);
                 
-
-            }
-            else
-            {
-                pauseMenu.SetActive(false);
-                Time.timeScale = 1f;
-                quitMenu.SetActive(false);
             }
         }
     }
@@ -62,6 +55,7 @@ public class PauseBehavior : MonoBehaviour
     public void ResumeGame()
     {
         Time.timeScale = 1f;
+        pauseMenu.SetActive(false);
     }
 
     public void OpenQuit()
