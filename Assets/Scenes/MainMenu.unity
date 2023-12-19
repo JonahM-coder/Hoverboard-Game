@@ -5246,7 +5246,7 @@ PrefabInstance:
     - target: {fileID: 5265415122302203756, guid: 2b5d4a795832d13448e8da66cf7b79bb,
         type: 3}
       propertyPath: m_Name
-      value: RevisedLevelRotationObject
+      value: LevelRotationObject
       objectReference: {fileID: 0}
     - target: {fileID: 7937353622348127092, guid: 2b5d4a795832d13448e8da66cf7b79bb,
         type: 3}
