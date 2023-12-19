@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using UnityEngine.SceneManagement;
 
 public class LevelSelect : MonoBehaviour
 {
@@ -17,6 +17,15 @@ public class LevelSelect : MonoBehaviour
 
     [SerializeField] private Transform areaModelPosition;
     [SerializeField] private Transform levelModelPosition;
+
+    [SerializeField] public string[] sceneList;
+    [SerializeField] private int index = 0;
+    [SerializeField] public Text sceneNameText;
+
+    private void Start()
+    {
+        index = PlayerPrefs.GetInt("SceneSelected", 0); // Default to the first scene
+    }
 
     public void DisplayLevel(Level lvl)
     {
@@ -41,5 +50,11 @@ public class LevelSelect : MonoBehaviour
 
         Instantiate(lvl.levelModel, levelModelPosition.position, levelModelPosition.rotation, levelModelPosition);
 
+    }
+
+    public void LoadScene()
+    {
+        PlayerPrefs.SetInt("SceneSelected", index);
+        SceneManager.LoadScene(sceneList[index], LoadSceneMode.Single);
     }
 }

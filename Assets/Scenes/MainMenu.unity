@@ -2627,6 +2627,9 @@ MonoBehaviour:
   levelModel: {fileID: 1139077473}
   areaModelPosition: {fileID: 1085997715}
   levelModelPosition: {fileID: 1139077474}
+  sceneList: []
+  index: 0
+  sceneNameText: {fileID: 0}
 --- !u!114 &1221298706
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3446,6 +3449,7 @@ MonoBehaviour:
   select_Button: {fileID: 53771836}
   play_Button: {fileID: 1088618891}
   hbPlayer: {fileID: 398551418930850287, guid: 2e15b649a7187e444ae65e61f671787a, type: 3}
+  boardIndex: 0
 --- !u!1 &1494023611
 GameObject:
   m_ObjectHideFlags: 0
@@ -5336,7 +5340,7 @@ PrefabInstance:
     - target: {fileID: 6940416961604416913, guid: 3586735800b9e6c4b816f341e67e2ea3,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6940416961604416913, guid: 3586735800b9e6c4b816f341e67e2ea3,
         type: 3}
@@ -5367,7 +5371,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
       value: 
-      objectReference: {fileID: 151399878}
+      objectReference: {fileID: 1485103674}
     - target: {fileID: 6940416961604416913, guid: 3586735800b9e6c4b816f341e67e2ea3,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
@@ -5381,7 +5385,7 @@ PrefabInstance:
     - target: {fileID: 6940416961604416913, guid: 3586735800b9e6c4b816f341e67e2ea3,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
-      value: OpenLevelMenu
+      value: SelectBoard
       objectReference: {fileID: 0}
     - target: {fileID: 6940416961604416913, guid: 3586735800b9e6c4b816f341e67e2ea3,
         type: 3}
