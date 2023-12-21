@@ -5,15 +5,15 @@ using UnityEngine;
 public class CameraBehavior : MonoBehaviour
 {
 
-    public GameObject player;
+    public GameObject characterList;
     public GameObject cameraTarget;
     public float speed;
     
     // Start is called before the first frame update
     public void Awake()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
-        cameraTarget = player.transform.Find("CameraTarget").gameObject;
+        characterList = GameObject.FindGameObjectWithTag("Player");
+        cameraTarget = characterList.transform.Find("CameraTarget").gameObject;
     }
 
     // Update is called once per frame
@@ -25,6 +25,6 @@ public class CameraBehavior : MonoBehaviour
     private void Follow()
     {
         gameObject.transform.position = Vector3.Lerp(transform.position, cameraTarget.transform.position, Time.deltaTime * speed);
-        gameObject.transform.LookAt(player.gameObject.transform.position);
+        gameObject.transform.LookAt(characterList.gameObject.transform.position);
     }
 }

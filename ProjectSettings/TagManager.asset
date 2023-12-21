@@ -14,6 +14,7 @@ TagManager:
   - SpeedBoost
   - Spawn
   - Respawnbox
+  - CharacterList
   layers:
   - Default
   - TransparentFX
