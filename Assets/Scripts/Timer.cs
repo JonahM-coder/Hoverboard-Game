@@ -16,7 +16,10 @@ public class Timer : MonoBehaviour
     public HbController controller;
 
     public bool countdownFinished = false;
-    
+
+    public GameObject retireSprite;
+    public GameObject goalSprite;
+
     // Start is called before the first frame update
     private void Start()
     {
@@ -24,6 +27,9 @@ public class Timer : MonoBehaviour
         currentTime = 0f;
         UpdateTimerDisplay();
         StartCoroutine(Countdown());
+
+        retireSprite.SetActive(false);
+        goalSprite.SetActive(false);
     }
 
     // Update is called once per frame
@@ -44,6 +50,7 @@ public class Timer : MonoBehaviour
 
                 UpdateTimerDisplay();
             }
+
         }
         
     }

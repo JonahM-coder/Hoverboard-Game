@@ -25,7 +25,8 @@ public class GoalScript : MonoBehaviour
 
     //Goal UI GameObject
     public GameObject landingMenu, quitMenu;
-    public GameObject landingButton, quitButton, quitMenu_landingButton, quitMenu_exitGameButton;
+    public GameObject restartButton, quitButton, quitMenu_landingButton, quitMenu_exitGameButton;
+    public GameObject goalSprite;
     
     private bool goalReached = false;
 
@@ -34,6 +35,7 @@ public class GoalScript : MonoBehaviour
         //Disable Menus
         landingMenu.SetActive(false);
         quitMenu.SetActive(false);
+        goalSprite.SetActive(false);
 
     }
 
@@ -45,27 +47,31 @@ public class GoalScript : MonoBehaviour
         {
             goalReached = true;
 
+            //Victory screen text goes here
+            goalText.enabled = true;
+            finalTimeText.enabled = true;
+            landingMenu.SetActive(true);
+
+            //Enable button events
+            EventSystem.current.SetSelectedGameObject(null);
+            EventSystem.current.SetSelectedGameObject(restartButton);
+
+            //Swap Cameras
             mainCamera.enabled = false;
             goalCamera.enabled = true;
 
+            //Turn on goal sprite
+            goalSprite.SetActive(true);
+
+            //Freeze player
             HbController controller = other.GetComponent<HbController>();
             if (controller != null)
             {
                 controller.StopAtPoint(stopPoint.position);
             }
 
-            //Disable Text
+            //Disable Player HUD
             DisableHUD();
-
-            // Victory screen text goes here
-            goalText.enabled = true;
-            finalTimeText.enabled = true;
-            landingMenu.SetActive(true);
-
-            if (!landingMenu.activeInHierarchy)
-            {
-                SelectButtonAndEnableNavigation(landingButton);
-            }
 
         }
     }
@@ -73,7 +79,7 @@ public class GoalScript : MonoBehaviour
     public void OpenQuit()
     {
         quitMenu.SetActive(true);
-        SelectButtonAndEnableNavigation(landingButton);
+        SelectButtonAndEnableNavigation(restartButton);
     }
 
     public void CloseQuit()

@@ -25,13 +25,9 @@ public class HbSelect : MonoBehaviour
     [SerializeField] private GameObject select_Button;
     [SerializeField] private GameObject play_Button;
 
-    [Header("Selected Board")]
-    [SerializeField] public GameObject hbPlayer;
-    [SerializeField] public int boardIndex = 0;
-
     private void Start()
     {
-        boardIndex = PlayerPrefs.GetInt("CharacterSelected");
+        index = PlayerPrefs.GetInt("CharacterSelected", 0);
     }
 
     public void DisplayBoard(Map map)
@@ -59,8 +55,7 @@ public class HbSelect : MonoBehaviour
 
     public void SelectBoard()
     {
-        PlayerPrefs.SetInt("SelectedPrefab", boardIndex);
-        Debug.Log("Prefab name set: " + hbPlayer.name);
+        PlayerPrefs.SetInt("CharacterSelected", index);
     }
 
     public void LoadNextScene()

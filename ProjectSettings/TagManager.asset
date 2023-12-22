@@ -15,6 +15,7 @@ TagManager:
   - Spawn
   - Respawnbox
   - CharacterList
+  - CameraTag
   layers:
   - Default
   - TransparentFX

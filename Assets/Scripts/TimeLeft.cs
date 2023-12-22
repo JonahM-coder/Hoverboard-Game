@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 
 public class TimeLeft : MonoBehaviour
 {
@@ -25,14 +27,13 @@ public class TimeLeft : MonoBehaviour
     public Text currentPowerText; //Current energy text
     public Text speedometerText; //Speedometer
     public Text timeDisplayText; //Time Left text
-    public Button restartButton; //Restart button
-    public Button menuButton; //Return to Main Menu button
+    public GameObject retireMenu; //Retire Menu gameobject
+    public GameObject retireSprite; //Retire sprite
+    public GameObject restartButton; //Restart button
 
     public Collider goalCollider;
 
     public bool countdownFinished = false;
-
-    public GameObject retireSprite;
 
     public void Start()
     {
@@ -51,8 +52,7 @@ public class TimeLeft : MonoBehaviour
         currentTime = startingTime;
         timeIsRunning = true;
 
-        restartButton.gameObject.SetActive(false);
-        menuButton.gameObject.SetActive(false);
+        retireMenu.gameObject.SetActive(false);
     }
 
     public void Update()
@@ -71,6 +71,12 @@ public class TimeLeft : MonoBehaviour
                 {
                     timeIsRunning = false;
                     retireSprite.SetActive(true);
+                    retireMenu.gameObject.SetActive(true);
+                    restartButton.gameObject.SetActive(true);
+
+                    //Enable button events
+                    EventSystem.current.SetSelectedGameObject(null);
+                    EventSystem.current.SetSelectedGameObject(restartButton);
                 }
 
             }
@@ -88,13 +94,6 @@ public class TimeLeft : MonoBehaviour
                 currentPowerText.enabled = false;
                 speedometerText.enabled = false;
                 timeDisplayText.enabled = false;
-
-
-                //Enable buttons
-                restartButton.gameObject.SetActive(true);
-                menuButton.gameObject.SetActive(true);
-
-
             }
        }
         

@@ -274,6 +274,105 @@ Transform:
   m_Father: {fileID: 147854740422275049}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &668390605894350163
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 147854740422275049}
+  - component: {fileID: 3864812573773078604}
+  - component: {fileID: 1316851845572187270}
+  - component: {fileID: 398551418208284613}
+  - component: {fileID: 398551418208284612}
+  - component: {fileID: 3260102156564809594}
+  - component: {fileID: 398551418208284608}
+  - component: {fileID: 398551418208284609}
+  - component: {fileID: 398551418208284614}
+  - component: {fileID: 398551418208284615}
+  - component: {fileID: 398551418208284616}
+  - component: {fileID: 398551418208284617}
+  - component: {fileID: 398551418208284623}
+  m_Layer: 11
+  m_Name: Hoverboard1 (new)
+  m_TagString: Player
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &147854740422275049
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 668390605894350163}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -3.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 398551418697240603}
+  - {fileID: 398551418513857537}
+  - {fileID: 398551417637074538}
+  - {fileID: 398551419149271432}
+  - {fileID: 3960372430459826286}
+  - {fileID: 398551418750596497}
+  - {fileID: 398551419300141777}
+  m_Father: {fileID: 398551418930850284}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &3864812573773078604
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 668390605894350163}
+  m_Mesh: {fileID: 3616028432848545789, guid: f503d23b601c7cd419b9d7a3b4e26c2e, type: 3}
+--- !u!23 &1316851845572187270
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 668390605894350163}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 6699446615349125189, guid: f503d23b601c7cd419b9d7a3b4e26c2e, type: 3}
+  - {fileID: -6478536213147159724, guid: f503d23b601c7cd419b9d7a3b4e26c2e, type: 3}
+  - {fileID: -6922793697723135513, guid: f503d23b601c7cd419b9d7a3b4e26c2e, type: 3}
+  - {fileID: -3846018093981099296, guid: f503d23b601c7cd419b9d7a3b4e26c2e, type: 3}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
 --- !u!54 &398551418208284613
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -304,6 +403,24 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -5495902117074765545, guid: 7991d5e5fc98bfe4f89a93aa303163b5, type: 3}
+--- !u!114 &3260102156564809594
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 668390605894350163}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a7e5ed6e1fb25d41863aad1d8f1da1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  endMenu: {fileID: 0}
+  quitMenu: {fileID: 0}
+  resetButton: {fileID: 0}
+  quitButton: {fileID: 0}
+  exitFirstButton: {fileID: 0}
+  exitClosedButton: {fileID: 0}
 --- !u!114 &398551418208284608
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -316,31 +433,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7621560d1aaa07448802a052fbb0891c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialRotation: {x: 0, y: 0, z: 0, w: 0}
   anchors:
   - {fileID: 398551418750596497}
   - {fileID: 398551417637074538}
   - {fileID: 398551419149271432}
   - {fileID: 3960372430459826286}
   multiplier: 2.4
-  moveForce: 500
-  turnTorque: 12
-  gravity: 13.8
-  forwardForce: 100
   hoverHeight: 25
   hoverForce: 5
   resetOrientationThreshold: 45
-  turnSpeed: 5
+  gravity: 13.8
+  maxGravityMultiplier: 2
+  gravityIncreaseRate: 1
   isFalling: 0
-  maxTurnAngle: 15
+  moveForce: 500
+  forwardForce: 100
+  decelerationRate: 1
+  maxSpeed: 10
+  acceleration: 5
+  brakingForce: 20
   boostForceStart: 25
   boostForce: 50000
   boostDuration: 3
-  isBoosting: 0
   boostMeterDrain: 25
   boostMeter: 10000
   currentBoostMeter: 0
   boostMeterFill: 500
+  turnTorque: 12
+  strafeSpeed: 4
+  strafeAcceleration: 2
+  strafeDeceleration: 4
+  maxStrafeSpeed: 5
+  angularDrag: 1
+  currentCheckpoint: 0
   boostText: {fileID: 0}
   boostPad: {fileID: 2941321899431202628, guid: f7e6281087d43e64c8ab16f5ca636a93,
     type: 3}
@@ -350,8 +475,12 @@ MonoBehaviour:
   boostLayer:
     serializedVersion: 2
     m_Bits: 512
+  speedBoostLayer:
+    serializedVersion: 2
+    m_Bits: 0
   hasReachedGoal: 0
   stopPointSpeed: 20
+  boostMeterBar: {fileID: 0}
 --- !u!114 &398551418208284609
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -365,6 +494,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gateText: {fileID: 0}
+  checkpointSprite: {fileID: 0}
+  gateSprite: {fileID: 0}
 --- !u!114 &398551418208284614
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -383,6 +514,7 @@ MonoBehaviour:
   timeBonus: 10
   stopPoint: {fileID: 398551419300141777}
   controller: {fileID: 398551418208284608}
+  boostBar: {fileID: 0}
   retireText: {fileID: 0}
   timeText: {fileID: 0}
   currentGateText: {fileID: 0}
@@ -390,7 +522,11 @@ MonoBehaviour:
   currentPowerText: {fileID: 0}
   speedometerText: {fileID: 0}
   timeDisplayText: {fileID: 0}
+  retireMenu: {fileID: 0}
+  retireSprite: {fileID: 0}
+  restartButton: {fileID: 0}
   goalCollider: {fileID: 0}
+  countdownFinished: 0
 --- !u!114 &398551418208284615
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -448,97 +584,7 @@ MonoBehaviour:
   totalTime: 60
   timerText: {fileID: 0}
   controller: {fileID: 398551418208284608}
---- !u!1001 &398551417746835458
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 398551418930850284}
-    m_Modifications:
-    - target: {fileID: -8679921383154817045, guid: f503d23b601c7cd419b9d7a3b4e26c2e,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: f503d23b601c7cd419b9d7a3b4e26c2e,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: f503d23b601c7cd419b9d7a3b4e26c2e,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -3.5
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: f503d23b601c7cd419b9d7a3b4e26c2e,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: f503d23b601c7cd419b9d7a3b4e26c2e,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: f503d23b601c7cd419b9d7a3b4e26c2e,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: f503d23b601c7cd419b9d7a3b4e26c2e,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: f503d23b601c7cd419b9d7a3b4e26c2e,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: f503d23b601c7cd419b9d7a3b4e26c2e,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: f503d23b601c7cd419b9d7a3b4e26c2e,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: f503d23b601c7cd419b9d7a3b4e26c2e,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 919132149155446097, guid: f503d23b601c7cd419b9d7a3b4e26c2e,
-        type: 3}
-      propertyPath: m_Name
-      value: Hoverboard1 (new)
-      objectReference: {fileID: 0}
-    - target: {fileID: 919132149155446097, guid: f503d23b601c7cd419b9d7a3b4e26c2e,
-        type: 3}
-      propertyPath: m_Layer
-      value: 11
-      objectReference: {fileID: 0}
-    - target: {fileID: 919132149155446097, guid: f503d23b601c7cd419b9d7a3b4e26c2e,
-        type: 3}
-      propertyPath: m_TagString
-      value: Player
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: f503d23b601c7cd419b9d7a3b4e26c2e, type: 3}
---- !u!1 &668390605894350163 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: f503d23b601c7cd419b9d7a3b4e26c2e,
-    type: 3}
-  m_PrefabInstance: {fileID: 398551417746835458}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &147854740422275049 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: f503d23b601c7cd419b9d7a3b4e26c2e,
-    type: 3}
-  m_PrefabInstance: {fileID: 398551417746835458}
-  m_PrefabAsset: {fileID: 0}
+  countdownFinished: 0
 --- !u!1001 &398551419208714202
 PrefabInstance:
   m_ObjectHideFlags: 0
