@@ -23,4 +23,14 @@ public class SceneChange : MonoBehaviour
         Time.timeScale = 1f;
     }
 
+    public void QuitGame()
+    {
+
+        // If in the Unity Editor, stop the play mode
+        UnityEditor.EditorApplication.isPlaying = false;
+
+        // If running a built game, quit the application
+        Application.Quit();
+    }
+
 }
