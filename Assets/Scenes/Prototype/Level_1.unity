@@ -5844,6 +5844,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   checkpointNumber: 0
   isActive: 1
+--- !u!1 &596590998 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5111640667853579758, guid: 2e15b649a7187e444ae65e61f671787a,
+    type: 3}
+  m_PrefabInstance: {fileID: 1770002576}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &598596339
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17293,6 +17299,11 @@ PrefabInstance:
       propertyPath: currentPowerText
       value: 
       objectReference: {fileID: 801121335}
+    - target: {fileID: 398551418208284615, guid: 2e15b649a7187e444ae65e61f671787a,
+        type: 3}
+      propertyPath: rider
+      value: 
+      objectReference: {fileID: 596590998}
     - target: {fileID: 398551418208284616, guid: 2e15b649a7187e444ae65e61f671787a,
         type: 3}
       propertyPath: currentSpeed
@@ -17377,6 +17388,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: PlayerController (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 398551419300141777, guid: 2e15b649a7187e444ae65e61f671787a,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 668390605894350163, guid: 2e15b649a7187e444ae65e61f671787a,
         type: 3}
