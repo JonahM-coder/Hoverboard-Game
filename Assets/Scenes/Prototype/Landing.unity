@@ -861,7 +861,7 @@ GameObject:
   - component: {fileID: 921142884}
   - component: {fileID: 921142883}
   m_Layer: 0
-  m_Name: HoverboardGameLandingPage2
+  m_Name: HoverboardGameLandingPage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
