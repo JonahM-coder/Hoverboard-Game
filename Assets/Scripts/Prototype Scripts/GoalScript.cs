@@ -43,7 +43,7 @@ public class GoalScript : MonoBehaviour
     {
         goalText.enabled = false;
 
-        if (other.CompareTag("Player") && !goalReached)
+        if ((other.CompareTag("Player1") || other.CompareTag("Player2") || other.CompareTag("Player3") || other.CompareTag("Player4")) && !goalReached)
         {
             goalReached = true;
 

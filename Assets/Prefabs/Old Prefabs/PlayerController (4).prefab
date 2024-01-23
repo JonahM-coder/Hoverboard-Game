@@ -304,6 +304,26 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -5495902117074765545, guid: 7991d5e5fc98bfe4f89a93aa303163b5, type: 3}
+--- !u!114 &655808649447538771
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4366139103234502071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc06484d581e15a4cb4d449b6e858809, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultThruster: {fileID: 1188280861861674682}
+  accelerateThruster: {fileID: 1188280860414622026}
+  boostThruster: {fileID: 1188280862143441356}
+  boostDuration: 3
+  killbox: {fileID: 0}
+  goal: {fileID: 0}
+  timer: {fileID: 3483197519137946713}
+  controller: {fileID: 3483197519137946714}
 --- !u!114 &3483197519137946712
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -456,26 +476,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controller: {fileID: 3483197519137946714}
   currentSpeed: {fileID: 0}
---- !u!114 &655808649447538771
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4366139103234502071}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc06484d581e15a4cb4d449b6e858809, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  defaultThruster: {fileID: 1188280861861674682}
-  accelerateThruster: {fileID: 1188280860414622026}
-  boostThruster: {fileID: 1188280862143441356}
-  boostDuration: 3
-  killbox: {fileID: 0}
-  goal: {fileID: 0}
-  timer: {fileID: 3483197519137946713}
-  controller: {fileID: 3483197519137946714}
 --- !u!114 &8207404775159494618
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -711,17 +711,17 @@ PrefabInstance:
     - target: {fileID: 7129828388904635455, guid: b3b4635cea3c37c498aad312bde510ec,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.84
+      value: -1.49
       objectReference: {fileID: 0}
     - target: {fileID: 7129828388904635455, guid: b3b4635cea3c37c498aad312bde510ec,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.15
       objectReference: {fileID: 0}
     - target: {fileID: 7129828388904635455, guid: b3b4635cea3c37c498aad312bde510ec,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0
+      value: 0.54
       objectReference: {fileID: 0}
     - target: {fileID: 7129828388904635455, guid: b3b4635cea3c37c498aad312bde510ec,
         type: 3}

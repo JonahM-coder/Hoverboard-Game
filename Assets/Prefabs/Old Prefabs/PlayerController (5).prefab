@@ -30,6 +30,56 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -5495902117074765545, guid: 7991d5e5fc98bfe4f89a93aa303163b5, type: 3}
+--- !u!114 &1973285649836423182
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3943686664010707712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc06484d581e15a4cb4d449b6e858809, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultThruster: {fileID: 5488199851059402585}
+  accelerateThruster: {fileID: 5488199850350547113}
+  boostThruster: {fileID: 5488199850801741871}
+  boostDuration: 3
+  killbox: {fileID: 0}
+  goal: {fileID: 0}
+  timer: {fileID: 4214142134764022234}
+  controller: {fileID: 4214142134764022233}
+--- !u!114 &2826834775529113184
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3943686664010707712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: 0}
+  m_NotificationBehavior: 0
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents: []
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: 
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
 --- !u!114 &4214142134764022232
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -182,36 +232,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controller: {fileID: 4214142134764022233}
   currentSpeed: {fileID: 0}
---- !u!114 &2826834775529113184
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3943686664010707712}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Actions: {fileID: 0}
-  m_NotificationBehavior: 0
-  m_UIInputModule: {fileID: 0}
-  m_DeviceLostEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_DeviceRegainedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ControlsChangedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ActionEvents: []
-  m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: 
-  m_DefaultActionMap: 
-  m_SplitScreenIndex: -1
-  m_Camera: {fileID: 0}
 --- !u!114 &4771012292321698261
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -231,26 +251,6 @@ MonoBehaviour:
   quitButton: {fileID: 0}
   exitFirstButton: {fileID: 0}
   exitClosedButton: {fileID: 0}
---- !u!114 &1973285649836423182
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3943686664010707712}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc06484d581e15a4cb4d449b6e858809, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  defaultThruster: {fileID: 5488199851059402585}
-  accelerateThruster: {fileID: 5488199850350547113}
-  boostThruster: {fileID: 5488199850801741871}
-  boostDuration: 3
-  killbox: {fileID: 0}
-  goal: {fileID: 0}
-  timer: {fileID: 4214142134764022234}
-  controller: {fileID: 4214142134764022233}
 --- !u!1 &4214142134006416681
 GameObject:
   m_ObjectHideFlags: 0
@@ -545,17 +545,17 @@ PrefabInstance:
     - target: {fileID: 7129828388904635455, guid: b3b4635cea3c37c498aad312bde510ec,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.25
+      value: -0.15
       objectReference: {fileID: 0}
     - target: {fileID: 7129828388904635455, guid: b3b4635cea3c37c498aad312bde510ec,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.33
       objectReference: {fileID: 0}
     - target: {fileID: 7129828388904635455, guid: b3b4635cea3c37c498aad312bde510ec,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 0.29
       objectReference: {fileID: 0}
     - target: {fileID: 7129828388904635455, guid: b3b4635cea3c37c498aad312bde510ec,
         type: 3}

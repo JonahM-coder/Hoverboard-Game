@@ -47,6 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6de7684aeb1f3e4891ac2ad2c45a19e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  index: 0
 --- !u!114 &4924698710647870198
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -156,6 +157,24 @@ MonoBehaviour:
   goal: {fileID: 0}
   timer: {fileID: 4746788534054011553}
   controller: {fileID: 4746788534054011559}
+--- !u!114 &2742929345140652418
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7836074301964293435}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a7e5ed6e1fb25d41863aad1d8f1da1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  endMenu: {fileID: 0}
+  quitMenu: {fileID: 0}
+  resetButton: {fileID: 0}
+  quitButton: {fileID: 0}
+  exitFirstButton: {fileID: 0}
+  exitClosedButton: {fileID: 0}
 --- !u!114 &4359045835130329459
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -181,24 +200,6 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8705369034196239226}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a7e5ed6e1fb25d41863aad1d8f1da1d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  endMenu: {fileID: 0}
-  quitMenu: {fileID: 0}
-  resetButton: {fileID: 0}
-  quitButton: {fileID: 0}
-  exitFirstButton: {fileID: 0}
-  exitClosedButton: {fileID: 0}
---- !u!114 &2742929345140652418
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7836074301964293435}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5a7e5ed6e1fb25d41863aad1d8f1da1d, type: 3}
@@ -568,7 +569,7 @@ PrefabInstance:
     - target: {fileID: 398551418930850287, guid: 2e15b649a7187e444ae65e61f671787a,
         type: 3}
       propertyPath: m_Name
-      value: PlayerController (2)
+      value: PlayerController (FD)
       objectReference: {fileID: 0}
     - target: {fileID: 398551418930850287, guid: 2e15b649a7187e444ae65e61f671787a,
         type: 3}
@@ -836,7 +837,7 @@ PrefabInstance:
     - target: {fileID: 4214142135130908756, guid: 83a7507ecd66d254d8d0c24ec2155073,
         type: 3}
       propertyPath: m_Name
-      value: PlayerController (5)
+      value: PlayerController (BV)
       objectReference: {fileID: 0}
     - target: {fileID: 4214142135130908756, guid: 83a7507ecd66d254d8d0c24ec2155073,
         type: 3}
@@ -1100,7 +1101,7 @@ PrefabInstance:
     - target: {fileID: 3483197519430441236, guid: 14fab5a5caa7559478d40764e9fdf982,
         type: 3}
       propertyPath: m_Name
-      value: PlayerController (4)
+      value: PlayerController (BC)
       objectReference: {fileID: 0}
     - target: {fileID: 3483197519430441236, guid: 14fab5a5caa7559478d40764e9fdf982,
         type: 3}
@@ -1442,7 +1443,7 @@ PrefabInstance:
     - target: {fileID: 2604829616561711769, guid: 4402a9e36452be449a47c10f1e15a3b2,
         type: 3}
       propertyPath: m_Name
-      value: PlayerController (3)
+      value: PlayerController (EG)
       objectReference: {fileID: 0}
     - target: {fileID: 2604829616561711769, guid: 4402a9e36452be449a47c10f1e15a3b2,
         type: 3}
