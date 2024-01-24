@@ -16,7 +16,6 @@ public class HbSelect : MonoBehaviour
     [SerializeField] private Text boardSpeed;
     [SerializeField] private Text boardBoost;
     [SerializeField] private Text boardHandling;
-    [SerializeField] private Text boardWeightClass;
 
     [Header("Board Model")]
     [SerializeField] private Transform boardPosition;
@@ -38,7 +37,6 @@ public class HbSelect : MonoBehaviour
         boardBoost.text = map.HbBoost;
         boardHandling.text = map.HbHandling;
         boardModel = map.boardModel;
-        boardWeightClass.text = map.HbWeightClass;
 
         select_Button = map.selectButton;
         play_Button = map.selectButton;

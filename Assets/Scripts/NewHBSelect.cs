@@ -9,7 +9,10 @@ public class NewHBSelect : MonoBehaviour
     private GameObject[] characterList;
     public int index = 0;
 
-    public Text characterNameText; // Reference to the UI Text object
+    public Text characterNameText;
+    public Text speedText;
+    public Text boostText;
+    public Text turningText;
 
     private void Start()
     {
@@ -36,7 +39,7 @@ public class NewHBSelect : MonoBehaviour
         }
 
         // Set the initial character name
-        UpdateCharacterName();
+        UpdateCharacterInfo();
     }
 
     public void ToggleLeft()
@@ -53,7 +56,7 @@ public class NewHBSelect : MonoBehaviour
         characterList[index].SetActive(true);
 
         // Update the character name text
-        UpdateCharacterName();
+        UpdateCharacterInfo();
     }
 
     public void ToggleRight()
@@ -70,7 +73,7 @@ public class NewHBSelect : MonoBehaviour
         characterList[index].SetActive(true);
 
         // Update the character name text
-        UpdateCharacterName();
+        UpdateCharacterInfo();
     }
 
     public void LoadScene()
@@ -79,11 +82,21 @@ public class NewHBSelect : MonoBehaviour
     }
 
     // Method to update the character name text
-    private void UpdateCharacterName()
+    private void UpdateCharacterInfo()
     {
         if (characterNameText != null && index >= 0 && index < characterList.Length)
         {
             characterNameText.text = characterList[index].name;
+
+            // Assuming you have HoverboardAttributes component attached to each hoverboard
+            HoverboardAttributes attributes = characterList[index].GetComponent<HoverboardAttributes>();
+            if (attributes != null)
+            {
+                // Update speed, boost, and turning text
+                speedText.text = attributes.Speed.ToString();
+                boostText.text = attributes.Boost.ToString();
+                turningText.text = attributes.Turning.ToString();
+            }
         }
     }
 }
