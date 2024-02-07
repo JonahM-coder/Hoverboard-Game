@@ -396,15 +396,17 @@ public class HbController : MonoBehaviour
         boostTimer = 0f;
         boostForce = 0f;
     }
-    
+
     public void RefillBoostMeter()
     {
-        if (currentBoostMeter < boostMeter)
+        float refillAmount = boostMeter - currentBoostMeter; // Calculate the amount needed to reach maximum
+        if (refillAmount > 0)
         {
-            UpdateBoostMeter(5000f);
-            boostMeterBar.SetMeter(boostMeter);
+            UpdateBoostMeter(refillAmount); // Update the boost meter with the refill amount
+            boostMeterBar.SetMeter(boostMeter); // Set the boost meter UI to the maximum value
         }
     }
+
 
     private void UpdateBoostMeter(float fillAmount)
     {

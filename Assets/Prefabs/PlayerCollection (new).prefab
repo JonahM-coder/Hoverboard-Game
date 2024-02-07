@@ -48,6 +48,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   index: 0
+  characterNameText: {fileID: 0}
+  speedText: {fileID: 0}
+  boostText: {fileID: 0}
+  turningText: {fileID: 0}
 --- !u!114 &4924698710647870198
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -584,7 +588,7 @@ PrefabInstance:
     - target: {fileID: 668390605894350163, guid: 2e15b649a7187e444ae65e61f671787a,
         type: 3}
       propertyPath: m_TagString
-      value: Player
+      value: Player1
       objectReference: {fileID: 0}
     - target: {fileID: 910951563351152619, guid: 2e15b649a7187e444ae65e61f671787a,
         type: 3}
@@ -708,6 +712,11 @@ PrefabInstance:
         type: 3}
       propertyPath: killbox
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3943686664010707712, guid: 83a7507ecd66d254d8d0c24ec2155073,
+        type: 3}
+      propertyPath: m_TagString
+      value: Player4
       objectReference: {fileID: 0}
     - target: {fileID: 4214142134764022233, guid: 83a7507ecd66d254d8d0c24ec2155073,
         type: 3}
@@ -1163,6 +1172,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4366139103234502071, guid: 14fab5a5caa7559478d40764e9fdf982,
+        type: 3}
+      propertyPath: m_TagString
+      value: Player3
+      objectReference: {fileID: 0}
     - target: {fileID: 8207404775159494618, guid: 14fab5a5caa7559478d40764e9fdf982,
         type: 3}
       propertyPath: quitMenu
@@ -1574,6 +1588,11 @@ PrefabInstance:
         type: 3}
       propertyPath: retireSprite
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2947429405397078828, guid: 4402a9e36452be449a47c10f1e15a3b2,
+        type: 3}
+      propertyPath: m_TagString
+      value: Player2
       objectReference: {fileID: 0}
     - target: {fileID: 3510107381023484301, guid: 4402a9e36452be449a47c10f1e15a3b2,
         type: 3}
