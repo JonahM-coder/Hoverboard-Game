@@ -47,7 +47,6 @@ public class LandingPageBehavior : MonoBehaviour
 
     }
 
-
     public void OpenInstructionMenu()
     {
         instructionMenu.SetActive(true);
@@ -57,9 +56,16 @@ public class LandingPageBehavior : MonoBehaviour
     {
         instructionMenu.SetActive(false);
 
-        //clear selected object and set new selected object
+        // Clear selected object and set new selected object
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(manualButton);
     }
+
+    public void QuitGame()
+    {
+        // Quit the application
+        Application.Quit();
+    }
+
 
 }
