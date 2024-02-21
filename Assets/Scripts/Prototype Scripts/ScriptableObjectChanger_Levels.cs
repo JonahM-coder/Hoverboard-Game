@@ -29,10 +29,6 @@ public class ScriptableObjectChanger_Levels : MonoBehaviour
             currentIndex = 0;
         }
 
-        if (levelSelector != null)
-        {
-            levelSelector.DisplayLevel((Level)serializableObjects[currentIndex]);
-        }
     }
 
 }

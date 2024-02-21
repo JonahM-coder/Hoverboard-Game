@@ -12,10 +12,7 @@ public class LevelSelect : MonoBehaviour
     [SerializeField] private Text difficultyText;
 
     [Header("Level Select Table Components")]
-    [SerializeField] private GameObject areaModel;
     [SerializeField] private GameObject levelModel;
-
-    [SerializeField] private Transform areaModelPosition;
     [SerializeField] private Transform levelModelPosition;
 
     [SerializeField] public string[] sceneList;
@@ -33,14 +30,6 @@ public class LevelSelect : MonoBehaviour
         areaName.text = lvl.areaName;
         levelName.text = lvl.levelName;
         difficultyText.text = lvl.difficultyText;
-        
-        //Area model position details
-        if (areaModelPosition.childCount > 0)
-        {
-            Destroy(areaModelPosition.GetChild(0).gameObject);
-        }
-
-        Instantiate(lvl.areaModel, areaModelPosition.position, areaModelPosition.rotation, areaModelPosition);
 
         //Level model position details
         if (levelModelPosition.childCount > 0)

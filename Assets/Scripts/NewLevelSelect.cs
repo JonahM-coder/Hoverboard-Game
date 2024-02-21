@@ -7,8 +7,16 @@ using UnityEngine.UI;
 public class NewLevelSelect : MonoBehaviour
 {
     public string[] sceneList;
-    public int index = 2;
-    public Text sceneNameText;
+    public int index = 0;
+    public Text planetNameText;
+    public Text levelNameText;
+    public Text difficultyText;
+
+    public string[] planetNames;
+    public string[] levelNames;
+    public string[] difficultyNames;
+
+    public GameObject[] planetObjects;
 
     private void Start()
     {
@@ -41,7 +49,21 @@ public class NewLevelSelect : MonoBehaviour
 
     private void UpdateSceneNameText()
     {
-        sceneNameText.text = sceneList[index]; // Update the UI Text with the current scene name
+        // Update the UI Text with the current scene name
+        planetNameText.text = planetNames[index];
+        levelNameText.text = levelNames[index];
+        difficultyText.text = difficultyNames[index];
+
+        foreach (GameObject planetObj in planetObjects)
+        {
+            planetObj.SetActive(false);
+        }
+
+        if (index < planetObjects.Length)
+        {
+            planetObjects[index].SetActive(true);
+        }
+
     }
 
 }
