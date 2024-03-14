@@ -131,6 +131,7 @@ public class HbController : MonoBehaviour
     private void FixedUpdate()
     {
 
+        //Restricts hovering (USE ONLY FOR PLAYTESTING)
         currentPosition = transform.position;
         currentRotation = transform.rotation;
 
