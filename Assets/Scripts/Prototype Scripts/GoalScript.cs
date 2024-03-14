@@ -27,6 +27,7 @@ public class GoalScript : MonoBehaviour
     public GameObject landingMenu, quitMenu;
     public GameObject restartButton, quitButton, quitMenu_landingButton, quitMenu_exitGameButton;
     public GameObject goalSprite;
+    public GameObject winBackground;
     
     private bool goalReached = false;
 

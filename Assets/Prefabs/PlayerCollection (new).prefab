@@ -1509,6 +1509,11 @@ PrefabInstance:
       propertyPath: boostMeterBar
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 2604829616693332658, guid: 4402a9e36452be449a47c10f1e15a3b2,
+        type: 3}
+      propertyPath: boostMeterDrain
+      value: 1500
+      objectReference: {fileID: 0}
     - target: {fileID: 2604829616693332660, guid: 4402a9e36452be449a47c10f1e15a3b2,
         type: 3}
       propertyPath: boostBar
