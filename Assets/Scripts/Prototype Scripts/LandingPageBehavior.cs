@@ -26,6 +26,18 @@ public class LandingPageBehavior : MonoBehaviour
         instructionMenu.SetActive(false);
     }
 
+    private void OnEnable()
+    {
+        // Enable the controls when the script is enabled
+        gamepad = Gamepad.current;
+    }
+
+    private void OnDisable()
+    {
+        // Disable the controls when the script is disabled
+        gamepad = null;
+    }
+
     void Update()
     {
         if (gamepad != null)
@@ -50,11 +62,13 @@ public class LandingPageBehavior : MonoBehaviour
     public void OpenInstructionMenu()
     {
         instructionMenu.SetActive(true);
+        landingMenu.SetActive(false);
     }
 
     public void CloseInstructionMenu()
     {
         instructionMenu.SetActive(false);
+        landingMenu.SetActive(true);
 
         // Clear selected object and set new selected object
         EventSystem.current.SetSelectedGameObject(null);

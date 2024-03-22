@@ -4311,6 +4311,36 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 11
       objectReference: {fileID: 0}
+    - target: {fileID: 1234957900779567672, guid: ca8757dc8bb6c1d4bbdce337d9b087c7,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -16.64
+      objectReference: {fileID: 0}
+    - target: {fileID: 1234957900779567672, guid: ca8757dc8bb6c1d4bbdce337d9b087c7,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 4.09
+      objectReference: {fileID: 0}
+    - target: {fileID: 1234957900779567672, guid: ca8757dc8bb6c1d4bbdce337d9b087c7,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1234957900779567672, guid: ca8757dc8bb6c1d4bbdce337d9b087c7,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1234957900779567672, guid: ca8757dc8bb6c1d4bbdce337d9b087c7,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1234957900779567672, guid: ca8757dc8bb6c1d4bbdce337d9b087c7,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1299217895543767985, guid: ca8757dc8bb6c1d4bbdce337d9b087c7,
         type: 3}
       propertyPath: m_Layer
@@ -6472,7 +6502,7 @@ GameObject:
   - component: {fileID: 7602095338292864087}
   m_Layer: 0
   m_Name: Course.001
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
