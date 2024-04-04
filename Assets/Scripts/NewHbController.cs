@@ -4,71 +4,81 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
 
-public class HbController : MonoBehaviour
+public class NewHbController : MonoBehaviour
 {
 
     [Header("Overview")]
-    Rigidbody hb;
+    private Rigidbody hb;
     private Quaternion currentRotation;
     private Vector3 currentPosition;
     public Transform[] anchors = new Transform[4];
     RaycastHit[] hits = new RaycastHit[4];
-    public float multiplier;
+    public float multiplier = 2.4f;
+    public float maxRaycastDistance = 5f;
 
     [Header("Hover Physics")]
     public float hoverHeight = 5f;
     public float hoverForce = 10f;
     public float resetOrientationThreshold = 45f;
-    public float gravity = 9.8f;
+    public float gravity = 9.81f;
     private float currentGravity;
     public float maxGravityMultiplier = 2f; // Maximum gravity multiplier to prevent excessive increase
     public float gravityIncreaseRate = 1f; // The rate at which gravity increases (adjust as needed)
-    public bool isFalling;
 
     [Header("Speed Stats")]
-    public float moveForce;
-    public float forwardForce = 50f;
+    public float forwardForce = 50f; // Top speed
     public float decelerationRate = 1f;
-    public float maxSpeed = 10f;
     public float acceleration = 5f;
     public float brakingForce = 20f;
 
     [Header("Boost Stats")]
-    public float boostForceStart = 10f;
-    public float boostForce = 20f;
+    public float boostForceStart = 25f;
+    public float boostForce = 35000f;
     public float boostDuration = 3f;
     public float boostMeterDrain = 2000f;
     public float boostMeter = 10000f;
-    public float currentBoostMeter;
+    public float currentBoostMeter = 0f;
     public float boostMeterFill = 500f;
 
     [Header("Handling Stats")]
-    public float turnTorque;
-    public float strafeSpeed = 4f;
+    public float turnTorque = 65f;
+    public float strafeSpeed = 12f;
     public float strafeAcceleration = 2f;
     public float strafeDeceleration = 4f;
     public float maxStrafeSpeed = 5f;
 
+    [Header("Flight Stats")]
+    public float pitchTorque = 30f;
+    public float minPitchAngle = -45f; // Adjust as needed
+    public float maxPitchAngle = 45f;  // Adjust as needed
+    public float airSpeedMultiplier = 2f;
+    public float airGravityMultiplier = 2f;
+
     [Header("Balance Stats")]
+    public float jumpForce = 300f;
     public float angularDrag = 1f;
 
-    [Header("Extra")]
+
+    [Header("Timer objects")]
+    public TimeLeft timeLeftScript;
+    public Timer timerScript;
+
+    [Header("Extra")]   
+    // Respawn & Checkpoint variables
+    public int currentCheckpoint = 0;
+    private Transform playerTransform;
+    private Checkpoint previousCheckpoint;
+
     private float currentStrafeSpeed = 0f;
     private float boostTimer = 0f;
     private bool isBoosting = false;
-
-    //Respawn & Checkpoint variables
-    private Transform playerTransform;
-    public int currentCheckpoint = 0;
-    private Checkpoint previousCheckpoint;
 
     //Rotation variables
     private float initialRotationX;
     private float initialRotationY;
     private float initialRotationZ;
 
-    // Boost Ring variables
-    public Text boostText;   
+    // Boost Ring object
     public GameObject boostPad;
 
     // Layer variables
@@ -77,7 +87,7 @@ public class HbController : MonoBehaviour
     public LayerMask speedBoostLayer;
 
     // Cutscene variables
-    private bool isMoving;
+    public bool isMoving;
     public bool hasReachedGoal = false;
     private Vector3 targetPoint;
     public float stopPointSpeed = 20f;
@@ -85,20 +95,26 @@ public class HbController : MonoBehaviour
     // Boostmeter Bar GameObject
     public BoostmeterBar boostMeterBar;
 
+    // Groundcheck 
+    public HbGroundCheck groundCheck;
+
     // Gamepad button commands
-    private bool isAccelerating = false;
+    private bool isJumping = false;
     private bool isRefreshing = false;
     private bool isPlayerBoosting = false;
     private bool isStrafingLeft = false;
     private bool isStrafingRight = false;
     private bool isBraking = false;
 
+    // Gate Trigger Script
+    public GateTrigger gateTrigger;
+
     private void Awake()
     {
         //Hoverboard hover & initial position setup
         hb = GetComponent<Rigidbody>();
         hb.angularDrag = angularDrag;
-        hb.freezeRotation = true;
+        hb.freezeRotation = false; //Disable rotation
 
         //Checkpoint system startup
         playerTransform = transform;
@@ -107,16 +123,10 @@ public class HbController : MonoBehaviour
         {
             respawnPoint.SetRespawnPosition();
         }
-    }
-
-    private void Start()
-    {
 
         //Set up start position
-        StartCoroutine(Countdown());
-        currentGravity = gravity;
         isMoving = false;
-        isFalling = false;
+        StartCoroutine(Countdown());
 
         // Set up boost meter
         currentBoostMeter = boostMeter;
@@ -144,44 +154,37 @@ public class HbController : MonoBehaviour
 
             //Gamepad Stick and Button Commands are active
             Vector2 moveInput = InputSystem.GetDevice<Gamepad>().leftStick.ReadValue();
-            isAccelerating = InputSystem.GetDevice<Gamepad>().aButton.isPressed;
+            isJumping = InputSystem.GetDevice<Gamepad>().aButton.isPressed;
             isPlayerBoosting = InputSystem.GetDevice<Gamepad>().xButton.isPressed;
             isRefreshing = InputSystem.GetDevice<Gamepad>().yButton.isPressed;
             isBraking = InputSystem.GetDevice<Gamepad>().bButton.isPressed;
             isStrafingLeft = InputSystem.GetDevice<Gamepad>().leftShoulder.isPressed;
             isStrafingRight = InputSystem.GetDevice<Gamepad>().rightShoulder.isPressed;
 
-            //Gamepad movement
-            Vector3 movement = transform.forward * moveInput.y * moveInput * Time.deltaTime;
-            hb.MovePosition(hb.position + movement);
+            // Separate horizontal and vertical movement from Gamepad controls
+            Vector3 horizontalMovement = transform.up * moveInput.y * moveInput.magnitude * Time.deltaTime;
+            Vector3 verticalMovement = transform.right * moveInput.x * moveInput.magnitude * Time.deltaTime;
 
-            //Gamepad rotation
-            float rotationInput = moveInput.x;
-            Quaternion rotation = Quaternion.Euler(0, rotationInput * turnTorque * Time.deltaTime, 0);
-            hb.MoveRotation(hb.rotation * rotation);
-
-            Ray ray = new Ray(transform.position, transform.up);
-            RaycastHit hit;
-            for (int i = 0; i < 4; i++)
+            if (groundCheck.IsGrounded)
             {
-                ApplyForce(anchors[i], hits[i]);
+
+                ApplyHovering(moveInput, maxRaycastDistance);
+
+                ApplyHorizontalMovement(moveInput);
+
+                ApplyBrakingOrAcceleration(moveInput);
+
+                ApplyJump(moveInput);
+
+            } 
+            else // Apply gravity when hoverboard is not grounded
+            {
+                ApplyAirboreMovement(moveInput, airSpeedMultiplier, airGravityMultiplier);
+
+                ApplyGravity();
             }
 
-            hb.AddForce(Input.GetAxis("Vertical") * moveForce * transform.right * acceleration);
-            hb.AddTorque(Input.GetAxis("Horizontal") * turnTorque * transform.up);
-
-            //Strafing
-            if (isStrafingLeft)
-            {
-                StrafeLeft();
-            }
-
-            if (isStrafingRight)
-            {
-                StrafeRight();
-            }
-
-
+            // Apply boost meter capacity
             if (currentBoostMeter < 0)
             {
                 currentBoostMeter = 0;
@@ -193,13 +196,6 @@ public class HbController : MonoBehaviour
 
             int totalBoost = (int)currentBoostMeter;
 
-            if (boostText != null)
-            {
-                totalBoost = Mathf.Max(totalBoost, 0);
-                boostText.text = totalBoost.ToString();
-            }
-
-
             // Respawn back to checkpoint
             if (isRefreshing)
             {
@@ -208,58 +204,8 @@ public class HbController : MonoBehaviour
                 Respawn();
             }
 
-            // Check if the ray intersects with the ground layer
-            if (Physics.Raycast(transform.position, Vector3.up, out hit, Mathf.Infinity, groundLayer))
-            {
-                isFalling = false;
-                float distanceToGround = hit.distance;
 
-                Vector3 groundPosition = hit.point + Vector3.up * hoverHeight;
-                transform.position = groundPosition;
-
-                float proportionalHeight = (hoverHeight - distanceToGround) / hoverHeight;
-                Vector3 appliedHoverForce = Vector3.up * proportionalHeight * hoverForce;
-                hb.AddForce(appliedHoverForce, ForceMode.Acceleration);
-
-                hb.constraints = RigidbodyConstraints.FreezePositionY;
-                if (distanceToGround < hoverHeight)
-                {
-                    hb.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotation;
-                }
-
-            }
-            else //Apply Gravity
-            {
-                isFalling = true;
-                // Increase gravity over time
-                currentGravity += gravityIncreaseRate * Time.fixedDeltaTime;
-                currentGravity = Mathf.Min(currentGravity, gravity * maxGravityMultiplier);
-
-                Vector3 gravityForce = Vector3.down * currentGravity;
-                hb.AddForce(gravityForce, ForceMode.Acceleration);
-            }
-
-            // Apply forward force
-            if (isAccelerating)
-            {
-                hb.AddForce(transform.right * forwardForce, ForceMode.Acceleration);
-            }
-
-            // Apply braking force
-            if (isBraking)
-            {
-                Vector3 brakingVelocity = -hb.velocity.normalized * brakingForce;
-                hb.AddForce(brakingVelocity, ForceMode.Impulse);
-            }
-            else // Apply autoacceleration
-            {
-
-                Vector3 forwardForceVector = transform.right * forwardForce;
-                hb.AddForce(forwardForceVector, ForceMode.Acceleration);
-            }
-
-
-            // Speed boost input
+            // Boost input
             if (isPlayerBoosting && !isBoosting && currentBoostMeter != 0)
             {
                 //Decreases current BoostMeter fuel
@@ -300,9 +246,120 @@ public class HbController : MonoBehaviour
         }
     }
 
-    //Extra functions
+    private void ApplyHovering(Vector2 moveInput, float maxRaycastDistance)
+    {
+        // Hovering
+        Ray ray = new Ray(transform.position, transform.up);
+        RaycastHit hit;
+        for (int i = 0; i < 4; i++)
+        {
+            if (Physics.Raycast(anchors[i].position, -anchors[i].up, out hit, maxRaycastDistance, groundLayer))
+            {
+                ApplyForce(anchors[i], hits[i]);
+            }
+        }
 
-    void ApplyForce(Transform anchor, RaycastHit hit)
+        // Check if the ray intersects with the ground layer
+        if (Physics.Raycast(transform.position, Vector3.up, out hit, maxRaycastDistance, groundLayer))
+        {
+            Debug.DrawRay(transform.position, Vector3.up * maxRaycastDistance, Color.red);
+            float distanceToGround = hit.distance;
+
+            Vector3 groundPosition = hit.point + Vector3.up * hoverHeight;
+            transform.position = groundPosition;
+
+            // Only allow front/back movement if the hoverboard is not close to the ground
+            if (distanceToGround > hoverHeight)
+            {
+                // Calculate the pitch angle based on the vertical movement (front/back)
+                float newPitchAngle = -moveInput.y * pitchTorque * Time.deltaTime; // Invert for consistent direction
+
+                // Clamp the pitch angle to stay within specified limits
+                newPitchAngle = Mathf.Clamp(newPitchAngle, minPitchAngle, maxPitchAngle);
+
+                // Create a rotation quaternion for pitch
+                Quaternion newPitchRotation = Quaternion.Euler(newPitchAngle, 0f, 0f);
+
+                // Apply the pitch rotation to the hoverboard
+                hb.MoveRotation(hb.rotation * newPitchRotation);
+            }
+
+            // Freeze hoverboard's position and rotation when close to the ground
+            hb.constraints = distanceToGround < hoverHeight ?
+                RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotation :
+                RigidbodyConstraints.FreezePositionY;
+        }
+    }
+
+    private void ApplyHorizontalMovement(Vector2 moveInput)
+    {
+        // Horizontal movement
+        float rotationInput = moveInput.x;
+        Quaternion rotation = Quaternion.Euler(0f, rotationInput * turnTorque * Time.deltaTime, 0f);
+        hb.MoveRotation(hb.rotation * rotation);
+
+        //Strafing
+        if (isStrafingLeft)
+        {
+            StrafeLeft();
+        }
+
+        if (isStrafingRight)
+        {
+            StrafeRight();
+        }
+    }
+
+    private void ApplyBrakingOrAcceleration(Vector2 moveInput)
+    {
+        // Apply braking force
+        if (isBraking)
+        {
+            Vector3 brakingVelocity = -hb.velocity.normalized * brakingForce;
+            hb.AddForce(brakingVelocity, ForceMode.Impulse);
+        }
+        else
+        {
+            // Apply autoacceleration
+            Vector3 forwardForceVector = transform.right * forwardForce;
+            hb.AddForce(forwardForceVector, ForceMode.Acceleration);
+        }
+    }
+
+    private void ApplyAirboreMovement(Vector2 moveInput, float airSpeedMultiplier, float airGravityMultiplier)
+    {
+        // Gravity handling
+        currentGravity += gravityIncreaseRate * Time.fixedDeltaTime;
+        currentGravity = Mathf.Min(currentGravity, gravity * maxGravityMultiplier);
+        Vector3 gravityForce = Vector3.down * currentGravity * airGravityMultiplier;
+
+        // Apply autoacceleration
+        Vector3 forwardForceVector = transform.right * forwardForce * airSpeedMultiplier;
+        hb.AddForce(forwardForceVector, ForceMode.Acceleration);
+
+        // Invert the gravity force if the left stick moves upwards
+        if (moveInput.y > 0)
+        {
+            gravityForce *= -1f; // Invert the force
+        }
+
+        hb.AddForce(gravityForce, ForceMode.Acceleration);
+
+        // Pitching
+        float pitchInput = -moveInput.y;
+        float pitchAngle = pitchInput * pitchTorque * Time.deltaTime;
+        pitchAngle = Mathf.Clamp(pitchAngle, minPitchAngle, maxPitchAngle);
+        Quaternion pitchRotation = Quaternion.Euler(0f, 0f, pitchAngle);
+
+        // Horizontal movement
+        float rotationInput = moveInput.x;
+        Quaternion rotation = Quaternion.Euler(0f, rotationInput * turnTorque * Time.deltaTime, 0f);
+
+        Quaternion combinedRotation = rotation * pitchRotation;
+        hb.MoveRotation(hb.rotation * combinedRotation);
+    }
+
+    private void ApplyForce(Transform anchor, RaycastHit hit)
     {
         if (Physics.Raycast(anchor.position, -anchor.up, out hit))
         {
@@ -311,9 +368,30 @@ public class HbController : MonoBehaviour
             hb.AddForceAtPosition(transform.up * force * multiplier, anchor.position, ForceMode.Acceleration);
         }
     }
-   
+
+    private void ApplyJump(Vector2 moveInput)
+    {
+        if (groundCheck.IsGrounded && isJumping)
+        {
+            hb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
+            isJumping = false;
+        }
+        else if (!groundCheck.IsGrounded)
+        {
+            // Apply gravitational force
+            hb.AddForce(Physics.gravity * hb.mass);
+        }
+    }
+
+    public void ApplyGravity()
+    {
+        hb.AddForce(Physics.gravity * hb.mass);
+    }
+
     private void OnTriggerEnter(Collider other)
     {
+        
+        
         if (other.transform.tag == "Battery")
         {
             RefillBoostMeter();
@@ -327,6 +405,30 @@ public class HbController : MonoBehaviour
         if (other.transform.tag == "Respawnbox")
         {
             Respawn();
+        }
+
+        if (other.transform.tag == "Gate")
+        {
+            timeLeftScript.AddTime(2f);
+            gateTrigger.GateSpriteAppear();
+            Destroy(other.gameObject);
+        }
+
+        if (other.transform.tag == "Checkpoint")
+        {
+            timeLeftScript.AddTime(15f);
+            gateTrigger.CheckpointSpriteAppear();
+            Destroy(other.gameObject);
+        }
+
+        if (other.transform.tag == "Goal")
+        {
+            isMoving = false;
+        }
+
+        if (other.transform.tag == "Killbox")
+        {
+            isMoving = false;
         }
 
         if (other.CompareTag("Spawn"))
@@ -405,14 +507,12 @@ public class HbController : MonoBehaviour
         }
     }
 
-
     private void UpdateBoostMeter(float fillAmount)
     {
         if (boostMeterFill < boostMeter)
         {
             currentBoostMeter += fillAmount;
         }
-
     }
 
     private void StrafeLeft()
@@ -472,13 +572,6 @@ public class HbController : MonoBehaviour
     public float GetSpeed()
     {
         return hb.velocity.magnitude;
-    }
-
-    public void DeactivateForce()
-    {
-        isMoving = false;
-        hb.velocity = Vector3.zero;
-        hb.Sleep();
     }
 
     IEnumerator Countdown()

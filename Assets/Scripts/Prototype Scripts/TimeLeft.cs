@@ -12,28 +12,20 @@ public class TimeLeft : MonoBehaviour
     public float currentTime = 0f;
     public bool timeIsRunning = true;
     
-    public float timeBonus = 10f;
-
     public Transform stopPoint;
-    
-    public HbController controller;
+   
+    // PlayerCollection and Hoverboard Scripts
+    public GameObject playerCollection;
+    private NewHbController[] controllers;
 
     // UI Text variables
     public BoostmeterBar boostBar;
-    public Text retireText;
     public Text timeText; //countdown timer
-    public Text currentGateText; //total gates text
-    public Text powerText; //Energy text
-    public Text currentPowerText; //Current energy text
-    public Text speedometerText; //Speedometer
     public Text timeDisplayText; //Time Left text
     public GameObject retireMenu; //Retire Menu gameobject
     public GameObject retireSprite; //Retire sprite
     public GameObject restartButton; //Restart button
-
-    public Collider goalCollider;
-
-    public bool countdownFinished = false;
+    public GameObject speedometer;
 
     public void Start()
     {
@@ -41,62 +33,47 @@ public class TimeLeft : MonoBehaviour
         retireSprite.SetActive(false);
         boostBar.gameObject.SetActive(false);
         timeText.enabled = false;
-        currentGateText.enabled = false;
-        powerText.enabled = false;
-        currentPowerText.enabled = false;
-        speedometerText.enabled = false;
+        speedometer.SetActive(false);
         timeDisplayText.enabled = false;
 
         StartCoroutine(Countdown());
 
         currentTime = startingTime;
-        timeIsRunning = true;
+        timeIsRunning = false;
 
         retireMenu.gameObject.SetActive(false);
+
+
     }
 
     public void Update()
     {
-        
-       if(countdownFinished)
-       {
-            if (timeIsRunning)
+        if (timeIsRunning)
+        {
+            if (currentTime > 0)
             {
-                if (currentTime >= 0)
-                {
-                    currentTime -= Time.deltaTime;
-                    DisplayTime(currentTime);
-                }
-                else
-                {
-                    timeIsRunning = false;
-                    retireSprite.SetActive(true);
-                    retireMenu.gameObject.SetActive(true);
-                    restartButton.gameObject.SetActive(true);
-
-                    //Enable button events
-                    EventSystem.current.SetSelectedGameObject(null);
-                    EventSystem.current.SetSelectedGameObject(restartButton);
-                }
-
+                currentTime -= Time.deltaTime;
+                DisplayTime(currentTime);
             }
             else
             {
+                retireSprite.SetActive(true);
+                retireMenu.SetActive(true);
+                restartButton.SetActive(true);
 
-                // Freeze player in place
-                currentTime = 0;
-                controller.DeactivateForce();
+                EventSystem.current.SetSelectedGameObject(null);
+                EventSystem.current.SetSelectedGameObject(restartButton);
 
-                // Turn off player HUD
-                timeText.enabled = false;
-                currentGateText.enabled = false;
-                powerText.enabled = false;
-                currentPowerText.enabled = false;
-                speedometerText.enabled = false;
-                timeDisplayText.enabled = false;
             }
-       }
-        
+        }
+  
+    }
+
+    private void DisableHUD()
+    {
+        timeText.enabled = false;
+        speedometer.SetActive(false);
+        timeDisplayText.enabled = false;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -106,15 +83,11 @@ public class TimeLeft : MonoBehaviour
         {
             if (other.transform.tag == "Gate")
             {
-
                 AddTime(2f);
-
             }
             else if (other.transform.tag == "Checkpoint")
             {
-
                 AddTime(15f);
-
             }
 
             // Reaching the finish line
@@ -133,12 +106,11 @@ public class TimeLeft : MonoBehaviour
         {
             if (other.transform.tag == "Gate")
             {
-
                 AddTime(2f);
-
             }
         }
     }
+
 
     public void DisplayTime(float timeToDisplay)
     {
@@ -164,13 +136,10 @@ public class TimeLeft : MonoBehaviour
             count--;
         }
 
-        countdownFinished = true;
+        timeIsRunning = true;
         boostBar.gameObject.SetActive(true);
         timeText.enabled = true;
-        currentGateText.enabled = true;
-        powerText.enabled = true;
-        currentPowerText.enabled = true;
-        speedometerText.enabled = true;
+        speedometer.SetActive(true);
         timeDisplayText.enabled = true;
     }
 

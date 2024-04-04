@@ -7,73 +7,58 @@ using UnityEngine.InputSystem;
 
 public class GoalScript : MonoBehaviour
 {
-    //Camera Change
+    // Camera Change
     public Transform stopPoint;
     public Camera mainCamera;
     public Camera goalCamera;
 
-    //Text Elements
-    public Text goalText;
-    public Text timeLeftText;
-    public Text currentTimeText;
-    public Text currentGateText;
-    public Text powerText;
-    public Text currentPowerText;
-    public Text speedometerText;
+    // Text Elements
+    public GameObject timer;
+    public GameObject speedometer;
     public Text finalTimeText;
     public BoostmeterBar boostBar;
 
-    //Goal UI GameObject
+    // Goal UI GameObject
     public GameObject landingMenu, quitMenu;
     public GameObject restartButton, quitButton, quitMenu_landingButton, quitMenu_exitGameButton;
     public GameObject goalSprite;
-    public GameObject winBackground;
-    
+
     private bool goalReached = false;
+
+    public GameObject playerCollection; // Reference to the PlayerCollection object
 
     public void Start()
     {
-        //Disable Menus
+        // Disable Menus
         landingMenu.SetActive(false);
         quitMenu.SetActive(false);
         goalSprite.SetActive(false);
-
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        goalText.enabled = false;
 
-        if ((other.CompareTag("Player1") || other.CompareTag("Player2") || other.CompareTag("Player3") || other.CompareTag("Player4")) && !goalReached)
+        if (!goalReached)
         {
-            goalReached = true;
 
-            //Victory screen text goes here
-            goalText.enabled = true;
+            // Victory screen text goes here
+            goalSprite.SetActive(true);
             finalTimeText.enabled = true;
             landingMenu.SetActive(true);
 
-            //Enable button events
+            // Enable button events
             EventSystem.current.SetSelectedGameObject(null);
             EventSystem.current.SetSelectedGameObject(restartButton);
 
-            //Swap Cameras
+            // Swap Cameras
             mainCamera.enabled = false;
             goalCamera.enabled = true;
 
-            //Turn on goal sprite
+            // Turn on goal sprite
             goalSprite.SetActive(true);
 
-            //Freeze player
-            HbController controller = other.GetComponent<HbController>();
-            if (controller != null)
-            {
-                controller.StopAtPoint(stopPoint.position);
-            }
-
-            //Disable Player HUD
+            // Disable Player HUD
             DisableHUD();
-
         }
     }
 
@@ -98,13 +83,8 @@ public class GoalScript : MonoBehaviour
     private void DisableHUD()
     {
         // In-game Text is disabled
-        timeLeftText.enabled = false;
-        currentTimeText.enabled = false;
-        currentGateText.enabled = false;
-        powerText.enabled = false;
-        currentPowerText.enabled = false;
-        speedometerText.enabled = false;
+        timer.SetActive(false);
+        speedometer.SetActive(false);
         boostBar.gameObject.SetActive(false);
     }
-
 }

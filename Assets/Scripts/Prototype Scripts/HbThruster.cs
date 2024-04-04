@@ -19,7 +19,7 @@ public class HbThruster : MonoBehaviour
     public GameObject killbox;
     public GameObject goal;
     public TimeLeft timer;
-    public HbController controller;
+    public NewHbController controller;
 
     // Gamepad button commands
     private bool isAccelerating = false;
@@ -32,7 +32,7 @@ public class HbThruster : MonoBehaviour
     void Start()
     {
         timer = FindObjectOfType<TimeLeft>();
-        controller = FindObjectOfType<HbController>();
+        controller = FindObjectOfType<NewHbController>();
 
         StartCoroutine(Countdown());
 

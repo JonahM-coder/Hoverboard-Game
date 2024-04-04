@@ -5,17 +5,13 @@ using UnityEngine.UI;
 
 public class GateTrigger : MonoBehaviour
 {
-    //Gate counter
-    private int totalGates = 0;
-    public Text gateText;
-
-    //Checkpoint Sprite variables
+    // Checkpoint Sprite variables
     public GameObject checkpointSprite;
     private bool isCheckpointVisible = false;
     private float checkpointTimer = 0f;
     private float checkpointVisibilityDuration = 2f;
 
-    //Gate Sprite variables
+    // Gate Sprite variables
     public GameObject gateSprite;
     private bool isGateVisible = false;
     private float gateTimer = 0f;
@@ -29,7 +25,7 @@ public class GateTrigger : MonoBehaviour
 
     private void Update()
     {
-        //Update Checkpoint time
+        // Update Checkpoint time
         if (isCheckpointVisible)
         {
             checkpointTimer += Time.deltaTime;
@@ -41,7 +37,7 @@ public class GateTrigger : MonoBehaviour
             }
         }
 
-        //Update Gate time
+        // Update Gate time
         if (isGateVisible)
         {
             gateTimer += Time.deltaTime;
@@ -52,27 +48,30 @@ public class GateTrigger : MonoBehaviour
                 gateSprite.SetActive(false);
             }
         }
-
     }
 
     public void OnTriggerEnter(Collider other)
     {
-        if (other.transform.tag == "Gate")
+        if (other.CompareTag("Gate"))
         {
-            isGateVisible = true;
-            totalGates++;
-            gateText.text = "Gates: " + totalGates.ToString();
-            Destroy(other.gameObject);
-            gateSprite.SetActive(true);
+            GateSpriteAppear();
         }
-        
-        if (other.transform.tag == "Checkpoint")
+
+        if (other.CompareTag("Checkpoint"))
         {
-            isCheckpointVisible = true;
-            totalGates++;
-            gateText.text = "Gates: " + totalGates.ToString();
-            Destroy(other.gameObject);
-            checkpointSprite.SetActive(true);
+            CheckpointSpriteAppear();
         }
+    }
+
+    public void GateSpriteAppear()
+    {
+        isGateVisible = true;
+        gateSprite.SetActive(true);
+    }
+
+    public void CheckpointSpriteAppear()
+    {
+        isCheckpointVisible = true;
+        checkpointSprite.SetActive(true);
     }
 }

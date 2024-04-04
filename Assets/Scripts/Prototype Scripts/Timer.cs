@@ -11,11 +11,11 @@ public class Timer : MonoBehaviour
 
     public Text timerText;
 
-    private bool isRunning = false;
+    public bool isRunning = false;
 
-    public HbController controller;
+    public GameObject playerCollection;
 
-    public bool countdownFinished = false;
+    private bool countdownFinished = false;
 
     public GameObject retireSprite;
     public GameObject goalSprite;
@@ -23,36 +23,20 @@ public class Timer : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
-        isRunning = true;
+        isRunning = false;
         currentTime = 0f;
         UpdateTimerDisplay();
         StartCoroutine(Countdown());
-
-        retireSprite.SetActive(false);
-        goalSprite.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
-        if(countdownFinished)
+        if (countdownFinished && !isRunning)
         {
-            if (isRunning && controller != null)
-            {
-                currentTime += Time.deltaTime;
-
-                // Check if the hoverboard has reached the goal
-                if (controller.hasReachedGoal)
-                {
-                    isRunning = false;
-                }
-
-                UpdateTimerDisplay();
-            }
-
+            currentTime += Time.deltaTime;
+            UpdateTimerDisplay();
         }
-        
     }
 
     private void UpdateTimerDisplay()
@@ -61,6 +45,21 @@ public class Timer : MonoBehaviour
         int seconds = Mathf.FloorToInt(currentTime % 60f);
 
         timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+    }
+
+    private void OnCollisionEnter(Collision other)
+    {
+        // Check if collision occurs with the object you want to stop the timer
+        if (other.gameObject.CompareTag("Goal"))
+        {
+            // Stop the timer
+            StopTimer();
+        }
+    }
+
+    public void StopTimer()
+    {
+        isRunning = false;
     }
 
     IEnumerator Countdown()
@@ -74,6 +73,8 @@ public class Timer : MonoBehaviour
         }
 
         countdownFinished = true;
+        isRunning = true;
+
     }
 
 }

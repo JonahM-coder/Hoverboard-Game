@@ -1024,12 +1024,6 @@ Light:
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
---- !u!4 &384347781 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: a8651e44dde246b4fa46bab861a132e3,
-    type: 3}
-  m_PrefabInstance: {fileID: 1588020137}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &476722194
 GameObject:
   m_ObjectHideFlags: 0
@@ -1528,7 +1522,7 @@ Transform:
   - {fileID: 198061343}
   - {fileID: 1771898334}
   - {fileID: 823756490}
-  m_Father: {fileID: 384347781}
+  m_Father: {fileID: 543450652112200770}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &529677437
@@ -2135,7 +2129,7 @@ Transform:
   m_LocalScale: {x: 0.7079144, y: 0.7165377, z: 1}
   m_Children:
   - {fileID: 1664869566}
-  m_Father: {fileID: 384347781}
+  m_Father: {fileID: 543450652112200770}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &807882103
@@ -3101,7 +3095,7 @@ Transform:
   - {fileID: 2341154427883166518}
   - {fileID: 7608654950314303875}
   - {fileID: 9023594457715230387}
-  m_Father: {fileID: 384347781}
+  m_Father: {fileID: 543450652112200770}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1221298705
@@ -3894,7 +3888,7 @@ Transform:
   - {fileID: 543450652935906315}
   - {fileID: 2073679174}
   - {fileID: 476722196}
-  m_Father: {fileID: 384347781}
+  m_Father: {fileID: 543450652112200770}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1485103674
@@ -4432,7 +4426,7 @@ Transform:
   m_LocalScale: {x: 0.7079144, y: 0.7165377, z: 1}
   m_Children:
   - {fileID: 338336742}
-  m_Father: {fileID: 384347781}
+  m_Father: {fileID: 543450652112200770}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1576231513
@@ -4513,85 +4507,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1576231513}
   m_CullTransparentMesh: 0
---- !u!1001 &1588020137
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: -8679921383154817045, guid: a8651e44dde246b4fa46bab861a132e3,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: a8651e44dde246b4fa46bab861a132e3,
-        type: 3}
-      propertyPath: m_LocalScale.x
-      value: 141.26001
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: a8651e44dde246b4fa46bab861a132e3,
-        type: 3}
-      propertyPath: m_LocalScale.y
-      value: 139.56
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: a8651e44dde246b4fa46bab861a132e3,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 2.53
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: a8651e44dde246b4fa46bab861a132e3,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.21
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: a8651e44dde246b4fa46bab861a132e3,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -1.78
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: a8651e44dde246b4fa46bab861a132e3,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.7071067
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: a8651e44dde246b4fa46bab861a132e3,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: a8651e44dde246b4fa46bab861a132e3,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: a8651e44dde246b4fa46bab861a132e3,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: a8651e44dde246b4fa46bab861a132e3,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: a8651e44dde246b4fa46bab861a132e3,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: a8651e44dde246b4fa46bab861a132e3,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 919132149155446097, guid: a8651e44dde246b4fa46bab861a132e3,
-        type: 3}
-      propertyPath: m_Name
-      value: Hoverboard Garage
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: a8651e44dde246b4fa46bab861a132e3, type: 3}
 --- !u!1001 &1639223245
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5493,6 +5408,26 @@ Transform:
   m_Father: {fileID: 1221298704}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -89.98, y: 0, z: 180}
+--- !u!4 &543450652112200770
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919132148461108984}
+  m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
+  m_LocalPosition: {x: 2.53, y: -0.21, z: -1.78}
+  m_LocalScale: {x: 141.26001, y: 139.56, z: 100}
+  m_Children:
+  - {fileID: 1554185519}
+  - {fileID: 757389129}
+  - {fileID: 6542149973352721666}
+  - {fileID: 1485103672}
+  - {fileID: 1221298704}
+  - {fileID: 528996069}
+  m_Father: {fileID: 0}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &543450652935906315
 Transform:
   m_ObjectHideFlags: 0
@@ -5577,6 +5512,24 @@ GameObject:
   - component: {fileID: 1711813855257632407}
   m_Layer: 0
   m_Name: Level Select Table
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &919132148461108984
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 543450652112200770}
+  - component: {fileID: 3469287838243433447}
+  - component: {fileID: 1711813854448967469}
+  m_Layer: 0
+  m_Name: Hoverboard Garage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5885,6 +5838,45 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5196383609421282242}
   m_Mesh: {fileID: -3263124518675488638, guid: e0e1d19e24ff9e84c98c3dccd2898b34, type: 3}
+--- !u!23 &1711813854448967469
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919132148461108984}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: -1637880222114644024, guid: a8651e44dde246b4fa46bab861a132e3, type: 3}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
 --- !u!23 &1711813855257632407
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -6217,6 +6209,14 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 919132147654508354}
   m_Mesh: {fileID: 1359389795734517373, guid: 7107de399a4c78b4a93abe72372a5592, type: 3}
+--- !u!33 &3469287838243433447
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919132148461108984}
+  m_Mesh: {fileID: -5028111744101268575, guid: a8651e44dde246b4fa46bab861a132e3, type: 3}
 --- !u!1 &3550441796619263040
 GameObject:
   m_ObjectHideFlags: 0
@@ -6426,11 +6426,11 @@ MonoBehaviour:
   currentGateText: {fileID: 0}
   powerText: {fileID: 0}
   currentPowerText: {fileID: 0}
-  speedometerText: {fileID: 0}
   timeDisplayText: {fileID: 0}
   retireMenu: {fileID: 0}
   retireSprite: {fileID: 0}
   restartButton: {fileID: 0}
+  speedometer: {fileID: 0}
   goalCollider: {fileID: 0}
   countdownFinished: 0
 --- !u!114 &4746788534994762803
@@ -6471,7 +6471,6 @@ MonoBehaviour:
   gravity: 13.8
   maxGravityMultiplier: 2
   gravityIncreaseRate: 1
-  isFalling: 0
   moveForce: 500
   forwardForce: 100
   decelerationRate: 1
@@ -6491,6 +6490,7 @@ MonoBehaviour:
   strafeDeceleration: 4
   maxStrafeSpeed: 5
   angularDrag: 1
+  maxRaycastDistance: Infinity
   currentCheckpoint: 0
   boostText: {fileID: 0}
   boostPad: {fileID: 0}
@@ -7080,7 +7080,7 @@ Transform:
   m_LocalScale: {x: 0.7079144, y: 0.7165377, z: 1}
   m_Children:
   - {fileID: 1043996798}
-  m_Father: {fileID: 384347781}
+  m_Father: {fileID: 543450652112200770}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6861954991849105660
@@ -7453,11 +7453,11 @@ MonoBehaviour:
   currentGateText: {fileID: 0}
   powerText: {fileID: 0}
   currentPowerText: {fileID: 0}
-  speedometerText: {fileID: 0}
   timeDisplayText: {fileID: 0}
   retireMenu: {fileID: 0}
   retireSprite: {fileID: 0}
   restartButton: {fileID: 0}
+  speedometer: {fileID: 0}
   goalCollider: {fileID: 0}
   countdownFinished: 0
 --- !u!114 &6953062902359929393
@@ -7543,7 +7543,6 @@ MonoBehaviour:
   gravity: 23.8
   maxGravityMultiplier: 2
   gravityIncreaseRate: 1
-  isFalling: 0
   moveForce: 500
   forwardForce: 100
   decelerationRate: 1
@@ -7563,6 +7562,7 @@ MonoBehaviour:
   strafeDeceleration: 4
   maxStrafeSpeed: 5
   angularDrag: 1
+  maxRaycastDistance: Infinity
   currentCheckpoint: 0
   boostText: {fileID: 0}
   boostPad: {fileID: 2941321899431202628, guid: f7e6281087d43e64c8ab16f5ca636a93,
@@ -8013,7 +8013,6 @@ MonoBehaviour:
   gravity: 13.8
   maxGravityMultiplier: 2
   gravityIncreaseRate: 1
-  isFalling: 0
   moveForce: 500
   forwardForce: 100
   decelerationRate: 1
@@ -8033,6 +8032,7 @@ MonoBehaviour:
   strafeDeceleration: 4
   maxStrafeSpeed: 5
   angularDrag: 1
+  maxRaycastDistance: Infinity
   currentCheckpoint: 0
   boostText: {fileID: 0}
   boostPad: {fileID: 2941321899431202628, guid: f7e6281087d43e64c8ab16f5ca636a93,
@@ -8102,11 +8102,11 @@ MonoBehaviour:
   currentGateText: {fileID: 0}
   powerText: {fileID: 0}
   currentPowerText: {fileID: 0}
-  speedometerText: {fileID: 0}
   timeDisplayText: {fileID: 0}
   retireMenu: {fileID: 0}
   retireSprite: {fileID: 0}
   restartButton: {fileID: 0}
+  speedometer: {fileID: 0}
   goalCollider: {fileID: 0}
   countdownFinished: 0
 --- !u!64 &8362840166995291146
@@ -8479,11 +8479,11 @@ MonoBehaviour:
   currentGateText: {fileID: 0}
   powerText: {fileID: 0}
   currentPowerText: {fileID: 0}
-  speedometerText: {fileID: 0}
   timeDisplayText: {fileID: 0}
   retireMenu: {fileID: 0}
   retireSprite: {fileID: 0}
   restartButton: {fileID: 0}
+  speedometer: {fileID: 0}
   goalCollider: {fileID: 0}
   countdownFinished: 0
 --- !u!114 &9089293822824806697
@@ -8542,7 +8542,6 @@ MonoBehaviour:
   gravity: 10.8
   maxGravityMultiplier: 2
   gravityIncreaseRate: 1
-  isFalling: 0
   moveForce: 200
   forwardForce: 100
   decelerationRate: 1
@@ -8562,6 +8561,7 @@ MonoBehaviour:
   strafeDeceleration: 4
   maxStrafeSpeed: 5
   angularDrag: 1
+  maxRaycastDistance: Infinity
   currentCheckpoint: 0
   boostText: {fileID: 0}
   boostPad: {fileID: 2941321899431202628, guid: f7e6281087d43e64c8ab16f5ca636a93,

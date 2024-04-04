@@ -6,17 +6,20 @@ using UnityEngine.UI;
 public class Speedometer : MonoBehaviour
 {
 
-    public HbController controller;
-    public Text currentSpeed;
+    public GameObject playerCollection;
+    public Text speedometerText;
 
     // Update is called once per frame
     private void Update()
     {
-        if(controller != null)
+        NewHbController controller = playerCollection.GetComponentInChildren<NewHbController>();
+
+        if (controller != null)
         {
             float speed = controller.GetSpeed();
 
-            currentSpeed.text = "Speed: " + speed.ToString("F1") + " m/s";
+            speedometerText.text = "Speed: " + speed.ToString("F1") + " m/s";
         }
+
     }
 }

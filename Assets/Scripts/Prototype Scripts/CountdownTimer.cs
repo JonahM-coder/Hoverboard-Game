@@ -6,8 +6,6 @@ using UnityEngine.UI;
 public class CountdownTimer : MonoBehaviour
 {
 
-    public Text countdownText;
-
     //Ready Sprite variables
     public GameObject readySprite;
     private bool isReadyVisible = false;
@@ -87,7 +85,6 @@ public class CountdownTimer : MonoBehaviour
                 countdownSprite_1sec.SetActive(true);
             }
 
-            countdownText.text = count.ToString();
             yield return new WaitForSeconds(1);
             count--;
         }
@@ -95,7 +92,6 @@ public class CountdownTimer : MonoBehaviour
         readySprite.SetActive(false);
         countdownSprite_1sec.SetActive(false);
 
-        countdownText.text = "GO!";
         goSprite.SetActive(true);
         isGoVisible = true;
         yield return new WaitForSeconds(1);
