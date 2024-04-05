@@ -88,7 +88,6 @@ public class NewHbController : MonoBehaviour
 
     // Cutscene variables
     public bool isMoving;
-    public bool hasReachedGoal = false;
     private Vector3 targetPoint;
     public float stopPointSpeed = 20f;
 
@@ -149,7 +148,7 @@ public class NewHbController : MonoBehaviour
         initialRotationY = transform.localRotation.eulerAngles.y;
 
         // In-game hoverboard mechanics, controls, and physics
-        if (isMoving && !hasReachedGoal)
+        if (isMoving)
         {
 
             //Gamepad Stick and Button Commands are active
@@ -236,14 +235,6 @@ public class NewHbController : MonoBehaviour
             }
 
         } //End of player controls
-
-        // When the player reaches the goal
-        if (hasReachedGoal)
-        {
-            // Move the hoverboard towards the targetPoint
-            float goalMoveSpeed = 5f; // Adjust this to control the movement speed
-            transform.position = Vector3.Lerp(transform.position, targetPoint, goalMoveSpeed * Time.deltaTime);
-        }
     }
 
     private void ApplyHovering(Vector2 moveInput, float maxRaycastDistance)
@@ -424,6 +415,7 @@ public class NewHbController : MonoBehaviour
         if (other.transform.tag == "Goal")
         {
             isMoving = false;
+            timerScript.StopTimer();
         }
 
         if (other.transform.tag == "Killbox")
@@ -564,7 +556,6 @@ public class NewHbController : MonoBehaviour
         hb.angularVelocity = Vector3.zero;
         transform.position = stopPoint;
         isMoving = false;
-        hasReachedGoal = true;
 
         targetPoint = stopPoint + Vector3.right * stopPointSpeed;
     }

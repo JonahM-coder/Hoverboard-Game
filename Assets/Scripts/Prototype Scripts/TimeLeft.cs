@@ -11,6 +11,7 @@ public class TimeLeft : MonoBehaviour
     public float startingTime = 20f;
     public float currentTime = 0f;
     public bool timeIsRunning = true;
+    public bool goalMet = false;
     
     public Transform stopPoint;
    
@@ -55,18 +56,28 @@ public class TimeLeft : MonoBehaviour
                 currentTime -= Time.deltaTime;
                 DisplayTime(currentTime);
             }
-            else
-            {
-                retireSprite.SetActive(true);
-                retireMenu.SetActive(true);
-                restartButton.SetActive(true);
-
-                EventSystem.current.SetSelectedGameObject(null);
-                EventSystem.current.SetSelectedGameObject(restartButton);
-
-            }
         }
-  
+        
+        if (!goalMet && currentTime <= 0)
+        {
+            retireSprite.SetActive(true);
+            retireMenu.SetActive(true);
+            restartButton.SetActive(true);
+
+            EventSystem.current.SetSelectedGameObject(null);
+            EventSystem.current.SetSelectedGameObject(restartButton);
+        }
+
+        if (goalMet)
+        {
+            retireSprite.SetActive(false);
+            retireMenu.SetActive(true);
+            restartButton.SetActive(true);
+
+            EventSystem.current.SetSelectedGameObject(null);
+            EventSystem.current.SetSelectedGameObject(restartButton);
+        }
+
     }
 
     private void DisableHUD()
@@ -78,39 +89,15 @@ public class TimeLeft : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        // Adding time for gates and checkpoints
-        if (timeIsRunning)
+        // Reaching the finish line
+        if (other.transform.tag == "Goal")
         {
-            if (other.transform.tag == "Gate")
+            if (gameObject.tag == "PlayerCollection")
             {
-                AddTime(2f);
-            }
-            else if (other.transform.tag == "Checkpoint")
-            {
-                AddTime(15f);
-            }
-
-            // Reaching the finish line
-            if (other.transform.tag == "Goal")
-            {
-                timeIsRunning = false;
-                retireSprite.SetActive(false);
-            }
-        }
-
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (timeIsRunning)
-        {
-            if (other.transform.tag == "Gate")
-            {
-                AddTime(2f);
+                goalMet = true;
             }
         }
     }
-
 
     public void DisplayTime(float timeToDisplay)
     {
@@ -123,8 +110,9 @@ public class TimeLeft : MonoBehaviour
 
     public void AddTime(float seconds)
     {
-        currentTime += seconds;
+        currentTime = currentTime + seconds;
     }
+
 
     IEnumerator Countdown()
     {

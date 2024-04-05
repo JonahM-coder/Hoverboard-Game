@@ -32,10 +32,14 @@ public class Timer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (countdownFinished && !isRunning)
+        if (countdownFinished && isRunning)
         {
             currentTime += Time.deltaTime;
             UpdateTimerDisplay();
+        }
+        else
+        {
+            StopTimer();
         }
     }
 
