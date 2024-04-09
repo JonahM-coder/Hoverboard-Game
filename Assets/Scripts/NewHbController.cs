@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
+using UnityEngine.Splines;
 
 public class NewHbController : MonoBehaviour
 {
@@ -57,7 +58,6 @@ public class NewHbController : MonoBehaviour
     [Header("Balance Stats")]
     public float jumpForce = 300f;
     public float angularDrag = 1f;
-
 
     [Header("Timer objects")]
     public TimeLeft timeLeftScript;
@@ -183,6 +183,11 @@ public class NewHbController : MonoBehaviour
                 ApplyGravity();
             }
 
+            if (!isStrafingLeft && !isStrafingRight)
+            {
+                StopStrafe();
+            }
+
             // Apply boost meter capacity
             if (currentBoostMeter < 0)
             {
@@ -239,14 +244,15 @@ public class NewHbController : MonoBehaviour
 
     private void ApplyHovering(Vector2 moveInput, float maxRaycastDistance)
     {
+        // Declare hit variable outside of the if block
+        RaycastHit hit;
         // Hovering
         Ray ray = new Ray(transform.position, transform.up);
-        RaycastHit hit;
         for (int i = 0; i < 4; i++)
         {
             if (Physics.Raycast(anchors[i].position, -anchors[i].up, out hit, maxRaycastDistance, groundLayer))
             {
-                ApplyForce(anchors[i], hits[i]);
+                ApplyForce(anchors[i], hit); // Apply force for the anchor and its corresponding hit
             }
         }
 
@@ -281,6 +287,7 @@ public class NewHbController : MonoBehaviour
                 RigidbodyConstraints.FreezePositionY;
         }
     }
+
 
     private void ApplyHorizontalMovement(Vector2 moveInput)
     {
@@ -346,19 +353,27 @@ public class NewHbController : MonoBehaviour
         float rotationInput = moveInput.x;
         Quaternion rotation = Quaternion.Euler(0f, rotationInput * turnTorque * Time.deltaTime, 0f);
 
-        Quaternion combinedRotation = rotation * pitchRotation;
-        hb.MoveRotation(hb.rotation * combinedRotation);
+        // Apply rotation if there is pitch input
+        if (moveInput.y != 0)
+        {
+            Quaternion combinedRotation = rotation * pitchRotation;
+            hb.MoveRotation(hb.rotation * combinedRotation);
+        }
     }
 
     private void ApplyForce(Transform anchor, RaycastHit hit)
     {
-        if (Physics.Raycast(anchor.position, -anchor.up, out hit))
+        if (hit.collider != null) // Ensure hit.collider is not null to avoid potential errors
         {
-            float force = 0;
-            force = Mathf.Abs(1 / (hit.point.y - anchor.position.y));
-            hb.AddForceAtPosition(transform.up * force * multiplier, anchor.position, ForceMode.Acceleration);
+            float distance = hit.point.y - anchor.position.y;
+            if (distance != 0) // Avoid division by zero
+            {
+                float force = Mathf.Abs(1 / distance);
+                hb.AddForceAtPosition(transform.up * force * multiplier, anchor.position, ForceMode.Acceleration);
+            }
         }
     }
+
 
     private void ApplyJump(Vector2 moveInput)
     {
@@ -380,9 +395,7 @@ public class NewHbController : MonoBehaviour
     }
 
     private void OnTriggerEnter(Collider other)
-    {
-        
-        
+    {        
         if (other.transform.tag == "Battery")
         {
             RefillBoostMeter();
@@ -437,6 +450,7 @@ public class NewHbController : MonoBehaviour
             currentCheckpoint = checkpoint.checkpointNumber;
             previousCheckpoint = checkpoint;
         }
+
     }
 
     private void Respawn()
@@ -509,6 +523,8 @@ public class NewHbController : MonoBehaviour
 
     private void StrafeLeft()
     {
+        StartStrafe(-maxStrafeSpeed);
+
         // Strafe the hoverboard to the left
         Vector3 strafeDirection = transform.forward * strafeSpeed * Time.fixedDeltaTime;
         hb.MovePosition(hb.position + strafeDirection);
@@ -516,6 +532,8 @@ public class NewHbController : MonoBehaviour
 
     private void StrafeRight()
     {
+        StartStrafe(maxStrafeSpeed);
+
         // Strafe the hoverboard to the right
         Vector3 strafeDirection = -transform.forward * strafeSpeed * Time.fixedDeltaTime;
         hb.MovePosition(hb.position + strafeDirection);

@@ -21,6 +21,7 @@ TagManager:
   - Player2
   - Player3
   - Player4
+  - Grind
   layers:
   - Default
   - TransparentFX

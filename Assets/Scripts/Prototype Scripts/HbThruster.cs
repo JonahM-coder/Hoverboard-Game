@@ -7,7 +7,6 @@ public class HbThruster : MonoBehaviour
 {
 
     //Particle System Objects
-    public ParticleSystem defaultThruster;
     public ParticleSystem accelerateThruster;
     public ParticleSystem boostThruster;
 
@@ -22,10 +21,8 @@ public class HbThruster : MonoBehaviour
     public NewHbController controller;
 
     // Gamepad button commands
-    private bool isAccelerating = false;
     private bool isPlayerBoosting = false;
     private bool isBraking = false;
-
     private bool isMoving = false;
 
     // Start is called before the first frame update
@@ -36,7 +33,6 @@ public class HbThruster : MonoBehaviour
 
         StartCoroutine(Countdown());
 
-        defaultThruster.Stop();
         accelerateThruster.Stop();
         boostThruster.Stop();
     }
@@ -47,51 +43,30 @@ public class HbThruster : MonoBehaviour
         bool timeRunning = timer.timeIsRunning;
         float currentPower = controller.currentBoostMeter;
 
-        if(timeRunning)
+        isPlayerBoosting = InputSystem.GetDevice<Gamepad>().xButton.isPressed;
+        isBraking = InputSystem.GetDevice<Gamepad>().bButton.isPressed;
+
+        if (timeRunning)
         {
             if (isMoving)
             {
 
-                isAccelerating = InputSystem.GetDevice<Gamepad>().aButton.isPressed;
-                isPlayerBoosting = InputSystem.GetDevice<Gamepad>().xButton.isPressed;
-                isBraking = InputSystem.GetDevice<Gamepad>().bButton.isPressed;
-
-                if (isAccelerating)
+                if (!accelerateThruster.isPlaying)
                 {
-                    if (!accelerateThruster.isPlaying)
-                    {
-                        accelerateThruster.Play();
-                    }
+                    accelerateThruster.Play();
                 }
-                else
+
+                if (isBraking)
                 {
                     accelerateThruster.Stop();
                     accelerateThruster.Clear();
                 }
-                
-                if (defaultThruster.isPlaying)
-                {
-                    if (isBraking)
-                    {
-                        defaultThruster.Stop();
-                        defaultThruster.Clear();
 
-                        accelerateThruster.Stop();
-                        accelerateThruster.Clear();
-                    }
-                }
-                else
-                {
-                    defaultThruster.Play();
-                }
 
                 if (isPlayerBoosting && !isBoosting)
                 {
                     if (currentPower != 0)
                     {
-                        accelerateThruster.Stop();
-                        accelerateThruster.Clear();
-
                         isBoosting = true;
                         boostThruster.Play();
                         StartCoroutine(StopBoostAfterDuration());
@@ -102,11 +77,9 @@ public class HbThruster : MonoBehaviour
         }
         else
         {
-            defaultThruster.Stop();
             accelerateThruster.Stop();
             boostThruster.Stop();
 
-            defaultThruster.Clear();
             accelerateThruster.Clear();
             boostThruster.Clear();
         }
@@ -129,11 +102,9 @@ public class HbThruster : MonoBehaviour
         {
             isMoving = false;
             
-            defaultThruster.Stop();
             accelerateThruster.Stop();
             boostThruster.Stop();
 
-            defaultThruster.Clear();
             accelerateThruster.Clear();
             boostThruster.Clear();
         }
@@ -142,11 +113,9 @@ public class HbThruster : MonoBehaviour
         {
             isMoving = false;
             
-            defaultThruster.Stop();
             accelerateThruster.Stop();
             boostThruster.Stop();
 
-            defaultThruster.Clear();
             accelerateThruster.Clear();
             boostThruster.Clear();
         }
@@ -164,9 +133,6 @@ public class HbThruster : MonoBehaviour
 
         yield return new WaitForSeconds(0);
         isMoving = true;
-        defaultThruster.Play();
-
-
     }
 
     private IEnumerator StopBoostAfterDuration()
