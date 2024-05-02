@@ -20,6 +20,7 @@ public class PauseBehavior : MonoBehaviour
     public void Start()
     {
         //Prevent pausing during countdown
+        Time.timeScale = 1f;
         StartCoroutine(Countdown());
 
         //Disable Pause UI menu during countdown

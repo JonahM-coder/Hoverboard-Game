@@ -58,6 +58,7 @@ public class NewHbController : MonoBehaviour
     [Header("Balance Stats")]
     public float jumpForce = 300f;
     public float angularDrag = 1f;
+    private float rotationThreshold = 90f;
 
     [Header("Timer objects")]
     public TimeLeft timeLeftScript;
@@ -164,23 +165,36 @@ public class NewHbController : MonoBehaviour
             Vector3 horizontalMovement = transform.up * moveInput.y * moveInput.magnitude * Time.deltaTime;
             Vector3 verticalMovement = transform.right * moveInput.x * moveInput.magnitude * Time.deltaTime;
 
+            Vector3 rotation = hb.rotation.eulerAngles;
+
+            // Normalize rotation angles to be within range [-180, 180]
+            float xRotation = Mathf.Abs(NormalizeAngle(rotation.x));
+            float zRotation = Mathf.Abs(NormalizeAngle(rotation.z));
+
+            // Check if rotation on X or Z axis exceeds the threshold
+            if (xRotation >= rotationThreshold || zRotation >= rotationThreshold)
+            {
+                Debug.Log("Exceeded rotation threshold!");
+                Respawn();
+            }
+
             if (groundCheck.IsGrounded)
             {
-
                 ApplyHovering(moveInput, maxRaycastDistance);
-
-                ApplyHorizontalMovement(moveInput);
 
                 ApplyBrakingOrAcceleration(moveInput);
 
                 ApplyJump(moveInput);
 
-            } 
+                ApplyHorizontalMovement(moveInput);
+            }
             else // Apply gravity when hoverboard is not grounded
             {
                 ApplyAirboreMovement(moveInput, airSpeedMultiplier, airGravityMultiplier);
 
                 ApplyGravity();
+
+                ApplyHorizontalMovement(moveInput);
             }
 
             if (!isStrafingLeft && !isStrafingRight)
@@ -246,48 +260,81 @@ public class NewHbController : MonoBehaviour
     {
         // Declare hit variable outside of the if block
         RaycastHit hit;
+
+        int groundedAnchorsCount = 0;
+
+        List<Transform> groundedAnchors = new List<Transform>();
+
         // Hovering
         Ray ray = new Ray(transform.position, transform.up);
         for (int i = 0; i < 4; i++)
         {
             if (Physics.Raycast(anchors[i].position, -anchors[i].up, out hit, maxRaycastDistance, groundLayer))
             {
-                ApplyForce(anchors[i], hit); // Apply force for the anchor and its corresponding hit
+                ApplyForce(anchors[i], hit); // Apply force for each anchor and its corresponding hit
+                groundedAnchorsCount++;
+                groundedAnchors.Add(anchors[i]);
             }
         }
 
-        // Check if the ray intersects with the ground layer
-        if (Physics.Raycast(transform.position, Vector3.up, out hit, maxRaycastDistance, groundLayer))
+        if (groundedAnchorsCount >= 2)
         {
-            Debug.DrawRay(transform.position, Vector3.up * maxRaycastDistance, Color.red);
-            float distanceToGround = hit.distance;
-
-            Vector3 groundPosition = hit.point + Vector3.up * hoverHeight;
-            transform.position = groundPosition;
-
-            // Only allow front/back movement if the hoverboard is not close to the ground
-            if (distanceToGround > hoverHeight)
+            // Check if the ray intersects with the ground layer
+            if (Physics.Raycast(transform.position, Vector3.up, out hit, maxRaycastDistance, groundLayer))
             {
-                // Calculate the pitch angle based on the vertical movement (front/back)
-                float newPitchAngle = -moveInput.y * pitchTorque * Time.deltaTime; // Invert for consistent direction
+                Debug.DrawRay(transform.position, Vector3.up * maxRaycastDistance, Color.red);
+                float distanceToGround = hit.distance;
 
-                // Clamp the pitch angle to stay within specified limits
-                newPitchAngle = Mathf.Clamp(newPitchAngle, minPitchAngle, maxPitchAngle);
+                Vector3 groundPosition = hit.point + Vector3.up * hoverHeight;
+                transform.position = groundPosition;
 
-                // Create a rotation quaternion for pitch
-                Quaternion newPitchRotation = Quaternion.Euler(newPitchAngle, 0f, 0f);
+                // Only allow front/back movement if the hoverboard is not close to the ground
+                if (distanceToGround > hoverHeight)
+                {
+                    // Calculate the pitch angle based on the vertical movement (front/back)
+                    float newPitchAngle = -moveInput.y * pitchTorque * Time.deltaTime; // Invert for consistent direction
 
-                // Apply the pitch rotation to the hoverboard
-                hb.MoveRotation(hb.rotation * newPitchRotation);
+                    // Clamp the pitch angle to stay within specified limits
+                    newPitchAngle = Mathf.Clamp(newPitchAngle, minPitchAngle, maxPitchAngle);
+
+                    // Create a rotation quaternion for pitch
+                    Quaternion newPitchRotation = Quaternion.Euler(newPitchAngle, 0f, 0f);
+
+                    // Apply the pitch rotation to the hoverboard
+                    hb.MoveRotation(hb.rotation * newPitchRotation);
+                }
+
+                // Freeze hoverboard's position and rotation when close to the ground
+                hb.constraints = distanceToGround < hoverHeight ?
+                    RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotation :
+                    RigidbodyConstraints.FreezePositionY;
+
+                ResetHoverForces();
+                ResetRaycastState();
             }
-
-            // Freeze hoverboard's position and rotation when close to the ground
-            hb.constraints = distanceToGround < hoverHeight ?
-                RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotation :
-                RigidbodyConstraints.FreezePositionY;
         }
-    }
+        else
+        {
+            if (groundedAnchorsCount > 0)
+            {
+                Vector3 averageGroundedAnchorPosition = Vector3.zero;
+                foreach (Transform anchor in groundedAnchors)
+                {
+                    averageGroundedAnchorPosition += anchor.position;
+                }
+                averageGroundedAnchorPosition /= groundedAnchorsCount;
 
+                transform.position = averageGroundedAnchorPosition;
+
+                hb.constraints = RigidbodyConstraints.FreezeRotation;
+            }
+            else
+            {
+                hb.constraints = RigidbodyConstraints.FreezePosition | RigidbodyConstraints.FreezeRotation;
+            }
+        }
+
+    }
 
     private void ApplyHorizontalMovement(Vector2 moveInput)
     {
@@ -296,20 +343,43 @@ public class NewHbController : MonoBehaviour
         Quaternion rotation = Quaternion.Euler(0f, rotationInput * turnTorque * Time.deltaTime, 0f);
         hb.MoveRotation(hb.rotation * rotation);
 
-        //Strafing
-        if (isStrafingLeft)
+        //Apply strafing when hoverboard is grounded
+        if (groundCheck.IsGrounded)
         {
-            StrafeLeft();
+            //Strafing
+            if (isStrafingLeft)
+            {
+                StrafeLeft();
+            }
+
+            if (isStrafingRight)
+            {
+                StrafeRight();
+            }
         }
 
-        if (isStrafingRight)
-        {
-            StrafeRight();
-        }
     }
 
     private void ApplyBrakingOrAcceleration(Vector2 moveInput)
     {
+
+        // Check if the hoverboard is close to the ground
+        RaycastHit hit;
+        bool isLanding = Physics.Raycast(transform.position, Vector3.down, out hit, maxRaycastDistance, groundLayer);
+
+        // Apply braking force if landing
+        if (isLanding)
+        {
+            Vector3 brakingVelocity = -hb.velocity.normalized * brakingForce;
+            hb.AddForce(brakingVelocity, ForceMode.Impulse);
+        }
+        else
+        {
+            // Apply autoacceleration if not landing
+            Vector3 forwardForceVector = transform.right * forwardForce;
+            hb.AddForce(forwardForceVector, ForceMode.Acceleration);
+        }
+
         // Apply braking force
         if (isBraking)
         {
@@ -374,7 +444,6 @@ public class NewHbController : MonoBehaviour
         }
     }
 
-
     private void ApplyJump(Vector2 moveInput)
     {
         if (groundCheck.IsGrounded && isJumping)
@@ -429,11 +498,16 @@ public class NewHbController : MonoBehaviour
         {
             isMoving = false;
             timerScript.StopTimer();
+            timeLeftScript.StopTimer();
+            Debug.Log("Goal reached!");
         }
 
         if (other.transform.tag == "Killbox")
         {
             isMoving = false;
+            timerScript.StopTimer();
+            timeLeftScript.StopTimer();
+            Debug.Log("Killbox collided!");
         }
 
         if (other.CompareTag("Spawn"))
@@ -453,7 +527,7 @@ public class NewHbController : MonoBehaviour
 
     }
 
-    private void Respawn()
+    public void Respawn()
     {
         // Find the checkpoint with the corresponding number and set the respawn position.
         Checkpoint[] checkpoints = FindObjectsOfType<Checkpoint>();
@@ -470,6 +544,9 @@ public class NewHbController : MonoBehaviour
                 // Set the respawn position to the checkpoint's position and rotation
                 playerTransform.position = checkpoint.transform.position;
                 playerTransform.rotation = Quaternion.Euler(0, checkpoint.transform.rotation.eulerAngles.y, 0);
+
+                ApplyBrakingOrAcceleration(Vector2.zero);
+
                 break;
             }
         }
@@ -486,6 +563,26 @@ public class NewHbController : MonoBehaviour
         transform.localRotation = Quaternion.Euler(newRotation);
 
     }
+
+    private void ResetHoverForces()
+    {
+        // Reset hover forces
+        currentGravity = gravity;
+        hb.velocity = Vector3.zero;
+        hb.angularVelocity = Vector3.zero;
+    }
+
+    private void ResetRaycastState()
+    {
+        // Reset anchor positions
+        for (int i = 0; i < anchors.Length; i++)
+        {
+            // Reset each anchor's position relative to the hoverboard's position and orientation
+            Vector3 anchorLocalPosition = Quaternion.Euler(hb.rotation.eulerAngles) * (anchors[i].localPosition * 1.5f);
+            anchors[i].position = hb.position + anchorLocalPosition;
+        }
+    }
+
 
     private void StartBoost()
     {
@@ -581,6 +678,15 @@ public class NewHbController : MonoBehaviour
     public float GetSpeed()
     {
         return hb.velocity.magnitude;
+    }
+
+    float NormalizeAngle(float angle)
+    {
+        if (angle > 180f)
+        {
+            angle -= 360f;
+        }
+        return angle;
     }
 
     IEnumerator Countdown()

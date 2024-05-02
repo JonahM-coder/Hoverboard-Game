@@ -20,6 +20,9 @@ public class FinishRunBehavior : MonoBehaviour
     // Timer variable
     public Timer timer;
 
+    public GameObject retireSprite;
+    public GameObject goalSprite;
+
     public void Start()
     {
         // Prevent pausing during countdown
@@ -29,8 +32,15 @@ public class FinishRunBehavior : MonoBehaviour
         endMenu.SetActive(false);
         quitMenu.SetActive(false);
 
+        retireSprite.SetActive(false);
+
         runComplete = false;
 
+    }
+
+    public void Update()
+    {
+        OnCompletionPerformed();
     }
 
     public void OnCompletionPerformed()
@@ -40,8 +50,7 @@ public class FinishRunBehavior : MonoBehaviour
         {
             if (!endMenu.activeInHierarchy)
             {
-                endMenu.SetActive(true);
-                
+                endMenu.SetActive(true);          
 
                 // Clear selected object and set new selected object
                 EventSystem.current.SetSelectedGameObject(null);
@@ -57,6 +66,13 @@ public class FinishRunBehavior : MonoBehaviour
     {
         if (other.transform.tag == "Goal")
         {
+            goalSprite.SetActive(true);
+            runComplete = true;
+        }
+
+        if (other.transform.tag == "Killbox")
+        {
+            retireSprite.SetActive(true);
             runComplete = true;
         }
     }

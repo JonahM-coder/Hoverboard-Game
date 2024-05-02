@@ -11,13 +11,8 @@ public class TimeLeft : MonoBehaviour
     public float startingTime = 20f;
     public float currentTime = 0f;
     public bool timeIsRunning = true;
-    public bool goalMet = false;
     
     public Transform stopPoint;
-   
-    // PlayerCollection and Hoverboard Scripts
-    public GameObject playerCollection;
-    private NewHbController[] controllers;
 
     // UI Text variables
     public BoostmeterBar boostBar;
@@ -44,59 +39,42 @@ public class TimeLeft : MonoBehaviour
 
         retireMenu.gameObject.SetActive(false);
 
-
+        Time.timeScale = 1f;
     }
 
     public void Update()
     {
         if (timeIsRunning)
         {
-            if (currentTime > 0)
+            if (currentTime >= 0)
             {
                 currentTime -= Time.deltaTime;
                 DisplayTime(currentTime);
             }
-        }
-        
-        if (!goalMet && currentTime <= 0)
-        {
-            retireSprite.SetActive(true);
-            retireMenu.SetActive(true);
-            restartButton.SetActive(true);
-
-            EventSystem.current.SetSelectedGameObject(null);
-            EventSystem.current.SetSelectedGameObject(restartButton);
-        }
-
-        if (goalMet)
-        {
-            retireSprite.SetActive(false);
-            retireMenu.SetActive(true);
-            restartButton.SetActive(true);
-
-            EventSystem.current.SetSelectedGameObject(null);
-            EventSystem.current.SetSelectedGameObject(restartButton);
-        }
-
-    }
-
-    private void DisableHUD()
-    {
-        timeText.enabled = false;
-        speedometer.SetActive(false);
-        timeDisplayText.enabled = false;
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        // Reaching the finish line
-        if (other.transform.tag == "Goal")
-        {
-            if (gameObject.tag == "PlayerCollection")
+            else
             {
-                goalMet = true;
+                timeIsRunning = false;
+                DisplayMenu();
             }
         }
+
+    }
+
+    private void DisplayMenu()
+    {
+        Time.timeScale = 0f;
+
+        timeText.enabled = true;
+        speedometer.SetActive(true);
+        timeDisplayText.enabled = true;
+
+        retireSprite.SetActive(true);
+        retireMenu.SetActive(true);
+        restartButton.SetActive(true);
+
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(restartButton);
+        Debug.Log("Time ran out!");
     }
 
     public void DisplayTime(float timeToDisplay)
@@ -113,6 +91,10 @@ public class TimeLeft : MonoBehaviour
         currentTime = currentTime + seconds;
     }
 
+    public void StopTimer()
+    {
+        timeIsRunning = false;
+    }
 
     IEnumerator Countdown()
     {

@@ -11,7 +11,8 @@
                     "id": "834f7e91-0b69-4580-8fa6-760ea27f8892",
                     "expectedControlType": "Stick",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Accelerate",
@@ -19,7 +20,8 @@
                     "id": "f353f136-cb1c-4050-9c3b-705b94831c1d",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Boost",
@@ -27,7 +29,8 @@
                     "id": "80a1cef4-972c-4fb1-8573-ba428f564bd1",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Refresh",
@@ -35,7 +38,8 @@
                     "id": "d130d114-0d55-48a1-980e-50f11d28d8b6",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Pause",
@@ -43,7 +47,8 @@
                     "id": "7e8e5613-dbb2-4e15-b5dc-c3da13a96370",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Brake",
@@ -51,7 +56,8 @@
                     "id": "49412f46-c1d3-4aee-b0f6-f3944538c205",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Strafe",
@@ -59,7 +65,8 @@
                     "id": "4e32439e-c0f0-445e-a204-bd3fade99887",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Crouch",
@@ -67,7 +74,8 @@
                     "id": "e506e838-27cb-4e13-a0f6-26b5d7ab6218",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Jump",
@@ -75,7 +83,17 @@
                     "id": "510ff417-9fb5-459e-aa5d-c33d1fc02935",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Zoom Camera",
+                    "type": "Value",
+                    "id": "88874411-c8db-4b04-9c87-0227064a2dfa",
+                    "expectedControlType": "Stick",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -186,6 +204,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "394ca6c4-87dc-4d42-996a-d7920c932471",
+                    "path": "<Gamepad>/rightStick/up",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Zoom Camera",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2d1ccbff-b605-40e3-895e-00ccb165c739",
+                    "path": "<Gamepad>/rightStick/down",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Zoom Camera",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

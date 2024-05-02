@@ -17,7 +17,6 @@ public class KillboxTrigger : MonoBehaviour
     {
         if (other.CompareTag("PlayerCollection"))
         {
-
             Debug.Log("Killbox collided!");
 
         }
