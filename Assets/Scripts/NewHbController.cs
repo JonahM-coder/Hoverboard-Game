@@ -54,6 +54,8 @@ public class NewHbController : MonoBehaviour
     public float maxPitchAngle = 45f;  // Adjust as needed
     public float airSpeedMultiplier = 2f;
     public float airGravityMultiplier = 2f;
+    public float glideSpeedDecrease = 3f;
+    public float fallSpeedIncrease = 3f;
 
     [Header("Balance Stats")]
     public float jumpForce = 300f;
@@ -95,8 +97,9 @@ public class NewHbController : MonoBehaviour
     // Boostmeter Bar GameObject
     public BoostmeterBar boostMeterBar;
 
-    // Groundcheck 
-    public HbGroundCheck groundCheck;
+    // Groundchecks
+    public HbGroundCheck[] groundChecks;
+    public bool allGrounded = true; // If all ground checks are landed
 
     // Gamepad button commands
     private bool isJumping = false;
@@ -140,12 +143,11 @@ public class NewHbController : MonoBehaviour
 
     private void FixedUpdate()
     {
-
-        //Restricts hovering (USE ONLY FOR PLAYTESTING)
+        // Restricts hovering (USE ONLY FOR PLAYTESTING)
         currentPosition = transform.position;
         currentRotation = transform.rotation;
 
-        //Update where the front of the hoverboard is facing
+        // Update where the front of the hoverboard is facing
         initialRotationY = transform.localRotation.eulerAngles.y;
 
         // In-game hoverboard mechanics, controls, and physics
@@ -178,23 +180,48 @@ public class NewHbController : MonoBehaviour
                 Respawn();
             }
 
-            if (groundCheck.IsGrounded)
+            // Check if all ground checks are grounded
+            foreach (HbGroundCheck groundCheck in groundChecks)
             {
+                if (!groundCheck.IsGrounded)
+                {
+                    allGrounded = false;
+                    break; // If any ground check is not grounded, no need to check further
+                }
+
+                allGrounded = true;
+            }
+
+            if (allGrounded && isMoving)
+            {
+
+                if (moveInput.y > 0f || moveInput.y <= 0f)
+                {
+                    moveInput.y = 0f;
+                }
+
                 ApplyHovering(moveInput, maxRaycastDistance);
 
                 ApplyBrakingOrAcceleration(moveInput);
 
-                ApplyJump(moveInput);
-
                 ApplyHorizontalMovement(moveInput);
+
+                //Strafing
+                if (isStrafingLeft)
+                {
+                    StrafeLeft();
+                }
+
+                if (isStrafingRight)
+                {
+                    StrafeRight();
+                }
             }
-            else // Apply gravity when hoverboard is not grounded
+            else if (!allGrounded && isMoving) // Apply gravity when hoverboard is not grounded
             {
                 ApplyAirboreMovement(moveInput, airSpeedMultiplier, airGravityMultiplier);
 
                 ApplyGravity();
-
-                ApplyHorizontalMovement(moveInput);
             }
 
             if (!isStrafingLeft && !isStrafingRight)
@@ -304,33 +331,8 @@ public class NewHbController : MonoBehaviour
                     hb.MoveRotation(hb.rotation * newPitchRotation);
                 }
 
-                // Freeze hoverboard's position and rotation when close to the ground
-                hb.constraints = distanceToGround < hoverHeight ?
-                    RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotation :
-                    RigidbodyConstraints.FreezePositionY;
-
                 ResetHoverForces();
                 ResetRaycastState();
-            }
-        }
-        else
-        {
-            if (groundedAnchorsCount > 0)
-            {
-                Vector3 averageGroundedAnchorPosition = Vector3.zero;
-                foreach (Transform anchor in groundedAnchors)
-                {
-                    averageGroundedAnchorPosition += anchor.position;
-                }
-                averageGroundedAnchorPosition /= groundedAnchorsCount;
-
-                transform.position = averageGroundedAnchorPosition;
-
-                hb.constraints = RigidbodyConstraints.FreezeRotation;
-            }
-            else
-            {
-                hb.constraints = RigidbodyConstraints.FreezePosition | RigidbodyConstraints.FreezeRotation;
             }
         }
 
@@ -342,22 +344,6 @@ public class NewHbController : MonoBehaviour
         float rotationInput = moveInput.x;
         Quaternion rotation = Quaternion.Euler(0f, rotationInput * turnTorque * Time.deltaTime, 0f);
         hb.MoveRotation(hb.rotation * rotation);
-
-        //Apply strafing when hoverboard is grounded
-        if (groundCheck.IsGrounded)
-        {
-            //Strafing
-            if (isStrafingLeft)
-            {
-                StrafeLeft();
-            }
-
-            if (isStrafingRight)
-            {
-                StrafeRight();
-            }
-        }
-
     }
 
     private void ApplyBrakingOrAcceleration(Vector2 moveInput)
@@ -406,12 +392,30 @@ public class NewHbController : MonoBehaviour
         hb.AddForce(forwardForceVector, ForceMode.Acceleration);
 
         // Invert the gravity force if the left stick moves upwards
-        if (moveInput.y > 0)
+        if (moveInput.y > 0f)
         {
             gravityForce *= -1f; // Invert the force
+            airSpeedMultiplier -= glideSpeedDecrease * Time.fixedDeltaTime;
+        }
+        else if (moveInput.y < 0f)
+        {
+            hb.velocity *= 0.8f;
+
+            if (hb.velocity.y < 0f)
+            {
+                hb.velocity /= 0.8f;
+                gravityForce *= 1.2f; // Invert the force
+                airSpeedMultiplier -= glideSpeedDecrease * Time.fixedDeltaTime;
+            }
+        }
+        else
+        {
+            airSpeedMultiplier += fallSpeedIncrease * Time.fixedDeltaTime;
         }
 
         hb.AddForce(gravityForce, ForceMode.Acceleration);
+
+        airSpeedMultiplier = Mathf.Clamp(airSpeedMultiplier, -airSpeedMultiplier, airSpeedMultiplier);
 
         // Pitching
         float pitchInput = -moveInput.y;
@@ -441,20 +445,6 @@ public class NewHbController : MonoBehaviour
                 float force = Mathf.Abs(1 / distance);
                 hb.AddForceAtPosition(transform.up * force * multiplier, anchor.position, ForceMode.Acceleration);
             }
-        }
-    }
-
-    private void ApplyJump(Vector2 moveInput)
-    {
-        if (groundCheck.IsGrounded && isJumping)
-        {
-            hb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
-            isJumping = false;
-        }
-        else if (!groundCheck.IsGrounded)
-        {
-            // Apply gravitational force
-            hb.AddForce(Physics.gravity * hb.mass);
         }
     }
 

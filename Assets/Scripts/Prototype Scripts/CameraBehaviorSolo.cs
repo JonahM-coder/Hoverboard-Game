@@ -1,112 +1,122 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-
 public class CameraBehaviorSolo : MonoBehaviour
 {
+    public string playerCollectionTag = "PlayerCollection"; // Default tag for PlayerCollection
+    public string cameraTag = "CameraTag"; // Tag for CameraTarget
 
-    public GameObject player;
-    public GameObject cameraTarget;
-    
-    public float speed;
-    public string playerTag;
-
+    public float speed = 5f;
     public float zoomSpeed = 15f;
     public float rotationSpeed = 15f;
 
-    private bool isActive = false;
-    private bool isZoomedOut = false;
-    private bool isRotating = false;
+    private GameObject playerCollection;
+    private GameObject cameraTarget;
 
-    // Start is called before the first frame update
+    public bool isActive = false;
+
     private void Awake()
     {
         StartCoroutine(Countdown());
-        FindPlayer();
+        FindPlayerCollectionAndCameraTarget();
 
-        // Get camera to face player collection object on first frame
-        gameObject.transform.position = Vector3.Lerp(transform.position, cameraTarget.transform.position, Time.deltaTime * speed);
-        gameObject.transform.LookAt(player.gameObject.transform.position);
-
+        // Initialize camera position and rotation if the cameraTarget is found
+        if (cameraTarget != null)
+        {
+            transform.position = Vector3.Lerp(transform.position, cameraTarget.transform.position, Time.deltaTime * speed);
+            transform.LookAt(playerCollection.transform.position);
+        }
     }
 
-    // Update is called once per frame
     private void FixedUpdate()
     {
-        Vector2 cameraInput = InputSystem.GetDevice<Gamepad>().rightStick.ReadValue();
+        if (Gamepad.current == null) return;
+
+        Vector2 cameraInput = Gamepad.current.rightStick.ReadValue();
 
         if (isActive)
         {
-            // Follow player collection object
             Follow();
 
             // Zoom camera controls
             if (Mathf.Abs(cameraInput.y) > 0.1f)
             {
-                if (cameraInput.y > 0)
-                {
-                    ZoomCamera(1);
-                }
-                else
-                {
-                    ZoomCamera(-1);
-                }
+                ZoomCamera(cameraInput.y > 0 ? 1 : -1);
             }
-
         }
-        
     }
 
     private void Follow()
     {
-        gameObject.transform.position = Vector3.Lerp(transform.position, cameraTarget.transform.position, Time.deltaTime * speed);
-        gameObject.transform.LookAt(player.gameObject.transform.position);
+        if (cameraTarget != null && playerCollection != null)
+        {
+            transform.position = Vector3.Lerp(transform.position, cameraTarget.transform.position, Time.deltaTime * speed);
+            transform.LookAt(playerCollection.transform.position);
+        }
     }
 
-    private void FindPlayer()
+    private void FindPlayerCollectionAndCameraTarget()
     {
-        GameObject[] players = GameObject.FindGameObjectsWithTag(playerTag);
-        if (players.Length > 0)
+        playerCollection = GameObject.FindWithTag(playerCollectionTag);
+        if (playerCollection != null)
         {
-            player = players[0];
-            cameraTarget = player.transform.Find("CameraTarget")?.gameObject;
+            cameraTarget = FindChildWithTag(playerCollection.transform, cameraTag);
+            if (cameraTarget == null)
+            {
+                Debug.LogError("No child object with tag '" + cameraTag + "' found within PlayerCollection.");
+            }
         }
         else
         {
-            Debug.LogError("No GameObject with tag '" + playerTag + "' found.");
+            Debug.LogError("No GameObject with tag '" + playerCollectionTag + "' found.");
         }
+    }
+
+    private GameObject FindChildWithTag(Transform parent, string tag)
+    {
+        foreach (Transform child in parent)
+        {
+            if (child.CompareTag(tag))
+            {
+                return child.gameObject;
+            }
+            // Recursively search in the child's children
+            GameObject result = FindChildWithTag(child, tag);
+            if (result != null)
+            {
+                return result;
+            }
+        }
+        return null;
     }
 
     private void ZoomCamera(float input)
     {
-        Vector3 offset = transform.position - cameraTarget.transform.position;
-        offset += transform.forward * input * zoomSpeed * Time.deltaTime;
-        transform.position = cameraTarget.transform.position + offset;
+        if (cameraTarget != null)
+        {
+            Vector3 offset = transform.position - cameraTarget.transform.position;
+            offset += transform.forward * input * zoomSpeed * Time.deltaTime;
+            transform.position = cameraTarget.transform.position + offset;
+        }
     }
 
     private void RotateCamera(float input)
     {
-        transform.RotateAround(cameraTarget.transform.position, Vector3.up, input * rotationSpeed * Time.deltaTime);
+        if (cameraTarget != null)
+        {
+            transform.RotateAround(cameraTarget.transform.position, Vector3.up, input * rotationSpeed * Time.deltaTime);
+        }
     }
 
-    private void ToggleZoom()
-    {
-        isZoomedOut = !isZoomedOut;
-    }
-
-    IEnumerator Countdown()
+    private IEnumerator Countdown()
     {
         int count = 3;
-
         while (count > 0)
         {
             yield return new WaitForSeconds(1);
             count--;
         }
-
         isActive = true;
     }
-
 }

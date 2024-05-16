@@ -4,39 +4,49 @@ using UnityEngine;
 
 public class HbGroundCheck : MonoBehaviour
 {
-    public bool isGrounded = false;
-    public bool IsGrounded => isGrounded;
+    public bool IsGrounded = false;
+    private float raycastDistance = 5f;
+    private float maxDistanceToGround = 5f; // Maximum distance to consider the hoverboard as grounded
+    private LayerMask groundLayer; // Layer mask for the ground layer
 
-    public float raycastDistance = 1f;
+    public void Awake()
+    {
+        groundLayer = LayerMask.GetMask("Ground");
+    }
 
     private void FixedUpdate()
     {
+        // Perform a raycast downwards to check for the ground layer
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, -transform.up, out hit, raycastDistance))
+        if (Physics.Raycast(transform.position, -transform.up, out hit, raycastDistance, groundLayer))
         {
-            if (hit.collider.CompareTag("Ground"))
+            // Check if the raycast hits the ground layer within maxDistanceToGround
+            if (hit.distance <= maxDistanceToGround)
             {
-                isGrounded = true;
+                IsGrounded = true;
                 return;
             }
         }
 
-        isGrounded = false;
+        IsGrounded = false;
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Ground"))
+        // Check if the entered collider belongs to the ground layer
+        if ((groundLayer & (1 << other.gameObject.layer)) != 0)
         {
-            isGrounded = true;
+            IsGrounded = true;
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Ground"))
+        // Check if the exited collider belongs to the ground layer
+        if ((groundLayer & (1 << other.gameObject.layer)) != 0)
         {
-            isGrounded = false;
+            IsGrounded = false;
         }
     }
 }
+
