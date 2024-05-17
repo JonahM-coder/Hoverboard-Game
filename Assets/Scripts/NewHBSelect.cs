@@ -17,8 +17,6 @@ public class NewHBSelect : MonoBehaviour
     private void Start()
     {
         
-
-        
         index = PlayerPrefs.GetInt("CharacterSelected");
 
         characterList = new GameObject[transform.childCount];

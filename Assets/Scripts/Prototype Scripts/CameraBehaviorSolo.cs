@@ -1,122 +1,58 @@
-﻿using System.Collections;
-using UnityEngine;
-using UnityEngine.InputSystem;
+﻿using UnityEngine;
 
 public class CameraBehaviorSolo : MonoBehaviour
 {
-    public string playerCollectionTag = "PlayerCollection"; // Default tag for PlayerCollection
-    public string cameraTag = "CameraTag"; // Tag for CameraTarget
+    public Transform[] cameraTargets; // Array to hold multiple camera targets
+    public float positionLerpSpeed = 500f; // Speed at which the camera follows the position
+    public float rotationLerpSpeed = 300f; // Speed at which the camera follows the rotation
+    private int currentTargetIndex = 0; // Get index from PlayerPref
 
-    public float speed = 5f;
-    public float zoomSpeed = 15f;
-    public float rotationSpeed = 15f;
 
-    private GameObject playerCollection;
-    private GameObject cameraTarget;
-
-    public bool isActive = false;
-
-    private void Awake()
+    void Start()
     {
-        StartCoroutine(Countdown());
-        FindPlayerCollectionAndCameraTarget();
-
-        // Initialize camera position and rotation if the cameraTarget is found
-        if (cameraTarget != null)
+        // Ensure we have camera targets set
+        if (cameraTargets.Length == 0)
         {
-            transform.position = Vector3.Lerp(transform.position, cameraTarget.transform.position, Time.deltaTime * speed);
-            transform.LookAt(playerCollection.transform.position);
+            Debug.LogWarning("No camera targets set. Please assign camera targets.");
+            return;
         }
-    }
 
-    private void FixedUpdate()
-    {
-        if (Gamepad.current == null) return;
+        // Load the current target index from PlayerPrefs
+        currentTargetIndex = PlayerPrefs.GetInt("CharacterSelected");
 
-        Vector2 cameraInput = Gamepad.current.rightStick.ReadValue();
-
-        if (isActive)
+        // Ensure the loaded index is valid
+        if (currentTargetIndex < 0 || currentTargetIndex >= cameraTargets.Length)
         {
-            Follow();
-
-            // Zoom camera controls
-            if (Mathf.Abs(cameraInput.y) > 0.1f)
-            {
-                ZoomCamera(cameraInput.y > 0 ? 1 : -1);
-            }
+            Debug.LogWarning("Loaded target index is out of range. Resetting to 0.");
+            currentTargetIndex = 0;
         }
-    }
 
-    private void Follow()
-    {
-        if (cameraTarget != null && playerCollection != null)
-        {
-            transform.position = Vector3.Lerp(transform.position, cameraTarget.transform.position, Time.deltaTime * speed);
-            transform.LookAt(playerCollection.transform.position);
-        }
-    }
+        Debug.Log("Starting with camera target index: " + currentTargetIndex);
 
-    private void FindPlayerCollectionAndCameraTarget()
-    {
-        playerCollection = GameObject.FindWithTag(playerCollectionTag);
-        if (playerCollection != null)
+        // Initialize the camera position and rotation to match the initial target
+        if (cameraTargets[currentTargetIndex] != null)
         {
-            cameraTarget = FindChildWithTag(playerCollection.transform, cameraTag);
-            if (cameraTarget == null)
-            {
-                Debug.LogError("No child object with tag '" + cameraTag + "' found within PlayerCollection.");
-            }
+            Vector3 targetPosition = cameraTargets[currentTargetIndex].position;
+            transform.position = cameraTargets[currentTargetIndex].position;
+            transform.rotation = cameraTargets[currentTargetIndex].rotation;
         }
         else
         {
-            Debug.LogError("No GameObject with tag '" + playerCollectionTag + "' found.");
+            Debug.LogWarning("Initial camera target is null.");
         }
     }
 
-    private GameObject FindChildWithTag(Transform parent, string tag)
+    void LateUpdate()
     {
-        foreach (Transform child in parent)
-        {
-            if (child.CompareTag(tag))
-            {
-                return child.gameObject;
-            }
-            // Recursively search in the child's children
-            GameObject result = FindChildWithTag(child, tag);
-            if (result != null)
-            {
-                return result;
-            }
-        }
-        return null;
+        if (cameraTargets.Length == 0 || cameraTargets[currentTargetIndex] == null) return;
+
+        // Smoothly interpolate the position and rotation of the camera to follow the current target
+        Vector3 targetPosition = cameraTargets[currentTargetIndex].position;
+        transform.position = Vector3.Lerp(transform.position, targetPosition, positionLerpSpeed * Time.deltaTime);
+
+        Quaternion targetRotation = cameraTargets[currentTargetIndex].rotation;
+        transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, rotationLerpSpeed * Time.deltaTime);
     }
 
-    private void ZoomCamera(float input)
-    {
-        if (cameraTarget != null)
-        {
-            Vector3 offset = transform.position - cameraTarget.transform.position;
-            offset += transform.forward * input * zoomSpeed * Time.deltaTime;
-            transform.position = cameraTarget.transform.position + offset;
-        }
-    }
 
-    private void RotateCamera(float input)
-    {
-        if (cameraTarget != null)
-        {
-            transform.RotateAround(cameraTarget.transform.position, Vector3.up, input * rotationSpeed * Time.deltaTime);
-        }
-    }
-
-    private IEnumerator Countdown()
-    {
-        int count = 3;
-        while (count > 0)
-        {
-            yield return new WaitForSeconds(1);
-            count--;
-        }
-        isActive = true;
-    }
 }
