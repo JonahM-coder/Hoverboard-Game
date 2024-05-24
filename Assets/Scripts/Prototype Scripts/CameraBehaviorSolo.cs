@@ -5,7 +5,7 @@ public class CameraBehaviorSolo : MonoBehaviour
     public Transform[] cameraTargets; // Array to hold multiple camera targets
     public float positionLerpSpeed = 500f; // Speed at which the camera follows the position
     public float rotationLerpSpeed = 300f; // Speed at which the camera follows the rotation
-    private int currentTargetIndex = 0; // Get index from PlayerPref
+    private int currentTargetIndex = 0; // Initialize index for PlayerPref item
 
 
     void Start()
