@@ -274,7 +274,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 133, y: -347}
+  m_AnchoredPosition: {x: 133, y: -300}
   m_SizeDelta: {x: 600, y: 600}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &190589354
@@ -310,25 +310,28 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Get to the end of the course before time runs out. If you crash too many
-    times and your energy bar goes below 0, you lose. If you fall off course, you
-    will also lose.
+  m_Text: 'The goal is to reach the end of the course before time runs out. Pass
+    through slalom gates and checkpoints to gain time, and go through rings to refuel
+    your hoverboard''s energy. If you crash too many times and your energy bar goes
+    below 0, you lose. If you fall off course, you will also lose.
 
 
-    Controll stick = move
+    Controll
+    stick = move
 
 
-    X button = boost
+    X button = boost (costs energy)
 
 
-    B button
-    = brake
+    B button = brake
 
 
-    Y button = respawn to previous checkpoint
+    Y
+    button = respawn to previous checkpoint (costs lots of energy)
 
 
-    LB & RB = Strafe'
+    LB & RB
+    = Strafe'
 --- !u!222 &190589355
 CanvasRenderer:
   m_ObjectHideFlags: 0

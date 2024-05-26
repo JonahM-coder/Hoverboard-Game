@@ -15047,7 +15047,7 @@ Transform:
   m_GameObject: {fileID: 364834104}
   serializedVersion: 2
   m_LocalRotation: {x: -6.123235e-17, y: 0.00000019470718, z: -6.123233e-17, w: 1}
-  m_LocalPosition: {x: -0.52, y: 0.18, z: 2}
+  m_LocalPosition: {x: -0.52, y: 0.14, z: 2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -15092,7 +15092,7 @@ Transform:
   m_GameObject: {fileID: 397359011}
   serializedVersion: 2
   m_LocalRotation: {x: -6.123235e-17, y: 0.00000019470718, z: -6.123233e-17, w: 1}
-  m_LocalPosition: {x: -0.52, y: 0.18, z: -2}
+  m_LocalPosition: {x: -0.52, y: 0.14, z: -2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -36992,7 +36992,7 @@ Transform:
   m_GameObject: {fileID: 1727062617}
   serializedVersion: 2
   m_LocalRotation: {x: -6.123235e-17, y: 0.00000019470718, z: -6.123233e-17, w: 1}
-  m_LocalPosition: {x: 8.84, y: 0.18, z: 0.34}
+  m_LocalPosition: {x: 8.84, y: 0.14, z: 0.34}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -37082,7 +37082,7 @@ Transform:
   m_GameObject: {fileID: 1973079875}
   serializedVersion: 2
   m_LocalRotation: {x: -6.123235e-17, y: 0.00000019470718, z: -6.123233e-17, w: 1}
-  m_LocalPosition: {x: 8.84, y: 0.18, z: -0.34}
+  m_LocalPosition: {x: 8.84, y: 0.14, z: -0.34}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -43169,15 +43169,15 @@ MonoBehaviour:
   - {fileID: 2134055755000550480}
   multiplier: 2.4
   maxRaycastDistance: 5
-  hoverHeight: 10
+  hoverHeight: 5
   hoverForce: 10
   resetOrientationThreshold: 45
-  gravity: 9.8
+  gravity: 9.81
   maxGravityMultiplier: 2
   gravityIncreaseRate: 1
   forwardForce: 140
   decelerationRate: 1
-  acceleration: 50
+  acceleration: 40
   brakingForce: 20
   boostForceStart: 50
   boostForce: 7000
@@ -43747,7 +43747,7 @@ Transform:
   m_GameObject: {fileID: 1736770976247802599}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 2896.4, y: 10.6, z: -3683}
+  m_LocalPosition: {x: 2896.4, y: 9.92, z: -3683}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -63400,17 +63400,17 @@ MonoBehaviour:
   gravityIncreaseRate: 1
   forwardForce: 130
   decelerationRate: 1
-  acceleration: 5
-  brakingForce: 20
-  boostForceStart: 50
-  boostForce: 35000
+  acceleration: 70
+  brakingForce: 10
+  boostForceStart: 80
+  boostForce: 10000
   boostDuration: 3
-  boostMeterDrain: 2000
+  boostMeterDrain: 3000
   boostMeter: 10000
   currentBoostMeter: 0
   boostMeterFill: 500
-  turnTorque: 65
-  strafeSpeed: 12
+  turnTorque: 30
+  strafeSpeed: 30
   strafeAcceleration: 2
   strafeDeceleration: 4
   maxStrafeSpeed: 5
@@ -64168,19 +64168,19 @@ MonoBehaviour:
   gravity: 9.81
   maxGravityMultiplier: 2
   gravityIncreaseRate: 1
-  forwardForce: 50
+  forwardForce: 150
   decelerationRate: 1
-  acceleration: 5
+  acceleration: 20
   brakingForce: 20
-  boostForceStart: 25
-  boostForce: 35000
+  boostForceStart: 50
+  boostForce: 7000
   boostDuration: 3
   boostMeterDrain: 2000
   boostMeter: 10000
   currentBoostMeter: 0
   boostMeterFill: 500
-  turnTorque: 65
-  strafeSpeed: 12
+  turnTorque: 20
+  strafeSpeed: 20
   strafeAcceleration: 2
   strafeDeceleration: 4
   maxStrafeSpeed: 5
@@ -64571,29 +64571,29 @@ MonoBehaviour:
   - {fileID: 2138789862}
   multiplier: 2.4
   maxRaycastDistance: 5
-  hoverHeight: 10
+  hoverHeight: 5
   hoverForce: 10
   resetOrientationThreshold: 45
-  gravity: 9.8
+  gravity: 9.81
   maxGravityMultiplier: 2
   gravityIncreaseRate: 1
-  forwardForce: 120
+  forwardForce: 140
   decelerationRate: 1
-  acceleration: 50
+  acceleration: 40
   brakingForce: 20
-  boostForceStart: 30
-  boostForce: 3000
+  boostForceStart: 17
+  boostForce: 5000
   boostDuration: 3
-  boostMeterDrain: 2000
+  boostMeterDrain: 1200
   boostMeter: 10000
   currentBoostMeter: 0
   boostMeterFill: 500
-  turnTorque: 45
-  strafeSpeed: 45
-  strafeAcceleration: 2
+  turnTorque: 60
+  strafeSpeed: 60
+  strafeAcceleration: 5
   strafeDeceleration: 4
   maxStrafeSpeed: 5
-  pitchTorque: -30
+  pitchTorque: 30
   minPitchAngle: -45
   maxPitchAngle: 45
   airSpeedMultiplier: 2
