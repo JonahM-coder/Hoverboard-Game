@@ -14,7 +14,7 @@ public class LandingPageBehavior : MonoBehaviour
     public GameObject landingMenu, instructionMenu;
 
     //Button Components
-    public GameObject startButton, manualButton, quitButton;
+    public GameObject startButton, manualButton, backButton;
 
     public void Start()
     {
@@ -63,6 +63,10 @@ public class LandingPageBehavior : MonoBehaviour
     {
         instructionMenu.SetActive(true);
         landingMenu.SetActive(false);
+
+        // Clear selected object and set new selected object
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(backButton);
     }
 
     public void CloseInstructionMenu()
