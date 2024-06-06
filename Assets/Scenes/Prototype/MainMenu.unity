@@ -3017,7 +3017,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneList:
-  - Level_1
+  - TEST
   - 
   - 
   - 
@@ -3026,15 +3026,15 @@ MonoBehaviour:
   levelNameText: {fileID: 1576231515}
   difficultyText: {fileID: 1436392327}
   planetNames:
-  - Andromeda
-  - Varos
-  - Reptilian Homeworld
-  - Haven VI
+  - PlanetName
+  - PlanetName
+  - PlanetName
+  - PlanetName
   levelNames:
-  - Ivory Street
-  - White Caves
-  - Snake Raceway
-  - Tropical Base
+  - LevelName
+  - LevelName
+  - LevelName
+  - LevelName
   difficultyNames:
   - Beginner
   - Intermediate
@@ -3043,7 +3043,7 @@ MonoBehaviour:
   planetObjects:
   - {fileID: 7123726979981916985}
   - {fileID: 2411054865904855247}
-  - {fileID: 8534866605262019593}
+  - {fileID: 7123726979981916985}
   - {fileID: 5196383609421282242}
 --- !u!1 &1275724193
 GameObject:
@@ -8183,7 +8183,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &8534866605262019594
 MonoBehaviour:
   m_ObjectHideFlags: 0
