@@ -22,6 +22,7 @@ TagManager:
   - Player3
   - Player4
   - Grind
+  - Audio
   layers:
   - Default
   - TransparentFX

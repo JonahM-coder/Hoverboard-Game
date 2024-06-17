@@ -66,6 +66,9 @@ public class NewHbController : MonoBehaviour
     public TimeLeft timeLeftScript;
     public Timer timerScript;
 
+    [Header("Audio Manager")]
+    public AudioManager audioManager;
+
     [Header("Extra")]   
     // Respawn & Checkpoint variables
     public int currentCheckpoint = 0;
@@ -114,12 +117,15 @@ public class NewHbController : MonoBehaviour
 
     private void Awake()
     {
-        //Hoverboard hover & initial position setup
+        // Find AudioManager Object
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+        
+        // Hoverboard hover & initial position setup
         hb = GetComponent<Rigidbody>();
         hb.angularDrag = angularDrag;
         hb.freezeRotation = false; //Disable rotation
 
-        //Checkpoint system startup
+        // Checkpoint system startup
         playerTransform = transform;
         Checkpoint respawnPoint = FindObjectOfType<Checkpoint>();
         if (respawnPoint != null)
@@ -127,7 +133,7 @@ public class NewHbController : MonoBehaviour
             respawnPoint.SetRespawnPosition();
         }
 
-        //Set up start position
+        // Set up start position
         isMoving = false;
         StartCoroutine(Countdown());
 
@@ -364,6 +370,9 @@ public class NewHbController : MonoBehaviour
             // Apply autoacceleration if not landing
             Vector3 forwardForceVector = transform.right * forwardForce;
             hb.AddForce(forwardForceVector, ForceMode.Acceleration);
+
+            // Apply acceleration sound
+            //audioManager.PlaySFX(audioManager.HbAcceleration);
         }
 
         // Apply braking force
@@ -377,6 +386,9 @@ public class NewHbController : MonoBehaviour
             // Apply autoacceleration
             Vector3 forwardForceVector = transform.right * forwardForce;
             hb.AddForce(forwardForceVector, ForceMode.Acceleration);
+
+            // Apply acceleration sound
+            //audioManager.PlaySFX(audioManager.HbAcceleration);
         }
     }
 
@@ -474,6 +486,7 @@ public class NewHbController : MonoBehaviour
         {
             timeLeftScript.AddTime(2f);
             gateTrigger.GateSpriteAppear();
+            audioManager.PlaySFX(audioManager.gateClip);
             Destroy(other.gameObject);
         }
 
@@ -481,6 +494,7 @@ public class NewHbController : MonoBehaviour
         {
             timeLeftScript.AddTime(15f);
             gateTrigger.CheckpointSpriteAppear();
+            audioManager.PlaySFX(audioManager.checkpointClip);
             Destroy(other.gameObject);
         }
 
@@ -682,14 +696,22 @@ public class NewHbController : MonoBehaviour
     IEnumerator Countdown()
     {
         int count = 3;
+        audioManager.PlaySFX(audioManager.countdownClip);
 
         while (count > 0)
         {
             yield return new WaitForSeconds(1);
+
+            if (count > 1)
+            {
+                audioManager.PlaySFX(audioManager.countdownClip);
+            }
+
             count--;
         }
 
         isMoving = true;
+        audioManager.PlaySFX(audioManager.goClip);
     }
 
 }
