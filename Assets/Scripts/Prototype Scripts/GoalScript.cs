@@ -27,7 +27,7 @@ public class GoalScript : MonoBehaviour
 
     public GameObject playerCollection; // Reference to the PlayerCollection object
 
-    public void Start()
+    public void Awake()
     {
         // Disable Menus
         landingMenu.SetActive(false);

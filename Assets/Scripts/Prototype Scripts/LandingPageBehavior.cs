@@ -7,16 +7,17 @@ using UnityEngine.InputSystem;
 
 public class LandingPageBehavior : MonoBehaviour
 {
-    //Gamepad component
+    // Gamepad component
     private Gamepad gamepad;
 
-    //Menu Components
-    public GameObject landingMenu, instructionMenu;
+    // Menu Components
+    public GameObject landingMenu, instructionMenu, leaderboardMenu;
 
-    //Button Components
-    public GameObject startButton, manualButton, backButton;
+    // Button Components
+    public GameObject startButton, manualButton, backButton1, leaderboardButton, backButton2;
 
-    public void Start()
+
+    public void Awake()
     {
         landingMenu.SetActive(true);
         
@@ -24,6 +25,8 @@ public class LandingPageBehavior : MonoBehaviour
         EventSystem.current.SetSelectedGameObject(startButton);
         
         instructionMenu.SetActive(false);
+        leaderboardMenu.SetActive(false);
+
     }
 
     private void OnEnable()
@@ -66,7 +69,7 @@ public class LandingPageBehavior : MonoBehaviour
 
         // Clear selected object and set new selected object
         EventSystem.current.SetSelectedGameObject(null);
-        EventSystem.current.SetSelectedGameObject(backButton);
+        EventSystem.current.SetSelectedGameObject(backButton1);
     }
 
     public void CloseInstructionMenu()
@@ -77,6 +80,26 @@ public class LandingPageBehavior : MonoBehaviour
         // Clear selected object and set new selected object
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(manualButton);
+    }
+
+    public void OpenLeaderboardMenu()
+    {
+        leaderboardMenu.SetActive(true);
+        landingMenu.SetActive(false);
+
+        // Clear selected object and set new selected object
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(backButton2);
+    }
+
+    public void CloseLeaderboardMenu()
+    {
+        leaderboardMenu.SetActive(false);
+        landingMenu.SetActive(true);
+
+        // Clear selected object and set new selected object
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(leaderboardButton);
     }
 
     public void QuitGame()
