@@ -51929,8 +51929,8 @@ MonoBehaviour:
   gravityIncreaseRate: 1
   forwardForce: 140
   decelerationRate: 1
-  acceleration: 40
-  brakingForce: 20
+  acceleration: 5
+  brakingForce: 30
   boostForceStart: 50
   boostForce: 7000
   boostDuration: 3
@@ -57172,7 +57172,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 807b923f87299bf44bad67f7f6bc51c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingTime: 45
+  startingTime: 600
   currentTime: 0
   timeIsRunning: 1
   stopPoint: {fileID: 2134055755423693584}
@@ -124173,7 +124173,7 @@ MonoBehaviour:
   gravityIncreaseRate: 1
   forwardForce: 130
   decelerationRate: 1
-  acceleration: 50
+  acceleration: 5
   brakingForce: 10
   boostForceStart: 80
   boostForce: 10000
@@ -124419,12 +124419,12 @@ MonoBehaviour:
   gravity: 9.81
   maxGravityMultiplier: 2
   gravityIncreaseRate: 1
-  forwardForce: 140
+  forwardForce: 150
   decelerationRate: 1
-  acceleration: 40
-  brakingForce: 20
+  acceleration: 5
+  brakingForce: 10
   boostForceStart: 50
-  boostForce: 10000
+  boostForce: 7000
   boostDuration: 3
   boostMeterDrain: 3000
   boostMeter: 10000
@@ -124634,7 +124634,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3586276972338121574}
   serializedVersion: 4
-  m_Mass: 360
+  m_Mass: 300
   m_Drag: 2
   m_AngularDrag: 4
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -135413,7 +135413,7 @@ MonoBehaviour:
   gravityIncreaseRate: 1
   forwardForce: 140
   decelerationRate: 1
-  acceleration: 40
+  acceleration: 5
   brakingForce: 20
   boostForceStart: 17
   boostForce: 5000
@@ -135423,7 +135423,7 @@ MonoBehaviour:
   currentBoostMeter: 0
   boostMeterFill: 500
   turnTorque: 55
-  strafeSpeed: 55
+  strafeSpeed: 45
   strafeAcceleration: 2
   strafeDeceleration: 4
   maxStrafeSpeed: 5
