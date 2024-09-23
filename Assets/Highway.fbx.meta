@@ -1,9 +1,29 @@
 fileFormatVersion: 2
-guid: ec0afa68653657447b20da48ab96e341
+guid: a05377b3210ba784ba398373358a5467
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Colors_Blender
+    second: {fileID: 2800000, guid: 4ed9fdb30f4b22441a6b5efe041b3c5b, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Concrete Texture
+    second: {fileID: 2800000, guid: 1e2f63acd3c099b4aa430b317e7627bf, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Dirt Texture
+    second: {fileID: 2800000, guid: d3d720ff6dc09c049879260a5d8e3a58, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Grass Texture
+    second: {fileID: 2800000, guid: 40decb75ad14eab499e8e44fb2c0bdfd, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0

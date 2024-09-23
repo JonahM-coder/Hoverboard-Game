@@ -15,15 +15,6 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Accelerate",
-                    "type": "Button",
-                    "id": "f353f136-cb1c-4050-9c3b-705b94831c1d",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "Boost",
                     "type": "Button",
                     "id": "80a1cef4-972c-4fb1-8573-ba428f564bd1",
@@ -105,17 +96,6 @@
                     "processors": "",
                     "groups": "",
                     "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "1c336f9c-63e7-43f6-b732-59494d8cfaab",
-                    "path": "<Gamepad>/buttonSouth",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Accelerate",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

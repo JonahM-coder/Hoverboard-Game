@@ -27,9 +27,8 @@ public class NewHbController : MonoBehaviour
     public float gravityIncreaseRate = 1f; // The rate at which gravity increases (adjust as needed)
 
     [Header("Speed Stats")]
-    public float forwardForce = 50f; // Top speed
+    public float forwardForce = 130f; // Accelerating speed
     public float decelerationRate = 1f;
-    public float acceleration = 5f;
     public float brakingForce = 20f;
 
     [Header("Boost Stats")]
@@ -629,6 +628,7 @@ public class NewHbController : MonoBehaviour
         // Strafe the hoverboard to the left
         Vector3 strafeDirection = transform.forward * strafeSpeed * Time.fixedDeltaTime;
         hb.MovePosition(hb.position + strafeDirection);
+
     }
 
     private void StrafeRight()
@@ -638,6 +638,7 @@ public class NewHbController : MonoBehaviour
         // Strafe the hoverboard to the right
         Vector3 strafeDirection = -transform.forward * strafeSpeed * Time.fixedDeltaTime;
         hb.MovePosition(hb.position + strafeDirection);
+
     }
 
     private void StartStrafe(float targetSpeed)

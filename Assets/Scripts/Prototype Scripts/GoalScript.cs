@@ -18,10 +18,11 @@ public class GoalScript : MonoBehaviour
     public Text finalTimeText;
     public BoostmeterBar boostBar;
 
-    // Goal UI GameObject
+    // Goal UI GameObjects
     public GameObject landingMenu, quitMenu;
     public GameObject restartButton, quitButton, quitMenu_landingButton, quitMenu_exitGameButton;
     public GameObject goalSprite;
+    public GameObject newRecordSprite;
 
     private bool goalReached = false;
 
@@ -33,6 +34,7 @@ public class GoalScript : MonoBehaviour
         landingMenu.SetActive(false);
         quitMenu.SetActive(false);
         goalSprite.SetActive(false);
+        newRecordSprite.SetActive(false);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -45,6 +47,7 @@ public class GoalScript : MonoBehaviour
             goalSprite.SetActive(true);
             finalTimeText.enabled = true;
             landingMenu.SetActive(true);
+            newRecordSprite.SetActive(true);
 
             // Enable button events
             EventSystem.current.SetSelectedGameObject(null);

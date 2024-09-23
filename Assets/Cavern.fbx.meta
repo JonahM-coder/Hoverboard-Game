@@ -1,9 +1,29 @@
 fileFormatVersion: 2
-guid: 9d9d6fb88ff709041b6d816eebf9a9c1
+guid: 33338048b4b08a24ca0dd3f44e2ba56f
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Cave Texture 1
+    second: {fileID: 2800000, guid: df796f98ac0f2b94796c890073cda045, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Cave Texture 2
+    second: {fileID: 2800000, guid: bd7765194765f9b458562094a98eb9ab, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Rock Texture
+    second: {fileID: 2800000, guid: 2ae10e66ff74c2947b78840305b91a80, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Snow Texture
+    second: {fileID: 2800000, guid: da811dc18f27f6243a5a472c2c56c89f, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0
