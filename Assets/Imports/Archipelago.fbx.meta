@@ -1,24 +1,9 @@
 fileFormatVersion: 2
-guid: 98fc179dd250a8e40a70263828a4c258
+guid: e800da5a2c2ffb448afd3003709bd72e
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects:
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: Concrete Texture
-    second: {fileID: 2800000, guid: 1ba5d5af665c67b45a50c036a4412d3f, type: 3}
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: Metal Texture
-    second: {fileID: 2800000, guid: 5ba2ca90ae9c2b340b84915bc4d876f5, type: 3}
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: Sand Texture
-    second: {fileID: 2800000, guid: 28ac3bda33b106149aee72b061716d14, type: 3}
+  externalObjects: {}
   materials:
     materialImportMode: 2
     materialName: 0
