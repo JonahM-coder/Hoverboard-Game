@@ -24,6 +24,14 @@ public class RespawnPointManager : MonoBehaviour
 
         for (int i = 0; i < spawnCheckpoints.Count; i++)
         {
+
+            // Disable the MeshRenderer component of the checkpoint
+            MeshRenderer meshRenderer = spawnCheckpoints[i].GetComponent<MeshRenderer>();
+            if (meshRenderer != null)
+            {
+                meshRenderer.enabled = false;
+            }
+
             spawnCheckpoints[i].checkpointNumber = i;
             checkpointsDictionary.Add(i, spawnCheckpoints[i]);
         }
